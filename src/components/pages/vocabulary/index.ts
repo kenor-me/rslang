@@ -1,22 +1,24 @@
-
 import { getWordPage } from '../../api';
 import { Word } from '../../types/index';
-import './index.css'
-const baseUrl = "https://app-english-learn.herokuapp.com";
-const root = document.querySelector("#root") as HTMLElement;
+import './index.css';
+const baseUrl = 'https://app-english-learn.herokuapp.com';
+const root = document.querySelector('#root') as HTMLElement;
 
 let pageBook = 0;
 let partBook = 0;
 let wordsOfPage:Word[] = [];
+const MAX_COUNT_PART = 6;
+const COLOR_FOR_PART = [
+  '#a5e8d6',
+  '#4e8dc0',
+  '#6b66a6',
+  '#d76565',
+  '#e6cccb',
+  '#d9bb63',
+];
 
-export async function mountedVocabulary() {
-  render();
-  wordsOfPage = await getWordPage(partBook, pageBook);
-  renderPage(wordsOfPage)
-}
-
-function render(){
-  root.innerHTML = "";
+function render() {
+  root.innerHTML = '';
   root.innerHTML = `
   <div class="book-page">
     <div class="container__book-page"></div>
@@ -45,11 +47,11 @@ function render(){
 }
 
 function renderPage(words:Word[]) {
-  const bookContainer = document.querySelector(".container__book-page") as HTMLElement;
-  bookContainer.innerHTML = "";
+  const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
+  bookContainer.innerHTML = '';
   words.forEach((word) => {
-    const cardWord = document.createElement("div");
-    cardWord.classList.add("book-word-item");
+    const cardWord = document.createElement('div');
+    cardWord.classList.add('book-word-item');
     cardWord.innerHTML = `
       <div class="book-word-image">
         <img class="word-img" src = '${baseUrl}/${word.image}' alt = "${word.word}"
@@ -80,3 +82,20 @@ function renderPage(words:Word[]) {
   });
 }
 
+function renderSelect() {
+  const selectPartition = document.querySelector('.select-partition') as HTMLElement;
+  for (let i = 1; i <= MAX_COUNT_PART; i++) {
+    const option = document.createElement('option');
+    option.value = (i - 1).toString();
+    option.textContent = `part ${i}`;
+    option.style.backgroundColor = COLOR_FOR_PART[i - 1];
+    selectPartition.append(option);
+  }
+}
+
+export async function mountedVocabulary():Promise<void> {
+  render();
+  wordsOfPage = await getWordPage(partBook, pageBook);
+  renderPage(wordsOfPage);
+  renderSelect();
+}
