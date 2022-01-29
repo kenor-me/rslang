@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.book-page {
+  position: relative;
+}
+.container__book-page {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
+  background-color: #a5e8d6;
+}
+.book-word-image {
+  height: 200px;
+  margin: 10px;
+  border-radius: 10px;
+}
+.book-word-item {
+  width: 400px;
+  height: 550px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  background-color: #2a3950;
+  color: azure;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.word-img {
+  width: 380px;
+  height: 200px;
+}
+.card-content {
+  text-align: center;
+  height: 180px;
+}
+.card__word {
+  font-size: 30px;
+}
+.card__btn-audio {
+  background-image: url("./../../../assets/vocabulary/audio.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+.card__example,
+.card__meaning {
+  font-size: 12px;
+}
+.card__btn-adddifficult,
+.card__btn-deldifficult {
+  width: 220px;
+  height: 45px;
+  background: #00e0c7;
+  border-radius: 5px;
+  color: #2a3950;
+  font-size: 20px;
+  padding: 10px 0;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.card__btn-deldifficult {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.card__card__meaning-translate,
+.card__example,
+.card__example-translate {
+  margin-top: 5px;
+}
