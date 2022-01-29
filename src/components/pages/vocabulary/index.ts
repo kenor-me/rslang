@@ -92,6 +92,17 @@ function renderSelect() {
     option.style.backgroundColor = COLOR_FOR_PART[i - 1];
     selectPartition.append(option);
   }
+  selectPartition.addEventListener('change', changePart);
+}
+
+async function changePart() {
+  const selectPartition = document.querySelector('.select-partition') as HTMLSelectElement;
+  const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
+  partBook = +selectPartition.value;
+  selectPartition.style.backgroundColor = COLOR_FOR_PART[partBook];
+  wordsOfPage = await getWordPage(partBook, pageBook);
+  renderPage(wordsOfPage);
+  bookContainer.style.backgroundColor = COLOR_FOR_PART[partBook];
 }
 
 export async function mountedVocabulary():Promise<void> {
@@ -107,6 +118,9 @@ export async function mountedVocabulary():Promise<void> {
   wordsOfPage = await getWordPage(partBook, pageBook);
   renderPage(wordsOfPage);
   renderSelect();
+  const selectPartition = document.querySelector('.select-partition') as HTMLElement;
+  const colorPage = COLOR_FOR_PART[0];
+  selectPartition.style.backgroundColor = colorPage;
   setNumberPage();
 }
 
