@@ -7,6 +7,7 @@ const root = document.querySelector('#root') as HTMLElement;
 let pageBook = 0;
 let partBook = 0;
 let wordsOfPage:Word[] = [];
+const MAX_COUNT_PAGE = 30;
 const MAX_COUNT_PART = 6;
 const COLOR_FOR_PART = [
   '#a5e8d6',
@@ -95,7 +96,40 @@ function renderSelect() {
 
 export async function mountedVocabulary():Promise<void> {
   render();
+  const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
+  buttonPrevPage.addEventListener('click', () => {
+    changePage('prev');
+  });
+  const buttonNextPage = document.querySelector('.pagination-next') as HTMLElement;
+  buttonNextPage.addEventListener('click', () => {
+    changePage('next');
+  });
   wordsOfPage = await getWordPage(partBook, pageBook);
   renderPage(wordsOfPage);
   renderSelect();
+  setNumberPage();
+}
+
+function setNumberPage():void {
+  const pageBlock = document.querySelector('.book-page-number-page') as HTMLElement;
+  const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
+  const buttonNextPage = document.querySelector('.pagination-next') as HTMLElement;
+  pageBlock.innerHTML = `Страница №${pageBook + 1}`;
+  if (pageBook === 0) {
+    buttonPrevPage.style.visibility = 'hidden';
+  } else {
+    buttonPrevPage.style.visibility = 'visible';
+  }
+  if (pageBook === MAX_COUNT_PAGE - 1) {
+    buttonNextPage.style.visibility = 'hidden';
+  } else {
+    buttonNextPage.style.visibility = 'visible';
+  }
+}
+
+async function changePage(param:string):Promise<void> {
+  pageBook = (param === 'next') ? pageBook++ : pageBook--;
+  wordsOfPage = await getWordPage(partBook, pageBook);
+  renderPage(wordsOfPage);
+  setNumberPage();
 }
