@@ -167,7 +167,11 @@ function setNumberPage():void {
 }
 
 async function changePage(param:string):Promise<void> {
-  pageBook = (param === 'next') ? pageBook++ : pageBook--;
+  if (param === 'next') {
+    pageBook++;
+  } else {
+    pageBook--;
+  }
   wordsOfPage = await getWordPage(partBook, pageBook);
   renderPage(wordsOfPage);
   setNumberPage();
