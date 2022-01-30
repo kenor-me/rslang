@@ -1,3 +1,5 @@
+import { mountedVocabulary } from "../vocabulary";
+
 const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
@@ -20,7 +22,7 @@ export const locationResolver = (location: string): void => {
       addDescription();
       break;
     case '#/textbook':
-      root.innerHTML = 'Учебник';
+      mountedVocabulary();
       break;
     case '#/games':
       root.innerHTML = 'Мини-игры';
