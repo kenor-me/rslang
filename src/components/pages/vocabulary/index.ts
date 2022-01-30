@@ -1,6 +1,7 @@
 import { getWordPage } from '../../api';
 import { Word } from '../../types/index';
 import './index.css';
+
 const baseUrl = 'https://app-english-learn.herokuapp.com';
 const root = document.querySelector('#root') as HTMLElement;
 
@@ -81,6 +82,30 @@ function renderPage(words:Word[]) {
       </div>`;
     bookContainer.append(cardWord);
   });
+  const btnPlay = document.querySelectorAll('.card__btn-audio');
+  btnPlay.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const audio = btn.querySelectorAll('audio');
+      stopSound();
+      playSound(audio);
+    });
+  });
+}
+
+function stopSound() {
+  const allAudio = document.querySelectorAll('audio');
+  allAudio.forEach((audio) => {
+    audio.pause();
+  });
+}
+
+function playSound(audio:NodeListOf<HTMLAudioElement>) {
+  audio[0].play();
+  for (let i = 0; i < audio.length; i++) {
+    audio[i].addEventListener('ended', () => {
+      audio[i + 1].play();
+    });
+  }
 }
 
 function renderSelect() {
