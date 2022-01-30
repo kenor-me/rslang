@@ -1,5 +1,33 @@
+@font-face {
+  font-family: Forum;
+  src: url("assets/fonts/Forum/Forum-Regular.ttf");
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("assets/fonts/Roboto/Roboto-Thin.ttf");
+  font-weight: 100;
+}
+
 body {
+<<<<<<< HEAD
   min-height: 100vh;
   margin: 0;
   background-color: rgb(245, 252, 252);
+=======
+  margin: 0;
+  padding: 0;
+  background-color: darkslategrey;
+  color: white;
+>>>>>>> develop
 }
+
+main {
+  min-width: 100vw;
+  height: calc(100vh - 120px);
+  background-image: url('assets/img/bg.png');
+  background-size: cover;
+  background-position-y: -50px;
+  background-attachment: fixed;
+}
+
