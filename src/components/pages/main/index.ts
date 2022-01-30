@@ -28,6 +28,9 @@ export const locationResolver = (location: string): void => {
     case '#/login':
       root.innerHTML = 'Вход';
       break;
+    case '#/statistics':
+      root.innerHTML = 'Статистика';
+      break;
     default:
       break;
   }
@@ -47,10 +50,13 @@ export function createHeader(): void {
   header.innerHTML = `
     <a class="logo" href="#/" data-href="#/">
     <img class="logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
-    <a href="#/textbook" data-href="#/textbook">Учебник</a>
-    <a href="#/games" data-href="#/games">Мини-игры</a>
-    <a href="#/statistics" data-href="#/statistics">Статистика</a>
+    <div class="links">
+      <a href="#/textbook" data-href="#/textbook">Учебник</a>
+      <a href="#/games" data-href="#/games">Мини-игры</a>
+      <a href="#/statistics" data-href="#/statistics">Статистика</a>
+    </div>
     <a class="login" href="#/login" data-href="#/login">Войти</a>
+    <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
 }
@@ -76,4 +82,35 @@ export function createFooter(): void {
     </div>
 `;
   document.body.appendChild(footer);
+}
+
+export function createBurgerMenu(): void {
+  const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
+  burgerMenu.innerHTML = `
+    <input id="menu-toggle" type="checkbox" />
+    <label class="menu-btn" for="menu-toggle">
+      <span></span>
+    </label>
+
+    <ul class="menubox">
+      <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
+      <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
+      <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
+    </ul>
+  `;
+  document.querySelector('header')?.appendChild(burgerMenu);
+
+  const menubox = document.querySelector('.menubox') as HTMLElement;
+  const body = document.querySelector('body') as HTMLBodyElement;
+
+  body.addEventListener('click', (e) => {
+    menubox.style.display = 'none';
+    (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+    e.preventDefault();
+  });
+
+  burgerMenu.addEventListener('click', (e) => {
+    menubox.style.display = 'block';
+    e.stopPropagation();
+  });
 }
