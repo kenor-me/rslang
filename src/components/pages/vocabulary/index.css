@@ -119,22 +119,25 @@
   border-radius: 50px;
 }
 .select-partition option {
-  font-size: 12px;
-  line-height: 25px;
+  font-size: 22px;
+  line-height: 50px;
+  padding: 10px;
 }
 .book-page-nav-savannah,
 .book-page-nav-audio {
   display: block;
   background: url("./../../../assets/vocabulary/vector.png") no-repeat;
-  width: 75px;
-  height: 90px;
+  background-size: cover;
+  width: 63px;
+  height: 77px;
   position: relative;
+  margin-top: 10px;
 }
 .book-page-nav-savannah div,
 .book-page-nav-audio div {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
   top: 8px;
   left: 6px;
@@ -154,11 +157,11 @@
   font-size: 20px;
   font-style: oblique;
   font-family: cursive;
-  top: 88px;
+  top: 73px;
   color: azure;
 }
 .book-page-nav-audio span {
-  right: -20px;
+  right: -27px;
 }
 .pagination-prev,
 .pagination-next {
@@ -174,4 +177,34 @@
 .pagination-next {
   background-image: url("./../../../assets/vocabulary/next.png");
   background-repeat: no-repeat;
+}
+@media screen and (max-width: 768px) {
+  .book-page-nav-logo {
+    width: 60px;
+    height: 60px;
+  }
+  .book-page-nav-audio span,
+  .book-page-nav-savannah span {
+    font-size: 16px;
+  }
+  .book-page-nav-audio span {
+    right: -14px;
+  }
+  .book-page-number-page {
+    font-size: 18px;
+    width: 140px;
+  }
+  .select-partition {
+    height: 50px;
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .word-img {
+    width: 280px;
+    height: 200px;
+  }
+  .book-word-item {
+    width: 300px;
+  }
 }
