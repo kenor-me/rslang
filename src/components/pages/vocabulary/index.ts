@@ -101,7 +101,7 @@ function stopSound() {
 
 function playSound(audio:NodeListOf<HTMLAudioElement>) {
   audio[0].play();
-  for (let i = 0; i < audio.length; i++) {
+  for (let i = 0; i < audio.length - 1; i++) {
     audio[i].addEventListener('ended', () => {
       audio[i + 1].play();
     });
