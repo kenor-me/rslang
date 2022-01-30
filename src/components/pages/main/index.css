@@ -1,0 +1,105 @@
+header {
+  width: 100vw;
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+}
+
+header a {
+  margin: 20px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+}
+
+.logo-img {
+  width: 60%;
+  margin-top: -11px;
+}
+
+footer {
+  height: 60px;
+}
+
+.personal-information {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100vw;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.personal-information a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.copyright {
+  color: #fff;
+}
+
+.rsschool img{
+  width: 100%;
+  height: 20px;
+}
+
+.mp-description {
+  margin: 0 auto;
+  padding: 50px;
+  font-family: Forum;
+  color: #000;
+  width: 30%;
+  height: 150px;
+}
+
+h1 {
+  font-family: Forum;
+  font-size: 3rem;
+  font-weight: 800;
+  color: rgb(12, 184, 169);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.mp-title {
+  color: rgb(10, 78, 73);
+}
+
+.mp-text {
+  font-family: Roboto;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: justify;
+}
+
+.mp-detail,
+.login {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 40px;
+  color: #fff;
+  font-family: Roboto;
+  font-size: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(7, 104, 99, 0.4);
+  border-radius: 10px;
+  transition: all 0.2s ease-in;
+}
+
+.login {
+  margin: 0.5rem;
+  padding: 10px 20px;
+  background-color: rgba(16, 230, 219, 0.4);
+}
+
+.login:hover,
+.login:active,
+.mp-detail:active,
+.mp-detail:hover {
+  border: 1px solid rgba(109, 243, 236, 0.4);
+  background-color: rgb(7, 104, 99);
+}
