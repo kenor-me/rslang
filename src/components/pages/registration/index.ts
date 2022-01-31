@@ -15,7 +15,6 @@ const renderCloseImg = () => `
 `;
 
 export const renderRegistrationForm = (): string => `
-    ${renderCloseImg()}
     <form id="registration" class="form registration-form" method="post">
       <div class="form__input-block">
         <div class="input-block__wrapper">
@@ -58,7 +57,6 @@ export const renderRegistrationForm = (): string => `
   `;
 
 export const renderSignInForm = (): string => `
-${renderCloseImg()}
 <form id="signIn" class="form registration-form" method="post">
     <div class="form__input-block">
       <div class="input-block__wrapper">
@@ -104,7 +102,9 @@ export const renderRegistrationPage = (): void => {
             <p>Изучать слова удобнее, если у вас есть профиль</p>
           </div>
           <div class="popup-right-block">
+            ${renderCloseImg()}
             ${renderSignInForm()}
+            ${renderRegistrationForm()}
           </div>
         </div>
       </div>
@@ -114,12 +114,17 @@ export const renderRegistrationPage = (): void => {
   const popup = document.getElementById('popup') as HTMLElement;
   popup.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;
-    // if (!target.closest('.popup__content') || ) {
-    //   popup.classList.remove('open');
-    //   console.log(target);
-    // }
+    const registrationForm = document.getElementById('registration') as HTMLElement;
+    const signForm = document.getElementById('signIn') as HTMLElement;
+    if (!target.closest('.popup__content')) {
+      popup.classList.remove('open');
+      registrationForm.style.display = 'none';
+      signForm.style.display = 'block';
+    }
     if (target.closest('.popup__close')) {
       popup.classList.remove('open');
+      registrationForm.style.display = 'none';
+      signForm.style.display = 'block';
     }
   });
 };

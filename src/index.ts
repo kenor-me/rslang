@@ -1,8 +1,8 @@
 import './style.css';
 import { addUser, signIn } from './components/api';
-import { renderRegistrationPage, renderRegistrationForm, renderSignInForm } from './components/pages/registration';
+import { renderRegistrationPage } from './components/pages/registration';
 import {
-  locationResolver, createHeader, createFooter, addDescription, createBurgerMenu,
+  locationResolver, createHeader, createFooter, addDescription,
 } from './components/pages/main';
 
 createHeader();
@@ -49,10 +49,10 @@ const createNewUser = async (e: Event): Promise<void> => {
 
 const link = popup.querySelector('.link-block__link') as HTMLElement;
 link.addEventListener('click', () => {
-  const rightBlock = popup.querySelector('.popup-right-block') as HTMLElement;
-  rightBlock.innerHTML = `${renderRegistrationForm()}`;
   const registrationForm = popup.querySelector('#registration') as HTMLElement;
-  popup.classList.add('open');
+  const signInForm = popup.querySelector('#signIn') as HTMLElement;
+  registrationForm.style.display = 'block';
+  signInForm.style.display = 'none';
   registrationForm.addEventListener('submit', createNewUser);
 });
 
