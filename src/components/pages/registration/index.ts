@@ -1,3 +1,3 @@
 export const renderRegistrationPage = (): void => {
-  console.log('registration page');
+  // console.log('registration page');
 };

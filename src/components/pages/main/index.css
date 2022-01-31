@@ -1,8 +1,16 @@
+:root {
+  --bg-dark: #2a3950;
+  --bg-light: #ffffff;
+  --font-light: #ffffff;
+  --font-dark: #000000;
+}
+
 header {
-  width: 100vw;
+  width: 100%;
   height: 60px;
   display: flex;
   justify-content: space-around;
+  background-color: var(--bg-dark);
 }
 
 header a {
@@ -10,7 +18,7 @@ header a {
   font-size: 1.2rem;
   text-transform: uppercase;
   text-decoration: none;
-  color: white;
+  color: var(--font-light);
 }
 
 .links {
@@ -24,38 +32,39 @@ header a {
 
 footer {
   height: 60px;
+  background-color: var(--bg-dark);
 }
 
 .personal-information {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100vw;
+  align-items: center;
   font-size: 1.2rem;
-  text-transform: uppercase;
+  padding-top: 10px;
 }
 
 .personal-information a {
   text-decoration: none;
-  color: #fff;
+  color: var(--font-light);
 }
 
 .copyright {
-  color: #fff;
+  color: var(--font-light);
 }
 
 .rsschool img{
   width: 100%;
-  height: 20px;
+  height: 35px;
 }
 
 .mp-description {
-  margin: 0 auto;
-  padding: 50px;
   font-family: Forum;
-  color: #000;
-  width: 30%;
-  height: 150px;
+  max-width: 40%;
+  min-width: 320px;
+  padding: 50px 20px;
+  margin: 0 auto;
+  color: var(--font-dark);
 }
 
 h1 {

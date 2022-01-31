@@ -1,14 +1,14 @@
 import { getWordPage } from '../../api';
 import { Word } from '../../types/index';
-import { locationResolver } from '../main';
 import './index.css';
+import { locationResolver } from '../main';
 
 const baseUrl = 'https://app-english-learn.herokuapp.com';
 const root = document.querySelector('#root') as HTMLElement;
 
 let pageBook = 0;
 let partBook = 0;
-let wordsOfPage:Word[] = [];
+let wordsOfPage: Word[] = [];
 const MAX_COUNT_PAGE = 30;
 const MAX_COUNT_PART = 6;
 const COLOR_FOR_PART = [
@@ -20,7 +20,7 @@ const COLOR_FOR_PART = [
   '#d9bb63',
 ];
 
-function render() {
+const render = (): void => {
   root.innerHTML = '';
   root.innerHTML = `
   <div class="book-page">
@@ -47,9 +47,25 @@ function render() {
       </div>
     </div>
   </div>`;
-}
+};
 
-function renderPage(words:Word[]) {
+const stopSound = (): void => {
+  const allAudio = document.querySelectorAll('audio');
+  allAudio.forEach((audio) => {
+    audio.pause();
+  });
+};
+
+const playSound = (audio: NodeListOf<HTMLAudioElement>): void => {
+  audio[0].play();
+  for (let i = 0; i < audio.length - 1; i++) {
+    audio[i].addEventListener('ended', () => {
+      audio[i + 1].play();
+    });
+  }
+};
+
+const renderPage = (words: Word[]): void => {
   const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
   bookContainer.innerHTML = '';
   words.forEach((word) => {
@@ -91,25 +107,19 @@ function renderPage(words:Word[]) {
       playSound(audio);
     });
   });
-}
+};
 
-function stopSound() {
-  const allAudio = document.querySelectorAll('audio');
-  allAudio.forEach((audio) => {
-    audio.pause();
-  });
-}
+const changePart = async (): Promise<void> => {
+  const selectPartition = document.querySelector('.select-partition') as HTMLSelectElement;
+  const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
+  partBook = +selectPartition.value;
+  selectPartition.style.backgroundColor = COLOR_FOR_PART[partBook];
+  wordsOfPage = await getWordPage(partBook, pageBook);
+  renderPage(wordsOfPage);
+  bookContainer.style.backgroundColor = COLOR_FOR_PART[partBook];
+};
 
-function playSound(audio:NodeListOf<HTMLAudioElement>) {
-  audio[0].play();
-  for (let i = 0; i < audio.length - 1; i++) {
-    audio[i].addEventListener('ended', () => {
-      audio[i + 1].play();
-    });
-  }
-}
-
-function renderSelect() {
+const renderSelect = (): void => {
   const selectPartition = document.querySelector('.select-partition') as HTMLElement;
   for (let i = 1; i <= MAX_COUNT_PART; i++) {
     const option = document.createElement('option');
@@ -119,19 +129,37 @@ function renderSelect() {
     selectPartition.append(option);
   }
   selectPartition.addEventListener('change', changePart);
-}
+};
 
-async function changePart() {
-  const selectPartition = document.querySelector('.select-partition') as HTMLSelectElement;
-  const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
-  partBook = +selectPartition.value;
-  selectPartition.style.backgroundColor = COLOR_FOR_PART[partBook];
+const setNumberPage = (): void => {
+  const pageBlock = document.querySelector('.book-page-number-page') as HTMLElement;
+  const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
+  const buttonNextPage = document.querySelector('.pagination-next') as HTMLElement;
+  pageBlock.innerHTML = `Страница №${pageBook + 1}`;
+  if (pageBook === 0) {
+    buttonPrevPage.style.visibility = 'hidden';
+  } else {
+    buttonPrevPage.style.visibility = 'visible';
+  }
+  if (pageBook === MAX_COUNT_PAGE - 1) {
+    buttonNextPage.style.visibility = 'hidden';
+  } else {
+    buttonNextPage.style.visibility = 'visible';
+  }
+};
+
+const changePage = async (param: string): Promise<void> => {
+  if (param === 'next') {
+    pageBook++;
+  } else {
+    pageBook--;
+  }
   wordsOfPage = await getWordPage(partBook, pageBook);
   renderPage(wordsOfPage);
-  bookContainer.style.backgroundColor = COLOR_FOR_PART[partBook];
-}
+  setNumberPage();
+};
 
-export async function mountedVocabulary():Promise<void> {
+export const mountedVocabulary = async (): Promise<void> => {
   render();
   const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
   buttonPrevPage.addEventListener('click', () => {
@@ -149,33 +177,5 @@ export async function mountedVocabulary():Promise<void> {
   selectPartition.style.backgroundColor = colorPage;
   setNumberPage();
   const logoHome = document.querySelector('.book-page-nav-logo') as HTMLElement;
-  logoHome.addEventListener('click', ()=>{locationResolver('#/')});
- }
-
-function setNumberPage():void {
-  const pageBlock = document.querySelector('.book-page-number-page') as HTMLElement;
-  const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
-  const buttonNextPage = document.querySelector('.pagination-next') as HTMLElement;
-  pageBlock.innerHTML = `Страница №${pageBook + 1}`;
-  if (pageBook === 0) {
-    buttonPrevPage.style.visibility = 'hidden';
-  } else {
-    buttonPrevPage.style.visibility = 'visible';
-  }
-  if (pageBook === MAX_COUNT_PAGE - 1) {
-    buttonNextPage.style.visibility = 'hidden';
-  } else {
-    buttonNextPage.style.visibility = 'visible';
-  }
-}
-
-async function changePage(param:string):Promise<void> {
-  if (param === 'next') {
-    pageBook++;
-  } else {
-    pageBook--;
-  }
-  wordsOfPage = await getWordPage(partBook, pageBook);
-  renderPage(wordsOfPage);
-  setNumberPage();
-}
+  logoHome.addEventListener('click', () => locationResolver('#/'));
+};
