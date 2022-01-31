@@ -149,8 +149,8 @@ export async function mountedVocabulary():Promise<void> {
   selectPartition.style.backgroundColor = colorPage;
   setNumberPage();
   const logoHome = document.querySelector('.book-page-nav-logo') as HTMLElement;
-  logoHome.addEventListener('click', ()=>{locationResolver('#/')})
-}
+  logoHome.addEventListener('click', ()=>{locationResolver('#/')});
+ }
 
 function setNumberPage():void {
   const pageBlock = document.querySelector('.book-page-number-page') as HTMLElement;
