@@ -1,5 +1,4 @@
 import './index.css';
-import { root } from '../main';
 
 const renderCloseImg = () => `
     <svg class="popup__close" 
@@ -109,7 +108,7 @@ export const renderRegistrationPage = (): void => {
         </div>
       </div>
   `;
-  root.appendChild(popupBody);
+  document.body.appendChild(popupBody);
 
   const popup = document.getElementById('popup') as HTMLElement;
   popup.addEventListener('click', (e: Event) => {
