@@ -24,6 +24,7 @@ header a {
 }
 
 footer {
+  padding-bottom: 5px;
   height: 60px;
   background-color: darkslategrey;
 }
