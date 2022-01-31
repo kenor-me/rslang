@@ -2,12 +2,14 @@ const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
   const description = `
-    <div class="mp-description">
-      <h1>Enjoy your way to learn English with <span class="mp-title">Eng-land</span></h1>
-      <p class="mp-text">Изучай английский язык вместе с нашим приложением!
-      Учебник с более 3000 слов поможет расширить Ваш словарный запас,
-      а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
-      <button class="mp-detail">Подробнее</button>
+    <div class="wrapper-main-page">
+      <div class="mp-description">
+        <h1>Enjoy your way to learn English with <span class="mp-title">Eng-land</span></h1>
+        <p class="mp-text">Изучай английский язык вместе с нашим приложением!
+        Учебник с более 3000 слов поможет расширить Ваш словарный запас,
+        а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
+        <button class="mp-detail">Подробнее</button>
+      </div>
     </div>
   `;
   root.innerHTML = `${description}`;
@@ -101,12 +103,11 @@ export function createBurgerMenu(): void {
   document.querySelector('header')?.appendChild(burgerMenu);
 
   const menubox = document.querySelector('.menubox') as HTMLElement;
-  const body = document.querySelector('body') as HTMLBodyElement;
 
-  body.addEventListener('click', (e) => {
+  document.body.addEventListener('click', () => {
     menubox.style.display = 'none';
     (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
-    e.preventDefault();
+    // e.preventDefault();
   });
 
   burgerMenu.addEventListener('click', (e) => {

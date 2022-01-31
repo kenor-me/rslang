@@ -12,16 +12,15 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: darkslategrey;
-  color: white;
 }
 
-main {
+.wrapper-main-page {
   min-width: 100vw;
-  height: calc(100vh - 120px);
+  min-height: calc(100vh - 125px);
   background-image: url('assets/img/bg.png');
   background-size: cover;
   background-position-y: -50px;
   background-attachment: fixed;
+  color: white;
 }
 
