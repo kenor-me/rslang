@@ -3,6 +3,7 @@ import { User, Sign, Token } from '../types';
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
 export const addUser = async (user: User): Promise<void> => {
+  const err = document.getElementById('registration-error') as HTMLElement;
   const response = await fetch(`${BASE_URL}/users`, {
     method: 'POST',
     body: JSON.stringify(user),
@@ -10,11 +11,22 @@ export const addUser = async (user: User): Promise<void> => {
       'Content-Type': 'application/json',
     },
   });
-  const result = await response.json();
-  localStorage.setItem('user', JSON.stringify(result));
+  await response.json().then((res: User): void => {
+    const popup = document.getElementById('popup') as HTMLElement;
+    const rightBlock = popup.querySelector('.popup-right-block') as HTMLElement;
+    rightBlock.innerHTML = `
+      <p class="popup-auth-text">Регистрация прошла успешно</p>
+    `;
+    localStorage.setItem('userAdd', JSON.stringify(res));
+    setTimeout((): void => {
+      popup.classList.remove('open');
+    }, 3000);
+  }).catch((): void => {
+    err.classList.add('visible');
+  });
 };
 
-export const signIn = async (user: Sign): Promise<Token> => {
+export const signIn = async (user: Sign): Promise<void> => {
   const err = document.getElementById('signin-error') as HTMLElement;
 
   const response = await fetch(`${BASE_URL}/signin`, {
@@ -25,9 +37,13 @@ export const signIn = async (user: Sign): Promise<Token> => {
     },
   });
 
-  const result = await response.json().catch((): void => {
-    err.classList.add('visible');
+  await response.json().then((res: Token): void => {
+    const popup = document.getElementById('popup') as HTMLElement;
+    popup.classList.remove('open');
+    localStorage.setItem('userAuth', JSON.stringify(res));
+  }).catch((): void => {
+    if (err) {
+      err.classList.add('visible');
+    }
   });
-  console.log(result);
-  return result;
 };

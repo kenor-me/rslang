@@ -7,7 +7,7 @@
   --font-color-disabled: #006270;
   --font-color-error: #e90e24;
   --bg-btn: #00E0C7;
-  --bg-btn-disabled: #b1f7ee;
+  --bg-btn-hover: #b1f7ee;
 }
 
 .popup-signIn {
@@ -16,42 +16,87 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(240, 240, 240, 0.8);
-  /* opacity: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
   visibility: hidden;
   overflow-y: auto;
-  overflow-x: hidden; */
+  overflow-x: hidden;
   transition: all 0.8s ease 0s;
   z-index: 1;
 }
 
-.popup-signIn__body {
+#popup.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup__body {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.popup-signIn__content {
+.popup__content {
   min-height: 250px;
-  max-width: 400px;
+  max-width: 650px;
   width: 100%;
-  padding: 40px 45px;
   background-color: var(--bg-dark);
   border-radius: var(--radius);
-  background-image: url("../../../assets/bg.png");
+  box-shadow: 0 15px 30px 0 rgb(0, 0, 0, 0.5);
+  display: flex;
+}
+
+.popup-left-block {
+  padding: 20px 30px 20px 30px;
+  background-image: url("../../../assets/img/signIn.png");
   background-size: cover;
   background-repeat:no-repeat;
   background-position:center;
-  box-shadow: 0 15px 30px 0 rgb(0, 0, 0, 0.5);
+  background-color: #B9F2E1;
 }
 
-h3 {
-  font-size: 42px;
+.popup-left-block  h2 {
+  font-size: 48px;
+  color: var(--font-color-disabled);
+  margin-top: 70px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.popup-left-block p {
+  color: var(--font-color-disabled);
+  margin-bottom: 70px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.popup-right-block {
+  position: relative;
+  box-sizing: border-box;
+  padding: 40px 30px 30px;
+  width: 320px;
+}
+
+.popup-auth-text {
+  padding-top: 50px;
+  font-size: 19px;
+  font-weight: bold;
   color: var(--font-color-light);
-  text-align: center;
-  margin: 0;
-  padding-bottom: 15px;
+}
+
+.popup__close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  cursor: pointer;
+}
+.popup__close path {
+  transition: 0.4s;
+}
+
+.popup__close:hover path {
+  fill: var(--bg-btn);
 }
 
 .form {
@@ -76,6 +121,10 @@ h3 {
   background-color: transparent;
   border-bottom: 2.5px solid var(--bg-light);
   outline: none;
+  margin-bottom: 0.6em;
+}
+
+.input-block__wrapper:last-of-type input {
   margin-bottom: 3em;
 }
 
@@ -88,14 +137,25 @@ h3 {
   border-color: var(--bg-btn);
 }
 
-.form__btn-block {
+.form__link-block {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.form__btn-block button,
-.form__btn-block div {
-  width: 180px;
+.form__link-block a {
+  font-size: 19px;
+  color: var(--bg-btn);
+  transition: 0.4s;
+}
+
+.form__link-block a:hover {
+  color: var(--bg-btn-hover);
+  cursor: pointer;
+}
+
+.form button {
+  width: 100%;
   height: 48px;
   font-size: 18px;
   font-weight: bold;
@@ -109,13 +169,13 @@ h3 {
   transition: .5s;
 }
 
-.form__btn-block button:hover {
-  background-color: var(--bg-light);
+.form button:hover {
+  background-color: var(--bg-btn-hover);
   color: var(--font-color-disabled);
 }
 
-.form__btn-block button:disabled {
-  background-color: var(--bg-btn-disabled);
+.form button:disabled {
+  background-color: var(--bg-btn-hover);
   color: var(--font-color-disabled);
   cursor: auto;
 }

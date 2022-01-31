@@ -1,4 +1,6 @@
-const root = document.getElementById('root') as HTMLElement;
+import './index.css';
+
+export const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
   const description = `
@@ -26,7 +28,7 @@ export const locationResolver = (location: string): void => {
       root.innerHTML = 'Мини-игры';
       break;
     case '#/login':
-      root.innerHTML = 'Вход';
+      // root.innerHTML = 'Вход';
       break;
     case '#/statistics':
       root.innerHTML = 'Статистика';

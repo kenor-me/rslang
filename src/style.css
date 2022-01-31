@@ -10,16 +10,10 @@
 }
 
 body {
-<<<<<<< HEAD
-  min-height: 100vh;
-  margin: 0;
-  background-color: rgb(245, 252, 252);
-=======
   margin: 0;
   padding: 0;
   background-color: darkslategrey;
   color: white;
->>>>>>> develop
 }
 
 main {
