@@ -1,5 +1,6 @@
 import { getWordPage } from '../../api';
 import { Word } from '../../types/index';
+import { locationResolver } from '../main';
 import './index.css';
 
 const baseUrl = 'https://app-english-learn.herokuapp.com';
@@ -147,6 +148,8 @@ export async function mountedVocabulary():Promise<void> {
   const colorPage = COLOR_FOR_PART[0];
   selectPartition.style.backgroundColor = colorPage;
   setNumberPage();
+  const logoHome = document.querySelector('.book-page-nav-logo') as HTMLElement;
+  logoHome.addEventListener('click', ()=>{locationResolver('#/')})
 }
 
 function setNumberPage():void {
