@@ -1,16 +1,23 @@
-const root = document.getElementById('root') as HTMLElement;
+import './index.css';
+import { createPageAboutUs } from '../about-us';
+import { mountedVocabulary } from '../vocabulary';
+
+export const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
   const description = `
-    <div class="mp-description">
-      <h1>Enjoy your way to learn English with <span class="mp-title">Eng-land</span></h1>
-      <p class="mp-text">Изучай английский язык вместе с нашим приложением!
-      Учебник с более 3000 слов поможет расширить Ваш словарный запас,
-      а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
-      <button class="mp-detail">Подробнее</button>
+    <div class="wrapper-main-page">
+      <div class="mp-description">
+        <h1>Enjoy your way to learn English with <span class="mp-title">Eng-land</span></h1>
+        <p class="mp-text">Изучай английский язык вместе с нашим приложением!
+        Учебник с более 3000 слов поможет расширить Ваш словарный запас,
+        а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
+        <a class="mp-detail" href="#/about" data-href="#/about">Подробнее</a>
+      </div>
     </div>
   `;
   root.innerHTML = `${description}`;
+  document.querySelector('.mp-detail')?.addEventListener('click', createPageAboutUs);
   return description;
 }
 
@@ -20,12 +27,13 @@ export const locationResolver = (location: string): void => {
       addDescription();
       break;
     case '#/textbook':
+      mountedVocabulary();
       break;
     case '#/games':
       root.innerHTML = 'Мини-игры';
       break;
     case '#/login':
-      root.innerHTML = 'Вход';
+      // root.innerHTML = 'Вход';
       break;
     case '#/statistics':
       root.innerHTML = 'Статистика';
@@ -47,14 +55,14 @@ export function createHeader(): void {
   const header = document.createElement('header');
 
   header.innerHTML = `
-    <a class="logo" href="#/" data-href="#/">
-    <img class="logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
+    <a class="mp-home logo" href="#/"">
+    <img class="mp-home logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
     <div class="links">
-      <a href="#/textbook" data-href="#/textbook">Учебник</a>
-      <a href="#/games" data-href="#/games">Мини-игры</a>
-      <a href="#/statistics" data-href="#/statistics">Статистика</a>
+      <a class="mp-textbook" href="#/textbook">Учебник</a>
+      <a class="mp-games" href="#/games">Мини-игры</a>
+      <a class="mp-statistics" href="#/statistics">Статистика</a>
     </div>
-    <a class="login" href="#/login" data-href="#/login">Войти</a>
+    <a class="mp-login login" href="#/login">Войти</a>
     <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
@@ -100,12 +108,11 @@ export function createBurgerMenu(): void {
   document.querySelector('header')?.appendChild(burgerMenu);
 
   const menubox = document.querySelector('.menubox') as HTMLElement;
-  const body = document.querySelector('body') as HTMLBodyElement;
 
-  body.addEventListener('click', (e) => {
+  document.body.addEventListener('click', () => {
     menubox.style.display = 'none';
     (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
-    e.preventDefault();
+    // e.preventDefault();
   });
 
   burgerMenu.addEventListener('click', (e) => {

@@ -13,16 +13,4 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  /* background-color: #2a3950; */
-  color: white;
-}
-
-main {
-  min-height: calc(100vh - 120px);
-  background-image: url("assets/img/bg.png");
-  background-size: cover;
 }
