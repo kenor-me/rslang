@@ -1,6 +1,7 @@
+import './index.css';
 import { createPageAboutUs } from '../about-us';
 
-const root = document.getElementById('root') as HTMLElement;
+export const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
   const description = `
@@ -31,7 +32,7 @@ export const locationResolver = (location: string): void => {
       root.innerHTML = 'Мини-игры';
       break;
     case '#/login':
-      root.innerHTML = 'Вход';
+      // root.innerHTML = 'Вход';
       break;
     case '#/statistics':
       root.innerHTML = 'Статистика';
