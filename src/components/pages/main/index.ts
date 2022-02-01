@@ -26,13 +26,11 @@ export const locationResolver = (location: string): void => {
       addDescription();
       break;
     case '#/textbook':
-      root.innerHTML = 'Учебник';
       break;
     case '#/games':
       root.innerHTML = 'Мини-игры';
       break;
     case '#/login':
-      // root.innerHTML = 'Вход';
       break;
     case '#/statistics':
       root.innerHTML = 'Статистика';
@@ -72,10 +70,7 @@ export function createFooter(): void {
 
   footer.innerHTML = `
     <div id="personal-information" class="personal-information">
-      <p class="copyright">&#169;2022</p>
-      <p class="rsschool">
-        <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
-      </p>
+      <p class="copyright">&#169;2021</p>
       <p class="github">
         <a href="https://github.com/kenor-me" target="_blank">Kanareikina Katherine</a>
       </p>
@@ -84,6 +79,9 @@ export function createFooter(): void {
       </p>
       <p class="github">
         <a href="https://github.com/Arzhanik-Anastasia" target="_blank">Arzhanik Anastasia</a>
+      </p>
+      <p class="rsschool">
+        <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
       </p>
     </div>
 `;

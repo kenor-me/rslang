@@ -1,13 +1,13 @@
 import './index.css';
 
 const renderCloseImg = () => `
-    <svg class="popup__close" 
+    <svg class="popup__close"
       xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-        <path 
-          fill-rule="evenodd" 
-          clip-rule="evenodd" 
-          d="M15 13.5858L21.3639 7.22183L22.7782 8.63604L16.4142 15L22.7782 21.364L21.3639 22.7782L15 
-          16.4142L8.63602 22.7782L7.22181 21.364L13.5858 15L7.22181 8.63604L8.63602 7.22183L15 13.5858Z" 
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15 13.5858L21.3639 7.22183L22.7782 8.63604L16.4142 15L22.7782 21.364L21.3639 22.7782L15
+          16.4142L8.63602 22.7782L7.22181 21.364L13.5858 15L7.22181 8.63604L8.63602 7.22183L15 13.5858Z"
           fill="#81869C">
         </path>
     </svg>
@@ -18,10 +18,10 @@ export const renderRegistrationForm = (): string => `
       <div class="form__input-block">
         <div class="input-block__wrapper">
           <label for="user_name">Имя пользователя</label>
-          <input 
-            type="text" 
-            name="name" 
-            id="new_user_name" 
+          <input
+            type="text"
+            name="name"
+            id="new_user_name"
             minlength="6"
             autocomplete="off"
             required
@@ -29,25 +29,25 @@ export const renderRegistrationForm = (): string => `
         </div>
         <div class="input-block__wrapper">
           <label for="user_email">Email</label>
-          <input 
-            type="email" 
-            name="email" 
-            id="new_user_email" 
+          <input
+            type="email"
+            name="email"
+            id="new_user_email"
             autocomplete="off"
             required
           >
         </div>
         <div class="input-block__wrapper">
           <label for="user_password">Пароль</label>
-          <input 
-            type="password" 
-            name="password" 
-            id="new_user_password" 
+          <input
+            type="password"
+            name="password"
+            id="new_user_password"
             minlength="6"
             autocomplete="off"
             required
           >
-          <span id="registration-error" class="error-text">Пользователь с таким Email уже существует, 
+          <span id="registration-error" class="error-text">Пользователь с таким Email уже существует,
           авторизуйтесь</span>
         </div>
       </div>
@@ -60,20 +60,20 @@ export const renderSignInForm = (): string => `
     <div class="form__input-block">
       <div class="input-block__wrapper">
         <label for="user_email">Email</label>
-        <input 
-          type="email" 
-          name="email" 
-          id="user_email" 
+        <input
+          type="email"
+          name="email"
+          id="user_email"
           autocomplete="off"
           required
         >
       </div>
       <div class="input-block__wrapper">
         <label for="user_password">Пароль</label>
-        <input 
-          type="password" 
-          name="password" 
-          id="user_password" 
+        <input
+          type="password"
+          name="password"
+          id="user_password"
           minlength="6"
           autocomplete="off"
           required

@@ -1,0 +1,231 @@
+.book-page {
+  position: relative;
+}
+.container__book-page {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.book-word-image {
+  height: 200px;
+  margin: 10px;
+  border-radius: 10px;
+}
+.book-word-item {
+  width: 400px;
+  height: 550px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  background-color: #2a3950;
+  color: azure;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.word-img {
+  width: 380px;
+  height: 200px;
+}
+.card-content {
+  text-align: center;
+  height: 180px;
+}
+.card__word {
+  font-size: 30px;
+}
+.card__btn-audio {
+  background-image: url("./../../../assets/vocabulary/audio.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+.card__example,
+.card__meaning {
+  font-size: 12px;
+}
+.card__btn-adddifficult,
+.card__btn-deldifficult {
+  width: 220px;
+  background: #00e0c7;
+  border-radius: 5px;
+  color: #2a3950;
+  font-size: 20px;
+  padding: 10px 0;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.card__btn-deldifficult {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.card__card__meaning-translate,
+.card__example,
+.card__example-translate {
+  margin-top: 5px;
+}
+.navigation {
+  background-color: #2a39507a;
+  height: 120px;
+  padding: 0 18px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.nav-left {
+  margin: auto 0;
+}
+.book-page-nav-logo {
+  background-image: url("./../../../assets/vocabulary/home.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+.book-page-pagination {
+  display: flex;
+}
+.book-page-number-page {
+  margin: auto;
+  font-size: 20px;
+  font-style: oblique;
+  font-family: cursive;
+  width: 160px;
+  text-align: center;
+  color: azure;
+}
+.select-partition {
+  width: 80px;
+  height: 70px;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 30px;
+  margin-right: 15px;
+  border-radius: 50px;
+}
+.select-partition option {
+  font-size: 22px;
+  line-height: 50px;
+  padding: 10px;
+}
+.book-page-nav-savannah,
+.book-page-nav-audio {
+  display: block;
+  background: url("./../../../assets/vocabulary/vector.png") no-repeat;
+  background-size: cover;
+  width: 63px;
+  height: 77px;
+  position: relative;
+  margin-top: 10px;
+}
+.book-page-nav-savannah div,
+.book-page-nav-audio div {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  top: 8px;
+  left: 6px;
+}
+.book-page-nav-savannah div {
+  background: url("./../../../assets/vocabulary/icon-2.png") no-repeat;
+  background-size: cover;
+}
+.book-page-nav-audio div {
+  background: url("./../../../assets/vocabulary/icon-4.jpg") no-repeat;
+  background-size: cover;
+}
+.book-page-nav-audio span,
+.book-page-nav-savannah span {
+  position: absolute;
+  bottom: 0;
+  font-size: 20px;
+  font-style: oblique;
+  font-family: cursive;
+  top: 73px;
+  color: azure;
+}
+.book-page-nav-audio span {
+  right: -27px;
+}
+.pagination-prev,
+.pagination-next {
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  margin: auto;
+}
+.pagination-prev {
+  background-image: url("./../../../assets/vocabulary/prev.png");
+  background-repeat: no-repeat;
+}
+.pagination-next {
+  background-image: url("./../../../assets/vocabulary/next.png");
+  background-repeat: no-repeat;
+}
+@media screen and (max-width: 768px) {
+  .book-page-nav-logo {
+    width: 60px;
+    height: 60px;
+  }
+  .book-page-nav-savannah,
+  .book-page-nav-audio {
+    width: 50px;
+    height: 60px;
+    margin-top: 30px;
+  }
+  .book-page-nav-savannah div,
+  .book-page-nav-audio div {
+    width: 40px;
+    height: 40px;
+    top: 5px;
+    left: 5px;
+  }
+  .book-page-nav-audio span,
+  .book-page-nav-savannah span {
+    font-size: 16px;
+  }
+  .book-page-nav-audio span {
+    right: -14px;
+  }
+  .book-page-number-page {
+    font-size: 18px;
+    width: 140px;
+  }
+  .select-partition {
+    height: 50px;
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .book-page-number-page {
+    font-size: 14px;
+  }
+  .book-word-item {
+    width: 350px;
+  }
+  .word-img {
+    width: 320px;
+  }
+  .nav-right {
+    margin-left: 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .book-word-item {
+    width: 300px;
+  }
+  .word-img {
+    width: 250px;
+    height: 200px;
+  }
+  .book-word-item {
+    width: 300px;
+  }
+}
