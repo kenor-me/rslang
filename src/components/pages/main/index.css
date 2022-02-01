@@ -3,6 +3,7 @@ header {
   height: 60px;
   display: flex;
   justify-content: space-around;
+  background-color: darkslategrey;
 }
 
 header a {
@@ -23,7 +24,9 @@ header a {
 }
 
 footer {
+  padding-bottom: 5px;
   height: 60px;
+  background-color: darkslategrey;
 }
 
 .personal-information {
@@ -81,12 +84,14 @@ h1 {
 .mp-detail,
 .login {
   display: block;
+  width: 100px;
   margin: 0 auto;
   padding: 10px 40px;
   color: #fff;
   font-family: Roboto;
   font-size: 1rem;
   text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(7, 104, 99, 0.4);
@@ -95,6 +100,7 @@ h1 {
 }
 
 .login {
+  width: 50px;
   margin: 0.5rem;
   padding: 10px 20px;
   background-color: rgba(16, 230, 219, 0.4);
@@ -110,6 +116,16 @@ h1 {
 
 .burger-menu {
   display: none;
+}
+
+.wrapper-main-page {
+  min-width: 100vw;
+  min-height: calc(100vh - 125px);
+  background-image: url('./../../../assets/img/bg.png');
+  background-size: cover;
+  background-position-y: -50px;
+  background-attachment: fixed;
+  color: white;
 }
 
 @media (max-width: 768px) {

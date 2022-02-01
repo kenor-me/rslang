@@ -2,31 +2,33 @@ import './style.css';
 import { addUser, signIn } from './components/api';
 import { renderRegistrationPage } from './components/pages/registration';
 import {
-  locationResolver, createHeader, createFooter, addDescription,
+  locationResolver, createHeader, createFooter, addDescription, createBurgerMenu,
 } from './components/pages/main';
 
 createHeader();
 createFooter();
 addDescription();
-// createBurgerMenu();
+createBurgerMenu();
 renderRegistrationPage();
 const popup = document.getElementById('popup') as HTMLElement;
 
-document.querySelector("[data-href='#/']")?.addEventListener('click', () => locationResolver('#/'));
-document.querySelector("[data-href='#/textbook']")?.addEventListener('click', () => locationResolver('#/textbook'));
-document.querySelector(".menu-item[data-href='#/textbook']")?.addEventListener('click', () => {
-  locationResolver('#/textbook');
+document.querySelector('header')?.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (target.classList.contains('mp-home')) locationResolver('#/');
+  if (target.classList.contains('mp-textbook')) locationResolver('#/textbook');
+  if (target.classList.contains('mp-games')) locationResolver('#/games');
+  if (target.classList.contains('mp-login')) {
+    locationResolver('#/login');
+    popup.classList.add('open');
+  }
+  if (target.classList.contains('mp-statistics')) locationResolver('#/statistics');
 });
-document.querySelector("[data-href='#/games']")?.addEventListener('click', () => locationResolver('#/games'));
-document.querySelector(".menu-item[data-href='#/games']")?.addEventListener('click', () => locationResolver('#/games'));
-document.querySelector("[data-href='#/login']")?.addEventListener('click', () => {
-  locationResolver('#/login');
 
-  popup.classList.add('open');
-});
-document.querySelector("[data-href='#/statistics']")?.addEventListener('click', () => locationResolver('#/statistics'));
-document.querySelector(".menu-item[data-href='#/statistics']")?.addEventListener('click', () => {
-  locationResolver('#/statistics');
+document.querySelector('.menubox')?.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  if (target.dataset.href === '#/textbook') locationResolver('#/textbook');
+  if (target.dataset.href === '#/games') locationResolver('#/games');
+  if (target.dataset.href === '#/statistics') locationResolver('#/statistics');
 });
 
 // !createNewUser listener
