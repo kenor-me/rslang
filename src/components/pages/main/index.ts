@@ -1,3 +1,5 @@
+import { createPageAboutUs } from '../about-us';
+
 const root = document.getElementById('root') as HTMLElement;
 
 export function addDescription(): string {
@@ -8,11 +10,12 @@ export function addDescription(): string {
         <p class="mp-text">Изучай английский язык вместе с нашим приложением!
         Учебник с более 3000 слов поможет расширить Ваш словарный запас,
         а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
-        <button class="mp-detail">Подробнее</button>
+        <a class="mp-detail" href="#/about" data-href="#/about">Подробнее</a>
       </div>
     </div>
   `;
   root.innerHTML = `${description}`;
+  document.querySelector('.mp-detail')?.addEventListener('click', createPageAboutUs);
   return description;
 }
 
@@ -50,14 +53,14 @@ export function createHeader(): void {
   const header = document.createElement('header');
 
   header.innerHTML = `
-    <a class="logo" href="#/" data-href="#/">
-    <img class="logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
+    <a class="mp-home logo" href="#/"">
+    <img class="mp-home logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
     <div class="links">
-      <a href="#/textbook" data-href="#/textbook">Учебник</a>
-      <a href="#/games" data-href="#/games">Мини-игры</a>
-      <a href="#/statistics" data-href="#/statistics">Статистика</a>
+      <a class="mp-textbook" href="#/textbook">Учебник</a>
+      <a class="mp-games" href="#/games">Мини-игры</a>
+      <a class="mp-statistics" href="#/statistics">Статистика</a>
     </div>
-    <a class="login" href="#/login" data-href="#/login">Войти</a>
+    <a class="mp-login login" href="#/login">Войти</a>
     <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
@@ -68,7 +71,7 @@ export function createFooter(): void {
 
   footer.innerHTML = `
     <div id="personal-information" class="personal-information">
-      <p class="copyright">&#169;2021</p>
+      <p class="copyright">&#169;2022</p>
       <p class="rsschool">
         <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
       </p>

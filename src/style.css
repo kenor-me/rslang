@@ -14,13 +14,3 @@ body {
   padding: 0;
 }
 
-.wrapper-main-page {
-  min-width: 100vw;
-  min-height: calc(100vh - 125px);
-  background-image: url('assets/img/bg.png');
-  background-size: cover;
-  background-position-y: -50px;
-  background-attachment: fixed;
-  color: white;
-}
-
