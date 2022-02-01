@@ -1,6 +1,5 @@
 import './index.css';
 import { createPageAboutUs } from '../about-us';
-import { mountedVocabulary } from '../vocabulary';
 
 export const root = document.getElementById('root') as HTMLElement;
 
@@ -27,13 +26,11 @@ export const locationResolver = (location: string): void => {
       addDescription();
       break;
     case '#/textbook':
-      mountedVocabulary();
       break;
     case '#/games':
       root.innerHTML = 'Мини-игры';
       break;
     case '#/login':
-      // root.innerHTML = 'Вход';
       break;
     case '#/statistics':
       root.innerHTML = 'Статистика';

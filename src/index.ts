@@ -13,10 +13,15 @@ createBurgerMenu();
 renderRegistrationPage();
 const popup = document.getElementById('popup') as HTMLElement;
 
-document.querySelector('header')?.addEventListener('click', (e) => {
+document.querySelector('header')?.addEventListener('click', (e: Event): void => {
   const target = e.target as HTMLElement;
-  if (target.classList.contains('mp-home')) locationResolver('#/');
-  if (target.classList.contains('mp-textbook')) locationResolver('#/textbook');
+  if (target.classList.contains('mp-home')) {
+    locationResolver('#/');
+  }
+  if (target.classList.contains('mp-textbook') || target.dataset.href === '#/textbook') {
+    locationResolver('#/textbook');
+    mountedVocabulary();
+  }
   if (target.classList.contains('mp-games')) locationResolver('#/games');
   if (target.classList.contains('mp-login')) {
     locationResolver('#/login');
@@ -27,7 +32,10 @@ document.querySelector('header')?.addEventListener('click', (e) => {
 
 document.querySelector('.menubox')?.addEventListener('click', (e) => {
   const target = e.target as HTMLElement;
-  if (target.dataset.href === '#/textbook') locationResolver('#/textbook');
+  if (target.dataset.href === '#/textbook') {
+    locationResolver('#/textbook');
+    mountedVocabulary();
+  }
   if (target.dataset.href === '#/games') locationResolver('#/games');
   if (target.dataset.href === '#/statistics') locationResolver('#/statistics');
 });
