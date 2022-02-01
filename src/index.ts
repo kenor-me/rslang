@@ -2,14 +2,13 @@ import './style.css';
 import { addUser, signIn } from './components/api';
 import { renderRegistrationPage } from './components/pages/registration';
 import {
-  locationResolver, createHeader, createFooter, addDescription, createBurgerMenu,
+  locationResolver, createHeader, createFooter, addDescription,
 } from './components/pages/main';
 import { mountedVocabulary } from './components/pages/vocabulary';
 
 createHeader();
 createFooter();
 addDescription();
-createBurgerMenu();
 renderRegistrationPage();
 const popup = document.getElementById('popup') as HTMLElement;
 

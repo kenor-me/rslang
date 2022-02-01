@@ -48,46 +48,6 @@ window.addEventListener('load', () => {
   }
 });
 
-export function createHeader(): void {
-  const header = document.createElement('header');
-
-  header.innerHTML = `
-    <a class="mp-home logo" href="#/"">
-    <img class="mp-home logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
-    <div class="links">
-      <a class="mp-textbook" href="#/textbook">Учебник</a>
-      <a class="mp-games" href="#/games">Мини-игры</a>
-      <a class="mp-statistics" href="#/statistics">Статистика</a>
-    </div>
-    <a class="mp-login login" href="#/login">Войти</a>
-    <div class="burger-menu"></div>
-`;
-  document.body.insertBefore(header, root);
-}
-
-export function createFooter(): void {
-  const footer = document.createElement('footer');
-
-  footer.innerHTML = `
-    <div id="personal-information" class="personal-information">
-      <p class="copyright">&#169;2021</p>
-      <p class="github">
-        <a href="https://github.com/kenor-me" target="_blank">Kanareikina Katherine</a>
-      </p>
-      <p class="github">
-        <a href="https://github.com/ShustovaElena" target="_blank">Shustova Elena</a>
-      </p>
-      <p class="github">
-        <a href="https://github.com/Arzhanik-Anastasia" target="_blank">Arzhanik Anastasia</a>
-      </p>
-      <p class="rsschool">
-        <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
-      </p>
-    </div>
-`;
-  document.body.appendChild(footer);
-}
-
 export function createBurgerMenu(): void {
   const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
   burgerMenu.innerHTML = `
@@ -116,4 +76,45 @@ export function createBurgerMenu(): void {
     menubox.style.display = 'block';
     e.stopPropagation();
   });
+}
+
+export function createHeader(): void {
+  const header = document.createElement('header');
+
+  header.innerHTML = `
+    <a class="mp-home logo" href="#/"">
+    <img class="mp-home logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
+    <div class="links">
+      <a class="mp-textbook" href="#/textbook">Учебник</a>
+      <a class="mp-games" href="#/games">Мини-игры</a>
+      <a class="mp-statistics" href="#/statistics">Статистика</a>
+    </div>
+    <a class="mp-login login" href="#/login">Войти</a>
+    <div class="burger-menu"></div>
+`;
+  document.body.insertBefore(header, root);
+  createBurgerMenu();
+}
+
+export function createFooter(): void {
+  const footer = document.createElement('footer');
+
+  footer.innerHTML = `
+    <div id="personal-information" class="personal-information">
+      <p class="copyright">&#169;2021</p>
+      <p class="github">
+        <a href="https://github.com/kenor-me" target="_blank">Kanareikina Katherine</a>
+      </p>
+      <p class="github">
+        <a href="https://github.com/ShustovaElena" target="_blank">Shustova Elena</a>
+      </p>
+      <p class="github">
+        <a href="https://github.com/Arzhanik-Anastasia" target="_blank">Arzhanik Anastasia</a>
+      </p>
+      <p class="rsschool">
+        <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
+      </p>
+    </div>
+`;
+  document.body.appendChild(footer);
 }
