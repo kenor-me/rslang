@@ -6,7 +6,6 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  background-color: #a5e8d6;
 }
 .book-word-image {
   height: 200px;
@@ -71,9 +70,7 @@
   margin-top: 5px;
 }
 .navigation {
-  /* position: fixed; */
-  background-color:#a5e8d6;
-  /* bottom: 0; */
+  background-color: #2a39507a;
   width: 100%;
   height: 120px;
   padding: 0 18px;
@@ -174,14 +171,24 @@
   background-image: url("./../../../assets/vocabulary/next.png");
   background-repeat: no-repeat;
 }
-/* .footer-book-page {
-  height: 185px;
-} */
 @media screen and (max-width: 768px) {
-  /*   .book-page-nav-logo {
+  .book-page-nav-logo {
     width: 60px;
     height: 60px;
-  } */
+  }
+  .book-page-nav-savannah,
+  .book-page-nav-audio {
+    width: 50px;
+    height: 60px;
+    margin-top: 30px;
+  }
+  .book-page-nav-savannah div,
+  .book-page-nav-audio div {
+    width: 40px;
+    height: 40px;
+    top: 5px;
+    left: 5px;
+  }
   .book-page-nav-audio span,
   .book-page-nav-savannah span {
     font-size: 16px;
@@ -199,12 +206,6 @@
   }
 }
 @media screen and (max-width: 600px) {
-  .navigation {
-    width: 100px;
-  }
-  .container__book-page {
-    padding-left: 100px;
-  }
   .book-page-number-page {
     font-size: 14px;
   }

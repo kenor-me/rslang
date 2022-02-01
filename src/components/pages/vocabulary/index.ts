@@ -111,7 +111,7 @@ const renderPage = (words: Word[]): void => {
 
 const changePart = async (): Promise<void> => {
   const selectPartition = document.querySelector('.select-partition') as HTMLSelectElement;
-  const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
+  const bookContainer = document.querySelector('.book-page') as HTMLElement;
   partBook = +selectPartition.value;
   selectPartition.style.backgroundColor = COLOR_FOR_PART[partBook];
   wordsOfPage = await getWordPage(partBook, pageBook);
@@ -175,6 +175,8 @@ export const mountedVocabulary = async (): Promise<void> => {
   const selectPartition = document.querySelector('.select-partition') as HTMLElement;
   const colorPage = COLOR_FOR_PART[0];
   selectPartition.style.backgroundColor = colorPage;
+  const bookContainer = document.querySelector('.book-page') as HTMLElement;
+  bookContainer.style.backgroundColor = colorPage;
   setNumberPage();
   const logoHome = document.querySelector('.book-page-nav-logo') as HTMLElement;
   logoHome.addEventListener('click', () => locationResolver('#/'));

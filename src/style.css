@@ -1,3 +1,4 @@
+@import url(./assets/normalize.css);
 @font-face {
   font-family: Forum;
   src: url("assets/fonts/Forum/Forum-Regular.ttf");
@@ -22,7 +23,6 @@ body {
 
 main {
   min-height: calc(100vh - 120px);
-  background-image: url('assets/img/bg.png');
+  background-image: url("assets/img/bg.png");
   background-size: cover;
 }
-
