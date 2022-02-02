@@ -178,37 +178,36 @@ h1 {
     display: block;
     position: absolute;
     z-index: 10;
-    visibility: hidden;
+    /* visibility: hidden; */
     top: 60px;
-    right: 100%;
+    left: -1000px;
     width: 100vw;
     margin: 0;
     padding: 45px 0;
     list-style: none;
     background-color: rgb(18, 109, 104);
     box-shadow: 1px 0px 6px rgba(0, 0, 0, 0.2);
-    transform: translateX(-100vw);
   }
 
   @keyframes burgerIn {
     0% {
       opacity: 0;
-      transform: translateX(-100vw);
+      left: -1000px;
     }
     100% {
       opacity: 1;
-      transform: translateX(0);
+      left: 0;
     }
   }
 
   @keyframes burgerOut {
     0% {
       opacity: 1;
-      transform: translateX(0);
+      left: 0;
     }
     100% {
       opacity: 0;
-      transform: translateX(-100vw);
+      left: -1000px;
     }
   }
 
@@ -250,7 +249,7 @@ h1 {
     transform: rotate(90deg);
   }
   #menu-toggle:checked ~ .menubox {
-    visibility: visible;
+    /* visibility: visible; */
     left: 0;
   }
 

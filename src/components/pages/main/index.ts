@@ -48,6 +48,8 @@ window.addEventListener('load', () => {
   }
 });
 
+let isOpen = false;
+
 export function createBurgerMenu(): void {
   const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
   burgerMenu.innerHTML = `
@@ -73,9 +75,16 @@ export function createBurgerMenu(): void {
     // e.preventDefault();
   });
 
-  burgerMenu.addEventListener('click', (e) => {
-    // menubox.style.display = 'block';
-    menubox.style.animation = 'burgerIn 0.5s forwards';
+  burgerMenu.addEventListener('click', (e: Event) => {
+    if (!isOpen) {
+      isOpen = true;
+      menubox.style.animation = 'burgerIn 0.5s forwards';
+    } else {
+      isOpen = false;
+      // menubox.style.display = 'block';
+      menubox.style.animation = 'burgerOut 0.5s forwards';
+    }
+    e.preventDefault();
     e.stopPropagation();
   });
 }
