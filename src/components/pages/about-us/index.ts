@@ -1,6 +1,19 @@
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
+const IMG_URL = ['./../../../assets/pictures/learn-4.jpg',
+  './../../../assets/pictures/learn-5.jpg',
+  './../../../assets/pictures/book.jpg',
+  './../../../assets/pictures/statistics.jpg'];
+
+function preloadImg(images: string[]) {
+  for (let i = 0; i < images.length; i++) {
+    const img = new Image();
+    img.src = images[i];
+  }
+}
+
+preloadImg(IMG_URL);
 
 function createTeamAboutUs(): string {
   return `
@@ -35,7 +48,7 @@ function createTeamAboutUs(): string {
       </div>
 
       <div class="avatar-item">
-        <img class="avatar-img" src="" alt="avatar">
+        <img class="avatar-img" src="./../../../assets/pictures/avatarNasty.jpg" alt="avatar">
         <div class="avatar-text">
           <h2 class="avatar-name">Arzhanik Anastasia</h2>
           <p class="avatar-name-position">Разработчик</p>

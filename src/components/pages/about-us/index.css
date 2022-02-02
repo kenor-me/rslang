@@ -114,3 +114,21 @@
 .avatar-github:hover {
   color: #2959a0;
 }
+
+@media (max-width: 1024px) {
+  .advantages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .about-advantages {
+    width: 40%;
+    height: 400px;
+  }
+
+  .avatar-item {
+    width: 80%;
+  }
+}
