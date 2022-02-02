@@ -1,5 +1,5 @@
 import './index.css';
-import { createPageAboutUs } from '../about-us';
+import { createAdvantagesAboutUs } from '../about-us';
 
 export const root = document.getElementById('root') as HTMLElement;
 
@@ -16,7 +16,7 @@ export function addDescription(): string {
     </div>
   `;
   root.innerHTML = `${description}`;
-  document.querySelector('.mp-detail')?.addEventListener('click', createPageAboutUs);
+  document.querySelector('.mp-detail')?.addEventListener('click', createAdvantagesAboutUs);
   return description;
 }
 
@@ -67,13 +67,15 @@ export function createBurgerMenu(): void {
   const menubox = document.querySelector('.menubox') as HTMLElement;
 
   document.body.addEventListener('click', () => {
-    menubox.style.display = 'none';
+    menubox.style.animation = 'burgerOut 0.5s forwards';
+    // menubox.style.display = 'none';
     (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
     // e.preventDefault();
   });
 
   burgerMenu.addEventListener('click', (e) => {
-    menubox.style.display = 'block';
+    // menubox.style.display = 'block';
+    menubox.style.animation = 'burgerIn 0.5s forwards';
     e.stopPropagation();
   });
 }
