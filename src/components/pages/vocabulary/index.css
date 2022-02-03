@@ -1,5 +1,5 @@
 .book-page {
-  position: relative;
+  /* position: relative; */
   animation: bookPage 0.7s ease-in;
 }
 

@@ -32,6 +32,7 @@ export function renderDescription(): string {
 }
 
 let isOpen = false;
+const body = document.querySelector('body') as HTMLElement;
 
 function createBurgerMenu(): void {
   const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
@@ -53,6 +54,7 @@ function createBurgerMenu(): void {
     if (!target.closest('.menubox') || target.closest('.menu-item')) {
       menubox.style.animation = 'burgerOut 0.5s forwards';
       (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+      body.style.overflowY = 'auto';
       isOpen = false;
     }
   });
@@ -90,9 +92,11 @@ export function createHeader(): void {
   toggleMenu.addEventListener('click', () => {
     if (!isOpen) {
       isOpen = true;
+      body.style.overflowY = 'hidden';
       menubox.style.animation = 'burgerIn 0.5s forwards';
     } else {
       isOpen = false;
+      body.style.overflowY = 'auto';
       menubox.style.animation = 'burgerOut 0.5s forwards';
     }
   });
