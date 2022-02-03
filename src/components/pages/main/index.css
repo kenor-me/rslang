@@ -69,6 +69,7 @@ footer {
 }
 
 h1 {
+  margin: 10px;
   font-family: Forum;
   font-size: 3rem;
   font-weight: 800;
@@ -82,6 +83,7 @@ h1 {
 }
 
 .mp-text {
+  margin: 20px;
   font-family: Roboto;
   font-size: 1.3rem;
   font-weight: 500;
@@ -130,7 +132,6 @@ h1 {
   min-height: calc(100vh - 125px);
   background-image: url("./../../../assets/img/bg.png");
   background-size: cover;
-  background-position-y: -50px;
   background-attachment: fixed;
   color: white;
 }
@@ -177,17 +178,37 @@ h1 {
     display: block;
     position: absolute;
     z-index: 10;
-    visibility: hidden;
+    /* visibility: hidden; */
     top: 60px;
-    right: 100%;
-    width: 300px;
-    height: calc(100% - 210px);
+    left: -1000px;
+    width: 100vw;
     margin: 0;
     padding: 45px 0;
     list-style: none;
     background-color: rgb(18, 109, 104);
     box-shadow: 1px 0px 6px rgba(0, 0, 0, 0.2);
-    transition-duration: 0.25s;
+  }
+
+  @keyframes burgerIn {
+    0% {
+      opacity: 0;
+      left: -1000px;
+    }
+    100% {
+      opacity: 1;
+      left: 0;
+    }
+  }
+
+  @keyframes burgerOut {
+    0% {
+      opacity: 1;
+      left: 0;
+    }
+    100% {
+      opacity: 0;
+      left: -1000px;
+    }
   }
 
   .menu-item {
@@ -228,7 +249,7 @@ h1 {
     transform: rotate(90deg);
   }
   #menu-toggle:checked ~ .menubox {
-    visibility: visible;
+    /* visibility: visible; */
     left: 0;
   }
 

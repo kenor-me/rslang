@@ -61,6 +61,10 @@ module.exports = ({ development }) => ({
         noErrorOnMissing: true,
       }],
     }),
+    new CopyPlugin({
+      patterns: [{from:'./src/assets/pictures',
+      to:'assets/pictures'} ]
+  }),
     new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
   ],
   resolve: {
