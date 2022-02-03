@@ -1,45 +1,22 @@
 import './style.css';
 import { addUser, signIn } from './components/api';
 import { renderRegistrationPage } from './components/pages/registration';
-import {
-  locationResolver, createHeader, createFooter, addDescription,
-} from './components/pages/main';
-import { mountedVocabulary } from './components/pages/vocabulary';
-import { createAdvantagesAboutUs } from './components/pages/about-us';
+import { createHeader, createFooter } from './components/pages/main';
+import { locationResolver } from './components/routing';
 
 createHeader();
 createFooter();
-addDescription();
 renderRegistrationPage();
-const popup = document.getElementById('popup') as HTMLElement;
 
-document.querySelector('header')?.addEventListener('click', (e: Event): void => {
-  const target = e.target as HTMLElement;
-  if (target.classList.contains('mp-home')) {
-    locationResolver('#/');
-  }
-  if (target.classList.contains('mp-textbook') || target.dataset.href === '#/textbook') {
-    locationResolver('#/textbook');
-    mountedVocabulary();
-  }
-  if (target.classList.contains('mp-games')) locationResolver('#/games');
-  if (target.classList.contains('mp-login')) {
-    popup.classList.add('open');
-  }
-  if (target.classList.contains('mp-statistics')) locationResolver('#/statistics');
+window.addEventListener('hashchange', () => {
+  locationResolver(window.location.hash);
 });
 
-document.querySelector('.menubox')?.addEventListener('click', (e) => {
+const popup = document.getElementById('popup') as HTMLElement;
+document.querySelector('header')?.addEventListener('click', (e: Event): void => {
   const target = e.target as HTMLElement;
-  if (target.dataset.href === '#/textbook') {
-    locationResolver('#/textbook');
-    mountedVocabulary();
-  }
-  if (target.dataset.href === '#/games') locationResolver('#/games');
-  if (target.dataset.href === '#/statistics') locationResolver('#/statistics');
-  if (target.dataset.href === '#/about') {
-    locationResolver('#/about');
-    createAdvantagesAboutUs();
+  if (target.classList.contains('mp-login')) {
+    popup.classList.add('open');
   }
 });
 
