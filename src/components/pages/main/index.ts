@@ -47,12 +47,14 @@ export const locationResolver = (location: string): void => {
     case '#/statistics':
       root.innerHTML = 'Статистика';
       break;
+    case '#/about':
+      break;
     default:
       break;
   }
 };
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const location = window.location.hash;
 
   if (location) {
@@ -74,6 +76,7 @@ export function createBurgerMenu(): void {
       <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
       <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
       <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
+      <li><a class="menu-item" href="#/about" data-href="#/about">О команде</a></li>
     </ul>
   `;
   document.querySelector('header')?.appendChild(burgerMenu);
@@ -84,6 +87,7 @@ export function createBurgerMenu(): void {
     menubox.style.animation = 'burgerOut 0.5s forwards';
     // menubox.style.display = 'none';
     (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+    isOpen = false;
     // e.preventDefault();
   });
 

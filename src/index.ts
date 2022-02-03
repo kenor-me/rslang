@@ -5,6 +5,7 @@ import {
   locationResolver, createHeader, createFooter, addDescription,
 } from './components/pages/main';
 import { mountedVocabulary } from './components/pages/vocabulary';
+import { createAdvantagesAboutUs } from './components/pages/about-us';
 
 createHeader();
 createFooter();
@@ -23,7 +24,6 @@ document.querySelector('header')?.addEventListener('click', (e: Event): void => 
   }
   if (target.classList.contains('mp-games')) locationResolver('#/games');
   if (target.classList.contains('mp-login')) {
-    locationResolver('#/login');
     popup.classList.add('open');
   }
   if (target.classList.contains('mp-statistics')) locationResolver('#/statistics');
@@ -37,6 +37,10 @@ document.querySelector('.menubox')?.addEventListener('click', (e) => {
   }
   if (target.dataset.href === '#/games') locationResolver('#/games');
   if (target.dataset.href === '#/statistics') locationResolver('#/statistics');
+  if (target.dataset.href === '#/about') {
+    locationResolver('#/about');
+    createAdvantagesAboutUs();
+  }
 });
 
 // !createNewUser listener

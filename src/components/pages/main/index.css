@@ -134,6 +134,7 @@ h1 {
 .login-block__wrapper {
   display: flex;
   align-items: center;
+  display: none;
 }
 
 .login-block__img {
@@ -273,13 +274,14 @@ h1 {
   }
 
   .menu-item {
+    box-sizing: border-box;
     display: block;
     padding: 25px 24px 24px 50px;
     left: 95px;
     top: 310px;
     font-family: Roboto;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 20px;
     line-height: 23px;
     letter-spacing: 2px;
@@ -287,11 +289,12 @@ h1 {
     background: url(./../../../assets/svg/arrow-burger.svg) no-repeat;
     background-position: 19px 28px;
     text-decoration: none;
-    transition-duration: 0.25s;
+    transition: 0.6s;
   }
 
   .menu-item:hover {
-    background-color: #cfd8dc;
+    color: var(--font-color-dark);
+    background-color: var(--bg-btn-hover);
   }
 
   #menu-toggle {
@@ -318,7 +321,16 @@ h1 {
   }
 
   .mp-description {
-    width: 45%;
+    max-width: 65%;
+  }
+
+  h1 {
+    font-size: 2.3rem;
+  }
+
+  .mp-text {
+    font-size: 1.1rem;
+    padding: 15px 0 25px;
   }
 
   .personal-information a {
@@ -340,20 +352,8 @@ h1 {
   }
 
   .wrapper-main-page {
+    min-width: 100%;
     min-height: calc(100vh - 70px - 188px);
-  }
-
-  .mp-description {
-    max-width: 80%;
-  }
-
-  h1 {
-    font-size: 2.3rem;
-  }
-
-  .mp-text {
-    font-size: 1.1rem;
-    padding: 15px 0 25px;
   }
   
   .personal-information {
@@ -377,7 +377,6 @@ h1 {
   }
 
   .wrapper-main-page {
-    min-width: 100%;
     min-height: calc(100vh - 134px - 189px);
   }
 
@@ -393,8 +392,12 @@ h1 {
     align-content: center;
   }
 
+  #menu-toggle {
+    margin-top: 10px;
+  }
+
   .menu-btn {
-    top: 85px;
+    top: 130px;
   }
 }
 
