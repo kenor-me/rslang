@@ -3,11 +3,23 @@ import { createAdvantagesAboutUs } from '../about-us';
 
 export const root = document.getElementById('root') as HTMLElement;
 
+const renderUserImg = (): string => `
+  <svg class="login-block__img" focusable="false" 
+  viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 
+    10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 
+    14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+    </path>
+  </svg>
+`;
+
 export function addDescription(): string {
   const description = `
     <div class="wrapper-main-page">
       <div class="mp-description">
-        <h1>Enjoy your way to learn English with <span class="mp-title">Eng-land</span></h1>
+        <h1>Enjoy your way to learn English with <span class="mp-title">
+        <br>ENG-<span>L</span><span>and</span></br>
+        </span></h1>
         <p class="mp-text">Изучай английский язык вместе с нашим приложением!
         Учебник с более 3000 слов поможет расширить Ваш словарный запас,
         а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
@@ -35,12 +47,14 @@ export const locationResolver = (location: string): void => {
     case '#/statistics':
       root.innerHTML = 'Статистика';
       break;
+    case '#/about':
+      break;
     default:
       break;
   }
 };
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const location = window.location.hash;
 
   if (location) {
@@ -62,6 +76,7 @@ export function createBurgerMenu(): void {
       <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
       <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
       <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
+      <li><a class="menu-item" href="#/about" data-href="#/about">О команде</a></li>
     </ul>
   `;
   document.querySelector('header')?.appendChild(burgerMenu);
@@ -72,6 +87,7 @@ export function createBurgerMenu(): void {
     menubox.style.animation = 'burgerOut 0.5s forwards';
     // menubox.style.display = 'none';
     (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+    isOpen = false;
     // e.preventDefault();
   });
 
@@ -93,14 +109,19 @@ export function createHeader(): void {
   const header = document.createElement('header');
 
   header.innerHTML = `
-    <a class="mp-home logo" href="#/"">
-    <img class="mp-home logo-img" src="https://img.icons8.com/nolan/64/language.png" alt=""></a>
+    <a class="mp-home mp-home__logo" href="#/">ENG-<span>L</span>and</a>
     <div class="links">
       <a class="mp-textbook" href="#/textbook">Учебник</a>
       <a class="mp-games" href="#/games">Мини-игры</a>
       <a class="mp-statistics" href="#/statistics">Статистика</a>
     </div>
-    <a class="mp-login login" href="#/login">Войти</a>
+    <div class="login-block">
+      <div class="login-block__wrapper">
+        ${renderUserImg()}
+        <p class="login-block__name">User name</p>
+      </div>
+      <button class="mp-login login">Войти</button>
+    </div>
     <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
@@ -123,7 +144,7 @@ export function createFooter(): void {
         <a href="https://github.com/Arzhanik-Anastasia" target="_blank">Arzhanik Anastasia</a>
       </p>
       <p class="rsschool">
-        <a href="https://rs.school/js/" target="_blank"><img src="https://rs.school/images/rs_school_js.svg"></a>
+        <a href="https://rs.school/js/" target="_blank"><img src="./rss.svg"></a>
       </p>
     </div>
 `;

@@ -66,6 +66,7 @@ const playSound = (audio: NodeListOf<HTMLAudioElement>): void => {
 };
 
 const renderPage = (words: Word[]): void => {
+  window.scrollTo(0, 0);
   const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
   bookContainer.innerHTML = '';
   words.forEach((word) => {
