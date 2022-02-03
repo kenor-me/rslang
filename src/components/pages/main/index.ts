@@ -77,9 +77,11 @@ export function createBurgerMenu(): void {
 
   burgerMenu.addEventListener('click', (e: Event) => {
     if (!isOpen) {
+      (document.getElementById('menu-toggle') as HTMLInputElement).checked = true;
       isOpen = true;
       menubox.style.animation = 'burgerIn 0.5s forwards';
     } else {
+      (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
       isOpen = false;
       // menubox.style.display = 'block';
       menubox.style.animation = 'burgerOut 0.5s forwards';
