@@ -242,6 +242,7 @@ h1 {
     height: calc(100vh - 70px);
     background-color: rgba(0, 0, 0, 0.6);
   }
+
   .menubox {
     left: 0;
     z-index: 1;
@@ -403,6 +404,11 @@ h1 {
 
   .menu-btn {
     top: 85px;
+  }
+
+  .menu-wrapper {
+    top: 136px;
+    height: calc(100vh - 136px);
   }
 }
 
