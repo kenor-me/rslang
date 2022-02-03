@@ -207,7 +207,7 @@ h1 {
   .menu-btn {
     position: absolute;
     top: 45%;
-    margin: 0 15px;
+    margin: 0 15px 0 55px;
     display: flex;
     align-items: center;
     width: 32px;
@@ -300,7 +300,7 @@ h1 {
   #menu-toggle {
     width: 32px;
     height: 32px;
-    margin: 0 15px;
+    margin: 0 15px 0 55px;
     opacity: 0;
   }
 
@@ -397,7 +397,7 @@ h1 {
   }
 
   .menu-btn {
-    top: 130px;
+    top: 85px;
   }
 }
 

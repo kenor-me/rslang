@@ -79,7 +79,7 @@ export function createBurgerMenu(): void {
       <li><a class="menu-item" href="#/about" data-href="#/about">О команде</a></li>
     </ul>
   `;
-  document.querySelector('header')?.appendChild(burgerMenu);
+  document.querySelector('burger-menu')?.appendChild(burgerMenu);
 
   const menubox = document.querySelector('.menubox') as HTMLElement;
 
@@ -121,8 +121,8 @@ export function createHeader(): void {
         <p class="login-block__name">User name</p>
       </div>
       <button class="mp-login login">Войти</button>
+      <div class="burger-menu"></div>
     </div>
-    <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
   createBurgerMenu();
