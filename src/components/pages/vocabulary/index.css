@@ -30,10 +30,14 @@
   background-repeat: no-repeat;
   border-radius: 10px;
   background-color: #2a3950;
+  border: 2px solid #2a3950;
   color: azure;
   margin: 20px;
   display: flex;
   flex-direction: column;
+}
+.book-word-item.hard-word {
+  border: 2px solid rgb(255, 251, 0);
 }
 .word-img {
   width: 380px;
@@ -72,6 +76,7 @@
   text-align: center;
   align-items: center;
   margin: 0 auto;
+  cursor: pointer;
 }
 .card__btn-deldifficult {
   margin-top: 10px;

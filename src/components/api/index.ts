@@ -78,7 +78,7 @@ export const signIn = async (user: Sign): Promise<void> => {
 
 // add word to hard
 export const setWordHard = async (userId:string, token:string, word:Word):Promise<void> => {
-  const newWordObject = {
+  const newWord = {
     difficulty: 'hard',
     optional: {},
   };
@@ -88,6 +88,18 @@ export const setWordHard = async (userId:string, token:string, word:Word):Promis
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newWordObject),
+    body: JSON.stringify(newWord),
+  });
+};
+
+// update word
+export const deleteUserWord = async (userId:string, token:string, word:Word):Promise<void> => {
+  const url = `${BASE_URL}/users/${userId}/words/${word.id}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
   });
 };
