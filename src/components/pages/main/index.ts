@@ -69,10 +69,12 @@ export function createBurgerMenu(): void {
   const menubox = document.querySelector('.menubox') as HTMLElement;
 
   document.body.addEventListener('click', () => {
-    menubox.style.animation = 'burgerOut 0.5s forwards';
-    // menubox.style.display = 'none';
-    (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
-    // e.preventDefault();
+    if (isOpen === true) {
+      menubox.style.animation = 'burgerOut 0.5s forwards';
+      // menubox.style.display = 'none';
+      (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+      // e.preventDefault();
+    }
   });
 
   burgerMenu.addEventListener('click', (e: Event) => {
