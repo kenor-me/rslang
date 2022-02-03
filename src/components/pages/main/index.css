@@ -235,11 +235,16 @@ h1 {
     top: 8px;
   }
 
-  .menubox {
-    display: block;
+  .menu-wrapper {
     position: absolute;
+    top: 70px;
+    left: -1000px;
+    height: calc(100vh - 70px);
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .menubox {
     left: 0;
-    z-index: 10;
+    z-index: 1;
     /* visibility: hidden; */
     top: 70px;
     left: -1000px;

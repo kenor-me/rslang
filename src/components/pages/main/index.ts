@@ -13,7 +13,7 @@ const renderUserImg = (): string => `
   </svg>
 `;
 
-export function addDescription(): string {
+export function renderDescription(): string {
   const description = `
     <div class="wrapper-main-page">
       <div class="mp-description">
@@ -23,7 +23,7 @@ export function addDescription(): string {
         <p class="mp-text">Изучай английский язык вместе с нашим приложением!
         Учебник с более 3000 слов поможет расширить Ваш словарный запас,
         а мини-игры Спринт и Аудио-вызов закрепят результат!</p>
-        <a class="mp-detail" href="#/about" data-href="#/about">Подробнее</a>
+        <a class="mp-detail" href="#about" data-href="#/about">Подробнее</a>
       </div>
     </div>
   `;
@@ -32,76 +32,30 @@ export function addDescription(): string {
   return description;
 }
 
-export const locationResolver = (location: string): void => {
-  switch (location) {
-    case '#/':
-      addDescription();
-      break;
-    case '#/textbook':
-      break;
-    case '#/games':
-      root.innerHTML = 'Мини-игры';
-      break;
-    case '#/login':
-      break;
-    case '#/statistics':
-      root.innerHTML = 'Статистика';
-      break;
-    case '#/about':
-      break;
-    default:
-      break;
-  }
-};
-
-window.addEventListener('DOMContentLoaded', () => {
-  const location = window.location.hash;
-
-  if (location) {
-    locationResolver(location);
-  }
-});
-
 let isOpen = false;
 
-export function createBurgerMenu(): void {
+function createBurgerMenu(): void {
   const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
-  burgerMenu.innerHTML = `
-    <input id="menu-toggle" type="checkbox" />
-    <label class="menu-btn" for="menu-toggle">
-      <span></span>
-    </label>
-
-    <ul class="menubox">
-      <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
-      <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
-      <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
-      <li><a class="menu-item" href="#/about" data-href="#/about">О команде</a></li>
-    </ul>
+  burgerMenu.innerHTML += `
+    <div class="menu-wrapper">
+      <ul class="menubox">
+        <li><a class="menu-item mp-textbook" href="#textbook">Учебник</a></li>
+        <li><a class="menu-item mp-games" href="#games">Мини-игры</a></li>
+        <li><a class="menu-item mp-statistics" href="#statistics">Статистика</a></li>
+        <li><a class="menu-item mp-about" href="#about">О команде</a></li>
+      </ul>
+    </div>
   `;
-  document.querySelector('burger-menu')?.appendChild(burgerMenu);
 
-  const menubox = document.querySelector('.menubox') as HTMLElement;
+  const menubox = document.querySelector('.menu-wrapper') as HTMLElement;
 
-  document.body.addEventListener('click', () => {
-    menubox.style.animation = 'burgerOut 0.5s forwards';
-    // menubox.style.display = 'none';
-    (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
-    isOpen = false;
-    // e.preventDefault();
-  });
-
-  burgerMenu.addEventListener('click', (e: Event) => {
-    if (!isOpen) {
-      isOpen = true;
-      menubox.style.animation = 'burgerIn 0.5s forwards';
-    } else {
-      isOpen = false;
-      // menubox.style.display = 'block';
+  menubox.addEventListener('click', (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('.menubox') || target.closest('.menu-item')) {
       menubox.style.animation = 'burgerOut 0.5s forwards';
+      (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+      isOpen = false;
     }
-    e.preventDefault();
-    e.stopPropagation();
   });
 }
 
@@ -109,11 +63,11 @@ export function createHeader(): void {
   const header = document.createElement('header');
 
   header.innerHTML = `
-    <a class="mp-home mp-home__logo" href="#/">ENG-<span>L</span>and</a>
+    <a class="mp-home mp-home__logo" href="">ENG-<span>L</span>and</a>
     <div class="links">
-      <a class="mp-textbook" href="#/textbook">Учебник</a>
-      <a class="mp-games" href="#/games">Мини-игры</a>
-      <a class="mp-statistics" href="#/statistics">Статистика</a>
+      <a class="mp-textbook" href="#textbook">Учебник</a>
+      <a class="mp-games" href="#games">Мини-игры</a>
+      <a class="mp-statistics" href="#statistics">Статистика</a>
     </div>
     <div class="login-block">
       <div class="login-block__wrapper">
@@ -121,11 +75,28 @@ export function createHeader(): void {
         <p class="login-block__name">User name</p>
       </div>
       <button class="mp-login login">Войти</button>
-      <div class="burger-menu"></div>
+      <div class="burger-menu">
+        <input id="menu-toggle" type="checkbox" />
+        <label class="menu-btn" for="menu-toggle">
+          <span></span>
+        </label>
+      </div>
     </div>
 `;
   document.body.insertBefore(header, root);
   createBurgerMenu();
+
+  const menubox = document.querySelector('.menu-wrapper') as HTMLElement;
+  const toggleMenu = document.querySelector('#menu-toggle') as HTMLElement;
+  toggleMenu.addEventListener('click', () => {
+    if (!isOpen) {
+      isOpen = true;
+      menubox.style.animation = 'burgerIn 0.5s forwards';
+    } else {
+      isOpen = false;
+      menubox.style.animation = 'burgerOut 0.5s forwards';
+    }
+  });
 }
 
 export function createFooter(): void {

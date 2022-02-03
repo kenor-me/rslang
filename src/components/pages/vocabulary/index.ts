@@ -1,7 +1,7 @@
 import { getWordPage } from '../../api';
 import { Word } from '../../types/index';
 import './index.css';
-import { locationResolver } from '../main';
+// import { locationResolver } from '../../routing';
 
 const baseUrl = 'https://app-english-learn.herokuapp.com';
 const root = document.querySelector('#root') as HTMLElement;
@@ -27,7 +27,7 @@ const render = (): void => {
     <div class="container__book-page"></div>
     <div class="navigation">
       <div class="nav-left">
-        <div class="book-page-nav-logo"></div>
+        <a class="book-page-nav-logo" href=""></a>
       </div>
       <div class="book-page-nav-savannah">
         <div></div>
@@ -179,6 +179,4 @@ export const mountedVocabulary = async (): Promise<void> => {
   const bookContainer = document.querySelector('.book-page') as HTMLElement;
   bookContainer.style.backgroundColor = colorPage;
   setNumberPage();
-  const logoHome = document.querySelector('.book-page-nav-logo') as HTMLElement;
-  logoHome.addEventListener('click', () => locationResolver('#/'));
 };
