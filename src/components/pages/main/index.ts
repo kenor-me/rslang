@@ -1,5 +1,5 @@
 import './index.css';
-import { createPageAboutUs } from '../about-us';
+import { createAdvantagesAboutUs } from '../about-us';
 
 export const root = document.getElementById('root') as HTMLElement;
 
@@ -28,7 +28,7 @@ export function addDescription(): string {
     </div>
   `;
   root.innerHTML = `${description}`;
-  document.querySelector('.mp-detail')?.addEventListener('click', createPageAboutUs);
+  document.querySelector('.mp-detail')?.addEventListener('click', createAdvantagesAboutUs);
   return description;
 }
 
@@ -60,6 +60,47 @@ window.addEventListener('load', () => {
   }
 });
 
+let isOpen = false;
+
+export function createBurgerMenu(): void {
+  const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
+  burgerMenu.innerHTML = `
+    <input id="menu-toggle" type="checkbox" />
+    <label class="menu-btn" for="menu-toggle">
+      <span></span>
+    </label>
+
+    <ul class="menubox">
+      <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
+      <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
+      <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
+    </ul>
+  `;
+  document.querySelector('header')?.appendChild(burgerMenu);
+
+  const menubox = document.querySelector('.menubox') as HTMLElement;
+
+  document.body.addEventListener('click', () => {
+    menubox.style.animation = 'burgerOut 0.5s forwards';
+    // menubox.style.display = 'none';
+    (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
+    // e.preventDefault();
+  });
+
+  burgerMenu.addEventListener('click', (e: Event) => {
+    if (!isOpen) {
+      isOpen = true;
+      menubox.style.animation = 'burgerIn 0.5s forwards';
+    } else {
+      isOpen = false;
+      // menubox.style.display = 'block';
+      menubox.style.animation = 'burgerOut 0.5s forwards';
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  });
+}
+
 export function createHeader(): void {
   const header = document.createElement('header');
 
@@ -80,6 +121,7 @@ export function createHeader(): void {
     <div class="burger-menu"></div>
 `;
   document.body.insertBefore(header, root);
+  createBurgerMenu();
 }
 
 export function createFooter(): void {
@@ -103,34 +145,4 @@ export function createFooter(): void {
     </div>
 `;
   document.body.appendChild(footer);
-}
-
-export function createBurgerMenu(): void {
-  const burgerMenu = document.querySelector('.burger-menu') as HTMLElement;
-  burgerMenu.innerHTML = `
-    <input id="menu-toggle" type="checkbox" />
-    <label class="menu-btn" for="menu-toggle">
-      <span></span>
-    </label>
-
-    <ul class="menubox">
-      <li><a class="menu-item" href="#/textbook" data-href="#/textbook">Учебник</a></li>
-      <li><a class="menu-item" href="#/games" data-href="#/games">Мини-игры</a></li>
-      <li><a class="menu-item" href="#/statistics" data-href="#/statistics">Статистика</a></li>
-    </ul>
-  `;
-  document.querySelector('.login-block')?.appendChild(burgerMenu);
-
-  const menubox = document.querySelector('.menubox') as HTMLElement;
-
-  document.body.addEventListener('click', () => {
-    menubox.style.display = 'none';
-    (document.getElementById('menu-toggle') as HTMLInputElement).checked = false;
-    // e.preventDefault();
-  });
-
-  burgerMenu.addEventListener('click', (e) => {
-    menubox.style.display = 'block';
-    e.stopPropagation();
-  });
 }

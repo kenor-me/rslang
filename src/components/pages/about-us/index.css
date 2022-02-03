@@ -1,11 +1,134 @@
 .wrapper-about {
-  /* filter: blur(3px); */
-  background-color: #000;
+  min-width: 100vw;
+  min-height: calc(100vh - 125px);
+  background-color: #d3f1e2;
+}
+
+.advantages {
+  display: flex;
+  justify-content: space-between;
 }
 
 .about-advantages {
-  width: 25%;
-  min-height: 150px;
+  width: 20%;
+  height: 400px;
+  margin: 30px;
   background-color: #fff;
   color: #000;
+  border-radius: 30px;
+}
+
+.wrapper-advantages {
+  animation: advantages 0.7s ease-in;
+}
+
+@keyframes advantages {
+  0% {
+    opacity: 0;
+  };
+  100% {
+    opacity: 1;
+  };
+}
+
+.about-img-advantages {
+  display: block;
+  margin: 30px auto;
+  width: 50%;
+}
+
+.about-header-advantages,
+.avatar-name {
+  margin: 20px auto;
+  text-align: center;
+  font-family: Forum;
+  text-transform: uppercase;
+  color: #2a3950;
+  letter-spacing: 5px;
+}
+
+.about-description-advantages,
+.avatar-description {
+  padding: 20px;
+  text-align: justify;
+  font-size: 1.2rem;
+  font-family: Roboto;
+}
+
+.developers,
+.our-advantages {
+  padding-top: 50px;
+  text-align: center;
+  font-family: Forum;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: #2a3950;
+}
+
+.wrapper-avatar {
+  display: flex;
+  flex-direction: column;
+  animation: advantages 0.7s ease-in;
+}
+
+.avatar-item {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px auto;
+  padding: 30px;
+  width: 50%;
+  background-color: rgb(249, 252, 252);
+  color: #000;
+  border-radius: 20px;
+}
+
+.avatar-img {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.avatar-text {
+  width: 50%;
+}
+
+.avatar-name-position {
+  margin-top: -10px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Roboto;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.avatar-github {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+}
+
+.github-sign {
+  width: 5%;
+  margin-top: 10px;
+}
+
+.avatar-github:hover {
+  color: #2959a0;
+}
+
+@media (max-width: 1024px) {
+  .advantages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .about-advantages {
+    width: 40%;
+    height: 400px;
+  }
+
+  .avatar-item {
+    width: 80%;
+  }
 }
