@@ -1,14 +1,18 @@
-import { getWordPage } from '../../api';
-import { Word } from '../../types/index';
+import { ContentWord, Word } from '../../types/index';
+import {
+  setWordHard, getWordPage, getWordsUser, getWordById,
+} from '../../api/index';
 import './index.css';
 import { locationResolver } from '../main';
 
 const baseUrl = 'https://app-english-learn.herokuapp.com';
 const root = document.querySelector('#root') as HTMLElement;
+const userAut = JSON.parse(localStorage.getItem('userAuth') as string);
 
 let pageBook = 0;
 let partBook = 0;
 let wordsOfPage: Word[] = [];
+let hardWordsUser:ContentWord[] = [];
 const MAX_COUNT_PAGE = 30;
 const MAX_COUNT_PART = 6;
 const COLOR_FOR_PART = [
@@ -18,6 +22,7 @@ const COLOR_FOR_PART = [
   '#d76565',
   '#e6cccb',
   '#d9bb63',
+  '#00ff66',
 ];
 
 const render = (): void => {
@@ -69,7 +74,11 @@ const renderPage = (words: Word[]): void => {
   window.scrollTo(0, 0);
   const bookContainer = document.querySelector('.container__book-page') as HTMLElement;
   bookContainer.innerHTML = '';
+  console.log(words)
+  console.log(hardWordsUser)
   words.forEach((word) => {
+   // const onlyHardWord = hardWordsUser.filter((word)=> word.difficulty === 'hard');
+
     const cardWord = document.createElement('div');
     cardWord.classList.add('book-word-item');
     cardWord.innerHTML = `
@@ -99,6 +108,19 @@ const renderPage = (words: Word[]): void => {
         <div class="card__btn-deldifficult">Удалить</div>
       </div>`;
     bookContainer.append(cardWord);
+    const addWordButton = cardWord.querySelector('.card__btn-adddifficult') as HTMLElement;
+    const deleteWordButton = cardWord.querySelector('.card__btn-deldifficult') as HTMLElement;
+    addWordButton.addEventListener('click', async () => {
+     if (userAut) {
+      setWordHard(userAut.userId, userAut.token, word);
+     }
+     else {
+       //открывать модальное окно, предлагая регистрацию/вход
+     }
+    });
+    deleteWordButton.addEventListener('click', () => {
+      // deleteWordHard(word.id)
+    });
   });
   const btnPlay = document.querySelectorAll('.card__btn-audio');
   btnPlay.forEach((btn) => {
@@ -115,7 +137,13 @@ const changePart = async (): Promise<void> => {
   const bookContainer = document.querySelector('.book-page') as HTMLElement;
   partBook = +selectPartition.value;
   selectPartition.style.backgroundColor = COLOR_FOR_PART[partBook];
-  wordsOfPage = await getWordPage(partBook, pageBook);
+  if (partBook === MAX_COUNT_PART) {
+    wordsOfPage = await Promise.all(hardWordsUser.map((word) => getWordById(word.wordId)));
+    (document.querySelector('.book-page-pagination') as HTMLElement).style.display = 'none';
+  } else {
+    wordsOfPage = await getWordPage(partBook, pageBook);
+    (document.querySelector('.book-page-pagination') as HTMLElement).style.display = 'flex';
+  }
   renderPage(wordsOfPage);
   bookContainer.style.backgroundColor = COLOR_FOR_PART[partBook];
 };
@@ -129,6 +157,7 @@ const renderSelect = (): void => {
     option.style.backgroundColor = COLOR_FOR_PART[i - 1];
     selectPartition.append(option);
   }
+  checkedUser();
   selectPartition.addEventListener('change', changePart);
 };
 
@@ -160,6 +189,25 @@ const changePage = async (param: string): Promise<void> => {
   setNumberPage();
 };
 
+const checkedUser = ():void => {
+  const selectPartition = document.querySelector('.select-partition') as HTMLSelectElement;
+  if (userAut) {
+    const options = document.querySelectorAll('option');
+    let isTrueOption = true;
+    options.forEach((option) => {
+      if (option.value === MAX_COUNT_PART.toString()) {
+        isTrueOption = false;
+      }
+    });
+    if (isTrueOption) {
+      const option = document.createElement('option');
+      option.value = MAX_COUNT_PART.toString();
+      option.textContent = 'Сложные';
+      selectPartition.append(option);
+    }
+  }
+};
+
 export const mountedVocabulary = async (): Promise<void> => {
   render();
   const buttonPrevPage = document.querySelector('.pagination-prev') as HTMLElement;
@@ -171,6 +219,7 @@ export const mountedVocabulary = async (): Promise<void> => {
     changePage('next');
   });
   wordsOfPage = await getWordPage(partBook, pageBook);
+  hardWordsUser = await getWordsUser(userAut.userId, userAut.token);
   renderPage(wordsOfPage);
   renderSelect();
   const selectPartition = document.querySelector('.select-partition') as HTMLElement;
