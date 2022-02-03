@@ -1,5 +1,4 @@
 import './index.css';
-import { createAdvantagesAboutUs } from '../about-us';
 
 export const root = document.getElementById('root') as HTMLElement;
 
@@ -28,7 +27,7 @@ export function renderDescription(): string {
     </div>
   `;
   root.innerHTML = `${description}`;
-  document.querySelector('.mp-detail')?.addEventListener('click', createAdvantagesAboutUs);
+
   return description;
 }
 
