@@ -237,6 +237,7 @@ h1 {
 
   .menu-wrapper {
     position: absolute;
+    z-index: 1;
     top: 70px;
     left: -1000px;
     height: calc(100vh - 70px);
@@ -366,7 +367,7 @@ h1 {
     min-width: 100%;
     min-height: calc(100vh - 70px - 188px);
   }
-  
+
   .personal-information {
     flex-direction: column;
   }
@@ -396,7 +397,7 @@ h1 {
     max-width: 100%;
     width: 90%;
   }
-  
+
   .login-block {
     width: 100%;
     justify-content: space-around;

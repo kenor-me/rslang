@@ -166,7 +166,7 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 500px) {
   .about-advantages {
     height: 300px;
   }
@@ -176,7 +176,11 @@
     font-size: 1rem;
   }
 
-  .about-description-advantages {
+  .about-description-advantages,
+  .avatar-description,
+  .avatar-name,
+  .avatar-name-position,
+  .avatar-github {
     font-size: 1rem;
   }
 }
