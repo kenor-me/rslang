@@ -1,5 +1,5 @@
 import { renderAdvantagesAboutUs } from '../pages/about-us';
-import { renderGamesPage } from '../pages/games';
+import { renderGamesPage } from '../pages/games-main';
 import { renderDescription } from '../pages/main';
 import { renderStatisticPage } from '../pages/statistic';
 import { mountedVocabulary } from '../pages/vocabulary';
@@ -20,6 +20,12 @@ export const locationResolver = (location: string): void => {
       break;
     case '#about':
       renderAdvantagesAboutUs();
+      break;
+    case '#savannah':
+      root.innerHTML = 'Саванна';
+      break;
+    case '#audiocall':
+      root.innerHTML = 'Аудиовызов';
       break;
     default:
       renderDescription();
