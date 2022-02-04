@@ -24,17 +24,17 @@
 .wrapper-games-savannah,
 .wrapper-games-audiocall {
   display: block;
-  z-index: 0;
   background: url(./../../../assets/vocabulary/vector.png) no-repeat;
   background-size: cover;
   width: 103px;
   height: 125px;
   position: relative;
-  margin: 80px auto;
+  margin: 300px auto;
 }
 
 .wrapper-games-savannah div,
 .wrapper-games-audiocall div {
+  z-index: 0;
   position: absolute;
   width: 90px;
   height: 90px;
@@ -74,24 +74,16 @@
   text-align: justify;
 }
 
-@media (max-width: 1920px) {
-  .wrapper-games-savannah,
-  .wrapper-games-audiocall {
-    margin: 400px auto;
-  }
-}
-
 @media (max-width: 1440px) {
   .wrapper-games-savannah,
   .wrapper-games-audiocall {
-    margin: 80px auto;
+    margin: 100px auto;
   }
 }
 
 @media (max-width: 1024px) {
   .wrapper-games {
     background-size: cover;
-    flex-direction: column;
   }
 
   .wrapper-games-savannah,
@@ -99,4 +91,20 @@
     margin: 80px auto;
   }
 }
+
+@media (max-width: 640px) {
+  .header-games {
+    font-size: 2rem;
+  }
+
+  .wrapper-games {
+    background-size: cover;
+    flex-direction: column;
+  }
+
+  .games-description {
+    font-size: 0.9rem;
+  }
+}
+
 
