@@ -63,6 +63,17 @@
   left: -10px;
 }
 
+.games-description {
+  position: absolute;
+  width: 300px;
+  top: 170px;
+  left: -90px;
+  font-family: Forum;
+  font-size: 1.2rem;
+  color: var(--font-color-light);
+  text-align: justify;
+}
+
 @media (max-width: 1920px) {
   .wrapper-games-savannah,
   .wrapper-games-audiocall {
