@@ -1,6 +1,17 @@
 .book-page {
-  position: relative;
+  /* position: relative; */
+  animation: bookPage 0.7s ease-in;
 }
+
+@keyframes bookPage {
+  0% {
+    opacity: 0;
+  };
+  100% {
+    opacity: 1;
+  };
+}
+
 .container__book-page {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
@@ -81,6 +92,7 @@
   margin: auto 0;
 }
 .book-page-nav-logo {
+  display: block;
   background-image: url("./../../../assets/vocabulary/home.png");
   background-repeat: no-repeat;
   background-size: contain;

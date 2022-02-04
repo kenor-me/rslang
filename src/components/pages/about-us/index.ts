@@ -64,7 +64,7 @@ function createTeamAboutUs(): string {
   `;
 }
 
-export function createAdvantagesAboutUs(): string {
+export function renderAdvantagesAboutUs(): string {
   root.innerHTML = '';
   const advantages = `
     <div class="wrapper-about">
