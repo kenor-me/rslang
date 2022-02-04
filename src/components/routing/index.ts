@@ -1,7 +1,7 @@
 import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games';
 import { renderDescription } from '../pages/main';
-import { renderStatisticPage } from '../pages/statistic';
+import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
 import { mountedVocabulary } from '../pages/vocabulary';
 
 const root = document.querySelector('#root') as HTMLElement;
@@ -15,8 +15,8 @@ export const locationResolver = (location: string): void => {
       renderGamesPage();
       break;
     case '#statistics':
-      root.innerHTML = 'Статистика';
       renderStatisticPage();
+      renderBaseStatisticPage();
       break;
     case '#about':
       renderAdvantagesAboutUs();
