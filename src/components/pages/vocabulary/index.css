@@ -37,7 +37,7 @@
   flex-direction: column;
 }
 .book-word-item.hard-word {
-  border: 2px solid rgb(255, 251, 0);
+  box-shadow: 7px -6px 33px #7c0101;
 }
 .word-img {
   width: 380px;
@@ -50,20 +50,40 @@
 .card__word {
   font-size: 30px;
 }
+.card__translate {
+  margin-bottom: 10px;
+}
 .card__btn-audio {
   background-image: url("./../../../assets/vocabulary/audio.png");
   background-repeat: no-repeat;
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto;
 }
 .card__example,
 .card__meaning {
   font-size: 12px;
+  margin-bottom: 10px;
 }
-.card__buttons {
-  /*  visibility: hidden;*/
+.card__example-value,
+.card__meaning-value {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.btn-add {
+  background-image: url("./../../../assets/img/bell.png");
+  background-color: #00e0c7;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.btn-hard-word {
+  background-color: #7c0101;
 }
 .card__btn-adddifficult,
 .card__btn-deldifficult {
@@ -120,7 +140,7 @@
   color: azure;
 }
 .select-partition {
-  width: 106px;
+  width: 125px;
   height: 70px;
   font-size: 20px;
   text-align: center;
@@ -132,7 +152,7 @@
   line-height: 50px;
   padding: 10px;
 }
-.book-page-nav-savannah,
+.book-page-nav-sprint,
 .book-page-nav-audio {
   display: block;
   background: url("./../../../assets/vocabulary/vector.png") no-repeat;
@@ -142,7 +162,7 @@
   position: relative;
   margin-top: 10px;
 }
-.book-page-nav-savannah div,
+.book-page-nav-sprint div,
 .book-page-nav-audio div {
   position: absolute;
   width: 50px;
@@ -151,7 +171,7 @@
   top: 8px;
   left: 6px;
 }
-.book-page-nav-savannah div {
+.book-page-nav-sprint div {
   background: url("./../../../assets/vocabulary/icon-2.png") no-repeat;
   background-size: cover;
 }
@@ -160,7 +180,7 @@
   background-size: cover;
 }
 .book-page-nav-audio span,
-.book-page-nav-savannah span {
+.book-page-nav-sprint span {
   position: absolute;
   bottom: 0;
   font-size: 20px;
@@ -187,18 +207,25 @@
   background-image: url("./../../../assets/vocabulary/next.png");
   background-repeat: no-repeat;
 }
+.text-errors {
+  height: 90vh;
+  color: black;
+  font-size: 40px;
+  margin-top: 50px;
+  justify-content: center;
+}
 @media screen and (max-width: 768px) {
   .book-page-nav-logo {
     width: 60px;
     height: 60px;
   }
-  .book-page-nav-savannah,
+  .book-page-nav-sprint,
   .book-page-nav-audio {
     width: 50px;
     height: 60px;
     margin-top: 30px;
   }
-  .book-page-nav-savannah div,
+  .book-page-nav-sprint div,
   .book-page-nav-audio div {
     width: 40px;
     height: 40px;
@@ -206,7 +233,7 @@
     left: 5px;
   }
   .book-page-nav-audio span,
-  .book-page-nav-savannah span {
+  .book-page-nav-sprint span {
     font-size: 16px;
   }
   .book-page-nav-audio span {
