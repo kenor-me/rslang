@@ -1,0 +1,110 @@
+.wrapper-games {
+  display: flex;
+  justify-content: space-around;
+  max-width: 100vw;
+  min-height: calc(100vh - 231px);
+  background-color: var(--bg-dark);
+  background-image: url(./../../../assets/img/bg-map.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.header-games {
+  padding: 20px;
+  font-family: Forum;
+  font-size: 3.3rem;
+  font-weight: 700;
+  color: var(--font-color-green);
+  text-align: center;
+  text-transform: uppercase;
+  background-color: rgb(38,66,87);
+}
+
+.wrapper-games-savannah,
+.wrapper-games-audiocall {
+  display: block;
+  background: url(./../../../assets/vocabulary/vector.png) no-repeat;
+  background-size: cover;
+  width: 103px;
+  height: 125px;
+  position: relative;
+  margin: 300px auto;
+}
+
+.wrapper-games-savannah div,
+.wrapper-games-audiocall div {
+  z-index: 0;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+  top: 8px;
+  left: 6px;
+}
+
+.wrapper-games-savannah div {
+  background: url(./../../../assets/vocabulary/icon-2.png) no-repeat;
+  background-size: cover;
+}
+
+.wrapper-games-audiocall div {
+  background: url(./../../../assets/vocabulary/icon-4.jpg) no-repeat;
+  background-size: cover;
+}
+
+.games-mark {
+  position: absolute;
+  top: 130px;
+  left: 5px;
+}
+
+.games-mark-audiocall {
+  left: -10px;
+}
+
+.games-description {
+  position: absolute;
+  width: 300px;
+  top: 170px;
+  left: -90px;
+  font-family: Forum;
+  font-size: 1.2rem;
+  color: var(--font-color-light);
+  text-align: justify;
+}
+
+@media (max-width: 1440px) {
+  .wrapper-games-savannah,
+  .wrapper-games-audiocall {
+    margin: 100px auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .wrapper-games {
+    background-size: cover;
+  }
+
+  .wrapper-games-savannah,
+  .wrapper-games-audiocall {
+    margin: 80px auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-games {
+    font-size: 2rem;
+  }
+
+  .wrapper-games {
+    background-size: cover;
+    flex-direction: column;
+  }
+
+  .games-description {
+    font-size: 0.9rem;
+  }
+}
+
+
