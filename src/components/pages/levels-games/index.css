@@ -59,6 +59,21 @@
   color: rgb(255, 255, 255);
 }
 
+@media (max-width: 1440px) {
+  .wrapper-levels-header {
+    padding-top: 60px;
+  }
+
+  .wrapper-desc p {
+    padding-top: 0px;
+    font-size: 1.3rem;
+  }
+
+  .levels {
+    margin: 0px auto;
+  }
+}
+
 @media (max-width: 1300px) {
   .wrapper-levels-header {
     padding-top: 60px;
