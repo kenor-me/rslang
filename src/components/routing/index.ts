@@ -2,7 +2,7 @@ import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
-import { renderStatisticPage } from '../pages/statistic';
+import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
 import { mountedVocabulary } from '../pages/vocabulary';
 
 const root = document.querySelector('#root') as HTMLElement;
@@ -16,8 +16,9 @@ export const locationResolver = (location: string): void => {
       renderGamesPage();
       break;
     case '#statistics':
-      root.innerHTML = 'Статистика';
-      renderStatisticPage();
+      if (localStorage.getItem('userAuth')) {
+        renderStatisticPage();
+      } else renderBaseStatisticPage();
       break;
     case '#about':
       renderAdvantagesAboutUs();

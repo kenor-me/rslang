@@ -1,4 +1,5 @@
 import './index.css';
+import { getTimer } from '../timer';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -55,6 +56,15 @@ export const renderLevelsGamePage = (description: string): string => {
     </div>
   `;
   root.innerHTML = content;
-
+  document.querySelector('.levels')?.addEventListener('click', (e) => {
+    const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
+    if (target.classList.contains('level')) {
+      root.innerHTML = `${getTimer()}`;
+      setTimeout(() => {
+        if (description === sprintDescription) root.innerHTML = 'Спринт';
+        else root.innerHTML = 'Аудиовызов';
+      }, 4500);
+    }
+  });
   return content;
 };
