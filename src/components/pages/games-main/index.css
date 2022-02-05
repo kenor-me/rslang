@@ -24,12 +24,18 @@
 .wrapper-games-savannah,
 .wrapper-games-audiocall {
   display: block;
+  position: relative;
+  margin: 300px auto;
+}
+
+.games-mark-bg {
+  display: block;
   background: url(./../../../assets/vocabulary/vector.png) no-repeat;
   background-size: cover;
   width: 103px;
   height: 125px;
   position: relative;
-  margin: 300px auto;
+  margin: 0px auto;
 }
 
 .wrapper-games-savannah div,
@@ -53,13 +59,13 @@
   background-size: cover;
 }
 
-.games-mark {
+.games-mark-name {
   position: absolute;
   top: 130px;
   left: 5px;
 }
 
-.games-mark-audiocall {
+.games-mark-audiocall .games-mark-name {
   left: -10px;
 }
 
