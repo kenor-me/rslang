@@ -1,5 +1,6 @@
 import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
+import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
 import { renderStatisticPage } from '../pages/statistic';
 import { mountedVocabulary } from '../pages/vocabulary';
@@ -22,10 +23,10 @@ export const locationResolver = (location: string): void => {
       renderAdvantagesAboutUs();
       break;
     case '#savannah':
-      root.innerHTML = 'Саванна';
+      renderLevelsGamePage(sprintDescription);
       break;
     case '#audiocall':
-      root.innerHTML = 'Аудиовызов';
+      renderLevelsGamePage(audioDescription);
       break;
     default:
       renderDescription();
