@@ -1,5 +1,5 @@
 .wrapper-levels {
-  height: calc(100vh - 130px);
+  min-height: calc(100vh - 130px);
   background-image: url(./../../../assets/img/bg-games.jpg);
   background-size: cover;
   background-repeat: no-repeat;
