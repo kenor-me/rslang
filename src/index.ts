@@ -4,8 +4,7 @@ import { renderRegistrationPage } from './components/pages/registration';
 import {
   locationResolver, createHeader, createFooter, addDescription,
 } from './components/pages/main';
-import { mountedVocabulary } from './components/pages/vocabulary';
-import { createAdvantagesAboutUs } from './components/pages/about-us';
+import Vocabulury from './components/pages/vocabulary';
 
 createHeader();
 createFooter();
@@ -20,7 +19,8 @@ document.querySelector('header')?.addEventListener('click', (e: Event): void => 
   }
   if (target.classList.contains('mp-textbook') || target.dataset.href === '#/textbook') {
     locationResolver('#/textbook');
-    mountedVocabulary();
+    (document.querySelector('#root') as HTMLElement).innerHTML = '';
+    const vocabulury = new Vocabulury((document.querySelector('#root') as HTMLElement));
   }
   if (target.classList.contains('mp-games')) locationResolver('#/games');
   if (target.classList.contains('mp-login')) {
@@ -33,7 +33,8 @@ document.querySelector('.menubox')?.addEventListener('click', (e) => {
   const target = e.target as HTMLElement;
   if (target.dataset.href === '#/textbook') {
     locationResolver('#/textbook');
-    mountedVocabulary();
+    (document.querySelector('#root') as HTMLElement).innerHTML = '';
+    const vocabulury = new Vocabulury((document.querySelector('#root') as HTMLElement));
   }
   if (target.dataset.href === '#/games') locationResolver('#/games');
   if (target.dataset.href === '#/statistics') locationResolver('#/statistics');

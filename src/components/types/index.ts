@@ -40,3 +40,8 @@ export type ContentWord = {
   wordId: string,
   optional:Record<string, unknown>
 };
+
+export type Settings = {
+  part: number;
+  page: number;
+};

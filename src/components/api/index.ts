@@ -4,7 +4,7 @@ import {
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
-export const getWordPage = async (part: number, pageNumber: number): Promise<Word[]> => {
+export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => {
   const path = `words?group=${part}&page=${pageNumber}`;
   const response = await fetch(`${BASE_URL}/${path}`);
   const wordsOfPage = await response.json();
@@ -46,9 +46,9 @@ export const addUser = async (user: User): Promise<void> => {
       <p class="popup-auth-text">Регистрация прошла успешно</p>
     `;
     localStorage.setItem('userAdd', JSON.stringify(res));
-    setTimeout((): void => {
-      popup.classList.remove('open');
-    }, 3000);
+    // setTimeout((): void => {
+    //   popup.classList.remove('open');
+    // }, 3000);
   }).catch((): void => {
     err.classList.add('visible');
   });
