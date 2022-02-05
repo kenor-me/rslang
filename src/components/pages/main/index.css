@@ -134,6 +134,9 @@ h1 {
 .login-block__wrapper {
   display: flex;
   align-items: center;
+}
+
+.hidden {
   display: none;
 }
 

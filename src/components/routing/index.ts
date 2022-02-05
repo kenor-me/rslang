@@ -15,8 +15,9 @@ export const locationResolver = (location: string): void => {
       renderGamesPage();
       break;
     case '#statistics':
-      renderStatisticPage();
-      renderBaseStatisticPage();
+      if (localStorage.getItem('userAuth')) {
+        renderStatisticPage();
+      } else renderBaseStatisticPage();
       break;
     case '#about':
       renderAdvantagesAboutUs();

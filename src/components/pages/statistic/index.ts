@@ -3,7 +3,11 @@ import './index.css';
 const root = document.getElementById('root') as HTMLElement;
 
 export const renderStatisticPage = (): void => {
-
+  root.innerHTML = `
+    <div class="statistic-wrapper">
+      <h1 class="statistic-title">Статистика</h1>
+    </div>
+  `;
 };
 
 export const renderBaseStatisticPage = (): void => {

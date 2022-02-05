@@ -117,7 +117,7 @@
 }
 
 .input-block__wrapper:last-of-type input {
-  margin-bottom: 3em;
+  margin-bottom: 3.5em;
 }
 
 .input-block__wrapper input:focus {
@@ -176,7 +176,7 @@
 
 .error-text {
   position: absolute;
-  font-size: 18px;
+  font-size: 17px;
   top: 75px;
   color: var(--bg-btn);
   visibility: hidden;
