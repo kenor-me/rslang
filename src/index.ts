@@ -1,19 +1,33 @@
 import './style.css';
 import { addUser, signIn } from './components/api';
 import { renderRegistrationPage } from './components/pages/registration';
+
 import {
-  locationResolver, createHeader, createFooter, addDescription,
+  createHeader, createFooter,
 } from './components/pages/main';
 import Vocabulury from './components/pages/vocabulary';
+import { locationResolver } from './components/routing';
+import { Token } from './components/types';
 
-createHeader();
+export const userAut: Token = JSON.parse(localStorage.getItem('userAuth') as string);
+let userName = '';
+if (userAut) userName = userAut.name;
+
+createHeader(!!userAut, userName);
 createFooter();
-addDescription();
 renderRegistrationPage();
+
+window.addEventListener('hashchange', () => {
+  locationResolver(window.location.hash);
+});
+
 const popup = document.getElementById('popup') as HTMLElement;
+const exitBtn = document.querySelector('.login') as HTMLElement;
+if (userAut) exitBtn.classList.add('exit');
 
 document.querySelector('header')?.addEventListener('click', (e: Event): void => {
   const target = e.target as HTMLElement;
+
   if (target.classList.contains('mp-home')) {
     locationResolver('#/');
   }
@@ -41,6 +55,14 @@ document.querySelector('.menubox')?.addEventListener('click', (e) => {
   if (target.dataset.href === '#/about') {
     locationResolver('#/about');
     createAdvantagesAboutUs();
+    if (target.classList.contains('mp-login') && !target.classList.contains('exit')) {
+      popup.classList.add('open');
+    }
+    if (target.classList.contains('exit')) {
+      localStorage.clear();
+      target.classList.remove('exit');
+      window.location.reload();
+    }
   }
 });
 
@@ -57,9 +79,18 @@ const createNewUser = async (e: Event): Promise<void> => {
   };
 
   await addUser(user);
-  setTimeout((): void => {
-    signIn({ email: newEmail.value, password: newPassword.value });
-  }, 4000);
+  // setTimeout((): void => {
+  //   signIn({ email: newEmail.value, password: newPassword.value });
+  // }, 4000);
+  if (JSON.parse(localStorage.getItem('userAdd') as string)) {
+    await signIn({ email: newEmail.value, password: newPassword.value });
+  }
+  if (JSON.parse(localStorage.getItem('userAuth') as string)) {
+    exitBtn.classList.add('exit');
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
 };
 
 const link = popup.querySelector('.link-block__link') as HTMLElement;
@@ -83,6 +114,13 @@ const authUser = async (e: Event): Promise<void> => {
     password: password.value,
   };
   await signIn(user);
+  if (JSON.parse(localStorage.getItem('userAuth') as string)) {
+    exitBtn.classList.add('exit');
+    window.location.reload();
+  }
 };
 
 sighInForm.addEventListener('submit', authUser);
+function createAdvantagesAboutUs() {
+  throw new Error('Function not implemented.');
+}

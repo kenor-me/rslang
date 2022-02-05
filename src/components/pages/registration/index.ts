@@ -23,6 +23,7 @@ export const renderRegistrationForm = (): string => `
             name="name"
             id="new_user_name"
             minlength="6"
+            maxlength="10"
             autocomplete="off"
             required
           >

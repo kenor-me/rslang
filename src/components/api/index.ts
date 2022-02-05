@@ -66,8 +66,8 @@ export const signIn = async (user: Sign): Promise<void> => {
   });
 
   await response.json().then((res: Token): void => {
-    const popup = document.getElementById('popup') as HTMLElement;
-    popup.classList.remove('open');
+    // const popup = document.getElementById('popup') as HTMLElement;
+    // popup.classList.remove('open');
     localStorage.setItem('userAuth', JSON.stringify(res));
   }).catch((): void => {
     if (err) {

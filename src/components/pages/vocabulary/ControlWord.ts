@@ -85,21 +85,21 @@ export class ControlWord extends BaseComponent {
   };
 
   setButtonAddWord = (wordInfo:Word, hard = false):void => {
-    const addWordButton = new BaseComponent(this.node, 'div', 'btn-add', '');
+    const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
     addWordButton.node.addEventListener('click', () => {
       if (!this.node.classList.contains('hard-word')) {
         setWordHard(this.user!.userId, this.user!.token, wordInfo);
-        addWordButton.node.classList.add('btn-hard-word');
+        addWordButton.node.textContent = 'Удалить слово';
         this.node.classList.add('hard-word');
       } else {
         deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
-        addWordButton.node.classList.remove('btn-hard-word');
+        addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
       /*   window.location.reload(); */
       }
     });
     if (hard) {
-      addWordButton.node.classList.add('btn-hard-word');
+      addWordButton.node.textContent = 'Удалить слово';
     }
   };
 }

@@ -134,6 +134,9 @@ h1 {
 .login-block__wrapper {
   display: flex;
   align-items: center;
+}
+
+.hidden {
   display: none;
 }
 
@@ -207,7 +210,7 @@ h1 {
   .menu-btn {
     position: absolute;
     top: 45%;
-    margin: 0 15px;
+    margin: 0 15px 0 55px;
     display: flex;
     align-items: center;
     width: 32px;
@@ -235,17 +238,25 @@ h1 {
     top: 8px;
   }
 
-  .menubox {
-    display: block;
+  .menu-wrapper {
     position: absolute;
+    z-index: 1;
+    top: 70px;
+    left: -1000px;
+    height: calc(100vh - 70px);
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .menubox {
+    box-sizing: border-box;
     left: 0;
-    z-index: 10;
+    z-index: 1;
     /* visibility: hidden; */
     top: 70px;
     left: -1000px;
     width: 100vw;
     margin: 0;
-    padding: 45px 0;
+    padding: 0px 50px;
     list-style: none;
     background-color: rgb(18, 109, 104);
     box-shadow: 1px 0px 6px rgba(0, 0, 0, 0.2);
@@ -276,7 +287,7 @@ h1 {
   .menu-item {
     box-sizing: border-box;
     display: block;
-    padding: 25px 24px 24px 50px;
+    padding: 30px 24px 30px 40px;
     left: 95px;
     top: 310px;
     font-family: Roboto;
@@ -287,20 +298,24 @@ h1 {
     letter-spacing: 2px;
     color: rgb(255, 255, 255);
     background: url(./../../../assets/svg/arrow-burger.svg) no-repeat;
-    background-position: 19px 28px;
+    background-position: 0px 35px;
     text-decoration: none;
     transition: 0.6s;
   }
 
+  .menubox li:not(:last-of-type) {
+    border-bottom: 2px solid var(--bg-light);
+  }
+
   .menu-item:hover {
-    color: var(--font-color-dark);
-    background-color: var(--bg-btn-hover);
+    color: var(--font-color-green);
+    /* background-color: var(--bg-btn-hover); */
   }
 
   #menu-toggle {
     width: 32px;
     height: 32px;
-    margin: 0 15px;
+    margin: 0 15px 0 55px;
     opacity: 0;
   }
 
@@ -355,7 +370,7 @@ h1 {
     min-width: 100%;
     min-height: calc(100vh - 70px - 188px);
   }
-  
+
   .personal-information {
     flex-direction: column;
   }
@@ -373,11 +388,11 @@ h1 {
   }
 
   #root {
-    min-height: calc(100vh - 134px - 189px);
+    min-height: calc(100vh - 325px);
   }
 
   .wrapper-main-page {
-    min-height: calc(100vh - 134px - 189px);
+    min-height: calc(100vh - 325px);
   }
 
   .mp-description {
@@ -385,7 +400,7 @@ h1 {
     max-width: 100%;
     width: 90%;
   }
-  
+
   .login-block {
     width: 100%;
     justify-content: space-around;
@@ -397,7 +412,12 @@ h1 {
   }
 
   .menu-btn {
-    top: 130px;
+    top: 85px;
+  }
+
+  .menu-wrapper {
+    top: 136px;
+    height: calc(100vh - 136px);
   }
 }
 

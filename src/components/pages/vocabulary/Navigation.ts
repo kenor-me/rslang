@@ -1,4 +1,5 @@
-import { locationResolver } from '../main';
+/* eslint-disable import/no-cycle */
+import { locationResolver } from '../../routing';
 import BaseComponent from './BaseComponent';
 import { PageSwitcher } from './PageSwitcher';
 import { SelectSwitcher } from './SelectSwitcher';
@@ -8,11 +9,11 @@ export class Navigation extends BaseComponent {
 
   logo:BaseComponent = new BaseComponent(this.leftBlock.node, 'div', 'book-page-nav-logo', '');
 
-  sprintButton:BaseComponent = new BaseComponent(this.node, 'div', 'book-page-nav-sprint', '');
+  sprintButton:BaseComponent<HTMLAnchorElement> = new BaseComponent(this.node, 'a', 'book-page-nav-sprint', '');
 
   pageSwitcher:PageSwitcher = new PageSwitcher(this.node);
 
-  audioCallButton:BaseComponent = new BaseComponent(this.node, 'div', 'book-page-nav-audio', '');
+  audioCallButton:BaseComponent<HTMLAnchorElement> = new BaseComponent(this.node, 'a', 'book-page-nav-audio', '');
 
   rightBlock:BaseComponent = new BaseComponent(this.node, 'div', 'nav-right', '');
 
@@ -21,7 +22,9 @@ export class Navigation extends BaseComponent {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', 'navigation');
     this.sprintButton.node.innerHTML = '<div></div><span>Спринт</span>';
+    this.sprintButton.node.href = '#savannah';
     this.audioCallButton.node.innerHTML = '<div></div><span>Аудиовызов</span>';
+    this.audioCallButton.node.href = '#audiocall';
     this.select = new SelectSwitcher(this.rightBlock.node);
     this.logo.node.addEventListener('click', () => {
       locationResolver('#/');

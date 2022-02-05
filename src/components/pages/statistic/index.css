@@ -1,0 +1,29 @@
+.statistic-wrapper {
+  padding: 50px 20px;
+  min-height: calc(100vh - 230px);
+  background-color: var(--bg-dark);
+  background-image: url("./../../../assets/bg.png");
+  background-size: cover;
+}
+
+.statistic-text {
+  font-size: 1.3rem;
+  font-weight: 400;
+  max-width: 600px;
+  padding-top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--bg-light);
+}
+
+@media (max-width: 639px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 358px);
+  }
+}
+
+@media (max-width: 440px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 425px);
+  }
+}

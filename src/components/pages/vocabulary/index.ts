@@ -7,6 +7,8 @@ import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
 
+// import { locationResolver } from '../../routing';
+
 class Vocabulury extends BaseComponent {
   wordsArray: BookWordsList;
 

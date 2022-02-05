@@ -1,12 +1,12 @@
 .wrapper-about {
-  min-width: 100vw;
+  min-width: 98vw;
   min-height: calc(100vh - 125px);
   background-color: #d3f1e2;
 }
 
 .advantages {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .about-advantages {
@@ -130,5 +130,57 @@
 
   .avatar-item {
     width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .advantages {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-advantages {
+    width: 50%;
+    height: 400px;
+  }
+
+  .about-img-advantages {
+    margin: 30px auto;
+    width: 30%;
+    align-items: center;
+  }
+
+  .about-description-advantages {
+    font-size: 1.5em;
+  }
+
+  .avatar-item {
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+  }
+
+  .avatar-text {
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-advantages {
+    height: 300px;
+  }
+
+  .about-header-advantages {
+    margin: 5px auto;
+    font-size: 1rem;
+  }
+
+  .about-description-advantages,
+  .avatar-description,
+  .avatar-name,
+  .avatar-name-position,
+  .avatar-github {
+    font-size: 1rem;
   }
 }
