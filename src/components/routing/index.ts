@@ -2,6 +2,7 @@ import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderDescription } from '../pages/main';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
+import { getTimer } from '../pages/timer';
 import { mountedVocabulary } from '../pages/vocabulary';
 
 const root = document.querySelector('#root') as HTMLElement;
@@ -23,10 +24,16 @@ export const locationResolver = (location: string): void => {
       renderAdvantagesAboutUs();
       break;
     case '#savannah':
-      root.innerHTML = 'Саванна';
+      root.innerHTML = `${getTimer()}`;
+      setTimeout(() => {
+        root.innerHTML = 'Спринт';
+      }, 4500);
       break;
     case '#audiocall':
-      root.innerHTML = 'Аудиовызов';
+      root.innerHTML = `${getTimer()}`;
+      setTimeout(() => {
+        root.innerHTML = 'Аудиовызов';
+      }, 4500);
       break;
     default:
       renderDescription();
