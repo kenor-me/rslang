@@ -1,6 +1,7 @@
 import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderDescription } from '../pages/main';
+import { renderSprintPage } from '../pages/sprint';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
 import { getTimer } from '../pages/timer';
 import { mountedVocabulary } from '../pages/vocabulary';
@@ -23,11 +24,11 @@ export const locationResolver = (location: string): void => {
     case '#about':
       renderAdvantagesAboutUs();
       break;
-    case '#savannah':
+    case '#sprint':
       root.innerHTML = `${getTimer()}`;
-      setTimeout(() => {
-        root.innerHTML = 'Спринт';
-      }, 4500);
+      // setTimeout(() => {
+      root.innerHTML = `${renderSprintPage()}`;
+      // }, 4500);
       break;
     case '#audiocall':
       root.innerHTML = `${getTimer()}`;
