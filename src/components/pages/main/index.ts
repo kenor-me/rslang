@@ -60,7 +60,7 @@ function createBurgerMenu(): void {
   });
 }
 
-export function createHeader(): void {
+export function createHeader(isAuth: boolean, userName: string): void {
   const header = document.createElement('header');
 
   header.innerHTML = `
@@ -71,11 +71,11 @@ export function createHeader(): void {
       <a class="mp-statistics" href="#statistics">Статистика</a>
     </div>
     <div class="login-block">
-      <div class="login-block__wrapper">
+      <div class="login-block__wrapper ${isAuth ? '' : 'hidden'}">
         ${renderUserImg()}
-        <p class="login-block__name">User name</p>
+        <p class="login-block__name">${userName}</p>
       </div>
-      <button class="mp-login login">Войти</button>
+      <button class="mp-login login">${isAuth ? 'Выйти' : 'Войти'}</button>
       <div class="burger-menu">
         <input id="menu-toggle" type="checkbox" />
         <label class="menu-btn" for="menu-toggle">
