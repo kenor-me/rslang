@@ -388,11 +388,11 @@ h1 {
   }
 
   #root {
-    min-height: calc(100vh - 134px - 189px);
+    min-height: calc(100vh - 325px);
   }
 
   .wrapper-main-page {
-    min-height: calc(100vh - 134px - 189px);
+    min-height: calc(100vh - 325px);
   }
 
   .mp-description {

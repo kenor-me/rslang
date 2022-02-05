@@ -15,3 +15,15 @@
   text-align: center;
   color: var(--bg-light);
 }
+
+@media (max-width: 639px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 358px);
+  }
+}
+
+@media (max-width: 440px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 425px);
+  }
+}
