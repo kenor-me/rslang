@@ -39,6 +39,9 @@
 .book-word-item.hard-word {
   box-shadow: 7px -6px 33px #7c0101;
 }
+.book-word-item.learn-word {
+  box-shadow: 7px -6px 33px #0b7c01ee;
+}
 .word-img {
   width: 380px;
   height: 200px;
@@ -71,7 +74,8 @@
   font-size: 14px;
   margin-bottom: 5px;
 }
-.btn-add {
+.btn-add,
+.btn-learn {
   display: block;
   width: 170px;
   height: 44px;
@@ -90,7 +94,15 @@
   display: flex;
   justify-content: center;
 }
-
+.btn-learn {
+  margin-bottom: 10px;
+}
+.hard-word .btn-add {
+  background-color: red;
+}
+.learn-word .btn-learn {
+  background-color: green;
+}
 .btn-hard-word {
   background-color: #7c0101;
 }
@@ -143,8 +155,7 @@
 .book-page-number-page {
   margin: auto;
   font-size: 20px;
-  font-style: oblique;
-  font-family: cursive;
+  font-family: Forum;
   width: 160px;
   text-align: center;
   color: azure;
@@ -156,6 +167,7 @@
   text-align: center;
   margin-top: 30px;
   border-radius: 50px;
+  cursor: pointer;
 }
 .select-partition option {
   font-size: 22px;
@@ -194,8 +206,7 @@
   position: absolute;
   bottom: 0;
   font-size: 20px;
-  font-style: oblique;
-  font-family: cursive;
+  font-family: Forum;
   top: 73px;
   color: azure;
 }
@@ -208,6 +219,7 @@
   height: 70px;
   background-size: contain;
   margin: auto;
+  cursor: pointer;
 }
 .pagination-prev {
   background-image: url("./../../../assets/vocabulary/prev.png");

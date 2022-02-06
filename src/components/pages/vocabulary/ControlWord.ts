@@ -1,4 +1,4 @@
-import { deleteUserWord, setWordHard } from '../../api';
+import { deleteUserWord, setWordHard, setWordLearned } from '../../api';
 import { Token, Word } from '../../types/index';
 import BaseComponent from './BaseComponent';
 
@@ -35,7 +35,7 @@ export class ControlWord extends BaseComponent {
 
   allAudio: HTMLAudioElement[] = [];
 
-  constructor(parentNode: HTMLElement, wordInfo: Word, hard = false) {
+  constructor(parentNode: HTMLElement, wordInfo: Word, hard:boolean, learn:boolean) {
     super(parentNode, 'div', 'book-word-item');
     this.imageWord.node.src = `${this.BASE_URL}/${wordInfo.image}`;
     this.imageWord.node.alt = wordInfo.word;
@@ -52,10 +52,13 @@ export class ControlWord extends BaseComponent {
     });
     this.user = JSON.parse(localStorage.getItem('userAuth') as string);
     if (this.user) {
-      this.setButtonAddWord(wordInfo, hard);
+      this.setButtonUser(wordInfo, hard, learn);
     }
     if (hard) {
       this.node.classList.add('hard-word');
+    }
+    if (learn) {
+      this.node.classList.add('learn-word');
     }
   }
 
@@ -84,22 +87,48 @@ export class ControlWord extends BaseComponent {
     });
   };
 
-  setButtonAddWord = (wordInfo: Word, hard = false): void => {
+  setButtonUser = (wordInfo: Word, hard:boolean, learn:boolean): void => {
     const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
-    addWordButton.node.addEventListener('click', () => {
+    const addLearnedWordButton = new BaseComponent(this.node, 'button', 'btn-learn', 'Знаю');
+    addWordButton.node.addEventListener('click', async () => {
       if (!this.node.classList.contains('hard-word')) {
-        setWordHard(this.user!.userId, this.user!.token, wordInfo);
+        if (this.node.classList.contains('learn-word')) {
+          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+          this.node.classList.remove('learn-word');
+        }
+        await setWordHard(this.user!.userId, this.user!.token, wordInfo);
         addWordButton.node.textContent = 'Удалить слово';
+        this.node.classList.remove('learn-word');
+        addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.add('hard-word');
       } else {
-        deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
         addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
-        /*   window.location.reload(); */
       }
     });
     if (hard) {
       addWordButton.node.textContent = 'Удалить слово';
+    }
+
+    addLearnedWordButton.node.addEventListener('click', async () => {
+      if (!this.node.classList.contains('learn-word')) {
+        if (this.node.classList.contains('hard-word')) {
+          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+          addWordButton.node.textContent = 'Добавить слово';
+          this.node.classList.remove('hard-word');
+        }
+        await setWordLearned(this.user!.userId, this.user!.token, wordInfo);
+        addLearnedWordButton.node.textContent = 'Не знаю';
+        this.node.classList.add('learn-word');
+      } else {
+        deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+        addLearnedWordButton.node.textContent = 'Знаю';
+        this.node.classList.remove('learn-word');
+      }
+    });
+    if (learn) {
+      addLearnedWordButton.node.textContent = 'Не знаю';
     }
   };
 }
