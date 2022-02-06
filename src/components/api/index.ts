@@ -1,14 +1,33 @@
 import {
-  User, Sign, Token, Word,
+  User, Sign, Token, Word, ContentWord,
 } from '../types';
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
-export const getWordPage = async (part: number, pageNumber: number): Promise<Word[]> => {
+export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => {
   const path = `words?group=${part}&page=${pageNumber}`;
   const response = await fetch(`${BASE_URL}/${path}`);
   const wordsOfPage = await response.json();
   return wordsOfPage;
+};
+
+// all users word
+export const getWordsUser = async (id: string, token: string):Promise<ContentWord[]> => {
+  const url = `${BASE_URL}/users/${id}/words`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+};
+
+// get word by ID
+export const getWordById = async (wordId:string):Promise<Word> => {
+  const response = await fetch(`${BASE_URL}/words/${wordId}`);
+  return response.json();
 };
 
 export const addUser = async (user: User): Promise<void> => {
@@ -54,5 +73,33 @@ export const signIn = async (user: Sign): Promise<void> => {
     if (err) {
       err.classList.add('visible');
     }
+  });
+};
+
+// add word to hard
+export const setWordHard = async (userId:string, token:string, word:Word):Promise<void> => {
+  const newWord = {
+    difficulty: 'hard',
+    optional: {},
+  };
+  await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWord),
+  });
+};
+
+// update word
+export const deleteUserWord = async (userId:string, token:string, word:Word):Promise<void> => {
+  const url = `${BASE_URL}/users/${userId}/words/${word.id}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
   });
 };
