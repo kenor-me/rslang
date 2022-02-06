@@ -9,10 +9,10 @@ import { Navigation } from './Navigation';
 
 // import { locationResolver } from '../../routing';
 
-class Vocabulury extends BaseComponent {
+class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
 
-  currentPage:Word[] | undefined = []; // словаа на одной странице
+  currentPage: Word[] | undefined = []; // словаа на одной странице
 
   settings: Settings;
 
@@ -20,11 +20,11 @@ class Vocabulury extends BaseComponent {
 
   navigation: Navigation;
 
-  user:Token | null;
+  user: Token | null;
 
   lastPageNumber = 29;
 
-  textErr:BaseComponent;
+  textErr: BaseComponent;
 
   COLOR_FOR_PART = [
     '#a5e8d6',
@@ -38,7 +38,7 @@ class Vocabulury extends BaseComponent {
 
   MAX_COUNT_PART = 6;
 
-  constructor(parent:HTMLElement) {
+  constructor(parent: HTMLElement) {
     super(parent, 'div', 'book-page');
     this.wordsArray = new BookWordsList(this.node);
     this.user = JSON.parse(localStorage.getItem('userAuth') as string);
@@ -69,7 +69,7 @@ class Vocabulury extends BaseComponent {
     this.currentPage = await getWordPage(part, page);
   }
 
-  updatePage = async ():Promise<void> => {
+  updatePage = async (): Promise<void> => {
     if (this.user) {
       this.hardWords = await getWordsUser(this.user.userId, this.user.token);
       if (this.settings.part === this.MAX_COUNT_PART) {
@@ -110,7 +110,7 @@ class Vocabulury extends BaseComponent {
     this.updatePage();
   };
 
-  changePart = ():void => {
+  changePart = (): void => {
     this.settings.part = Number(this.navigation.select.node.value);
     this.settings.page = 0;
     this.node.style.backgroundColor = this.COLOR_FOR_PART[this.settings.part];
@@ -119,7 +119,7 @@ class Vocabulury extends BaseComponent {
     this.updatePage();
   };
 
-  loadPart = ():void => {
+  loadPart = (): void => {
     this.navigation.select.node.value = (this.settings.part).toString();
     this.node.style.backgroundColor = this.COLOR_FOR_PART[this.settings.part];
     this.navigation.select.setColorSelect(this.COLOR_FOR_PART[this.settings.part]);
@@ -133,4 +133,9 @@ class Vocabulury extends BaseComponent {
   };
 }
 
-export default Vocabulury;
+export default Vocabulary;
+
+export const renderVocabulary = (): void => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const vocabulary = new Vocabulary(document.querySelector('#root') as HTMLElement);
+};

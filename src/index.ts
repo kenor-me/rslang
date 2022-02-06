@@ -1,11 +1,7 @@
 import './style.css';
 import { addUser, signIn } from './components/api';
 import { renderRegistrationPage } from './components/pages/registration';
-
-import {
-  createHeader, createFooter,
-} from './components/pages/main';
-import Vocabulury from './components/pages/vocabulary';
+import { createHeader, createFooter } from './components/pages/main';
 import { locationResolver } from './components/routing';
 import { Token } from './components/types';
 
@@ -27,42 +23,13 @@ if (userAut) exitBtn.classList.add('exit');
 
 document.querySelector('header')?.addEventListener('click', (e: Event): void => {
   const target = e.target as HTMLElement;
-
-  if (target.classList.contains('mp-home')) {
-    locationResolver('#/');
-  }
-  if (target.classList.contains('mp-textbook') || target.dataset.href === '#/textbook') {
-    locationResolver('#/textbook');
-    (document.querySelector('#root') as HTMLElement).innerHTML = '';
-    const vocabulury = new Vocabulury((document.querySelector('#root') as HTMLElement));
-  }
-  if (target.classList.contains('mp-games')) locationResolver('#/games');
-  if (target.classList.contains('mp-login')) {
+  if (target.classList.contains('mp-login') && !target.classList.contains('exit')) {
     popup.classList.add('open');
   }
-  if (target.classList.contains('mp-statistics')) locationResolver('#/statistics');
-});
-
-document.querySelector('.menubox')?.addEventListener('click', (e) => {
-  const target = e.target as HTMLElement;
-  if (target.dataset.href === '#/textbook') {
-    locationResolver('#/textbook');
-    (document.querySelector('#root') as HTMLElement).innerHTML = '';
-    const vocabulury = new Vocabulury((document.querySelector('#root') as HTMLElement));
-  }
-  if (target.dataset.href === '#/games') locationResolver('#/games');
-  if (target.dataset.href === '#/statistics') locationResolver('#/statistics');
-  if (target.dataset.href === '#/about') {
-    locationResolver('#/about');
-    createAdvantagesAboutUs();
-    if (target.classList.contains('mp-login') && !target.classList.contains('exit')) {
-      popup.classList.add('open');
-    }
-    if (target.classList.contains('exit')) {
-      localStorage.clear();
-      target.classList.remove('exit');
-      window.location.reload();
-    }
+  if (target.classList.contains('exit')) {
+    localStorage.clear();
+    target.classList.remove('exit');
+    window.location.reload();
   }
 });
 
@@ -121,6 +88,3 @@ const authUser = async (e: Event): Promise<void> => {
 };
 
 sighInForm.addEventListener('submit', authUser);
-function createAdvantagesAboutUs() {
-  throw new Error('Function not implemented.');
-}

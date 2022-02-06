@@ -1,18 +1,16 @@
-/* eslint-disable import/no-cycle */
 import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
-// import { renderSprintPage } from '../pages/sprint';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
-import Vocabulury from '../pages/vocabulary/index';
+import { renderVocabulary } from '../pages/vocabulary';
 
-// const root = document.querySelector('#root') as HTMLElement;
+const root = document.querySelector('#root') as HTMLElement;
 export const locationResolver = (location: string): void => {
   switch (location) {
     case '#textbook':
       root.innerHTML = '';
-      const vocabulury = new Vocabulury(root);
+      renderVocabulary();
       break;
     case '#games':
       renderGamesPage();

@@ -5,33 +5,33 @@ import BaseComponent from './BaseComponent';
 export class ControlWord extends BaseComponent {
   BASE_URL = 'https://app-english-learn.herokuapp.com';
 
-  user:Token | null;
+  user: Token | null;
 
   imageBlock: BaseComponent = new BaseComponent(this.node, 'div', 'book-word-image', '');
 
-  imageWord:BaseComponent<HTMLImageElement> = new BaseComponent(this.imageBlock.node, 'img', 'word-img');
+  imageWord: BaseComponent<HTMLImageElement> = new BaseComponent(this.imageBlock.node, 'img', 'word-img');
 
-  content:BaseComponent = new BaseComponent(this.node, 'div', 'card-content', '');
+  content: BaseComponent = new BaseComponent(this.node, 'div', 'card-content', '');
 
-  cardWord:BaseComponent = new BaseComponent(this.content.node, 'div', 'card__word', '');
+  cardWord: BaseComponent = new BaseComponent(this.content.node, 'div', 'card__word', '');
 
-  cardWordValue:BaseComponent = new BaseComponent(this.cardWord.node, 'div', 'card__word-value', '');
+  cardWordValue: BaseComponent = new BaseComponent(this.cardWord.node, 'div', 'card__word-value', '');
 
-  cardWordTranslate:BaseComponent = new BaseComponent(this.cardWord.node, 'div', 'card__translate', '');
+  cardWordTranslate: BaseComponent = new BaseComponent(this.cardWord.node, 'div', 'card__translate', '');
 
-  cardMeaning:BaseComponent = new BaseComponent(this.content.node, 'div', 'card__meaning', '');
+  cardMeaning: BaseComponent = new BaseComponent(this.content.node, 'div', 'card__meaning', '');
 
-  cardMeaningValue:BaseComponent = new BaseComponent(this.cardMeaning.node, 'div', 'card__meaning-value', '');
+  cardMeaningValue: BaseComponent = new BaseComponent(this.cardMeaning.node, 'div', 'card__meaning-value', '');
 
-  cardMeaningTranslate:BaseComponent = new BaseComponent(this.cardMeaning.node, 'div', 'card__meaning-translate', '');
+  cardMeaningTranslate: BaseComponent = new BaseComponent(this.cardMeaning.node, 'div', 'card__meaning-translate', '');
 
-  cardExample:BaseComponent = new BaseComponent(this.content.node, 'div', 'card__example', '');
+  cardExample: BaseComponent = new BaseComponent(this.content.node, 'div', 'card__example', '');
 
-  cardExampleValue:BaseComponent = new BaseComponent(this.cardExample.node, 'div', 'card__example-value', '');
+  cardExampleValue: BaseComponent = new BaseComponent(this.cardExample.node, 'div', 'card__example-value', '');
 
-  cardExampleTranslate:BaseComponent = new BaseComponent(this.cardExample.node, 'div', 'card__example-translate', '');
+  cardExampleTranslate: BaseComponent = new BaseComponent(this.cardExample.node, 'div', 'card__example-translate', '');
 
-  cardButtonAudio:BaseComponent = new BaseComponent(this.node, 'div', 'card__btn-audio', '');
+  cardButtonAudio: BaseComponent = new BaseComponent(this.node, 'div', 'card__btn-audio', '');
 
   allAudio: HTMLAudioElement[] = [];
 
@@ -59,7 +59,7 @@ export class ControlWord extends BaseComponent {
     }
   }
 
-  createAudio = (urlAudio:string[]):void => {
+  createAudio = (urlAudio: string[]): void => {
     urlAudio.forEach((url) => {
       const audio = document.createElement('audio');
       audio.src = `${this.BASE_URL}/${url}`;
@@ -68,7 +68,7 @@ export class ControlWord extends BaseComponent {
     });
   };
 
-  playSound = ():void => {
+  playSound = (): void => {
     this.allAudio[0].play();
     for (let i = 0; i < this.allAudio.length - 1; i++) {
       this.allAudio[i].addEventListener('ended', () => {
@@ -84,7 +84,7 @@ export class ControlWord extends BaseComponent {
     });
   };
 
-  setButtonAddWord = (wordInfo:Word, hard = false):void => {
+  setButtonAddWord = (wordInfo: Word, hard = false): void => {
     const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
     addWordButton.node.addEventListener('click', () => {
       if (!this.node.classList.contains('hard-word')) {
@@ -95,7 +95,7 @@ export class ControlWord extends BaseComponent {
         deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
         addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
-      /*   window.location.reload(); */
+        /*   window.location.reload(); */
       }
     });
     if (hard) {
