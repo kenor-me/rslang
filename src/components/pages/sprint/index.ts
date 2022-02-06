@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import './index.css';
 
+const root = document.getElementById('root') as HTMLElement;
+
 const renderFullscreenOpen = (): string => `
   <svg class="fullscreen-open" xmlns="http://www.w3.org/2000/svg" 
   width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -30,7 +32,8 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-export const renderSprintPage = (): string => `
+export const renderSprintPage = (): void => {
+  root.innerHTML = `
   <div class="sprint-wrapper">
     <div class="sprint__inf-block">
       <div class="sprint__btn-block-top">
@@ -54,3 +57,4 @@ export const renderSprintPage = (): string => `
     </div>
   </div>
 `;
+};
