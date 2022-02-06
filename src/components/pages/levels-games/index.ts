@@ -1,5 +1,6 @@
 import './index.css';
 import { getTimer } from '../timer';
+import { renderSprintPage } from '../sprint';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -61,8 +62,8 @@ export const renderLevelsGamePage = (description: string): string => {
     if (target.classList.contains('level')) {
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {
-        if (description === sprintDescription) root.innerHTML = 'Спринт';
-        else root.innerHTML = 'Аудиовызов';
+        if (window.location.hash === '#sprint') renderSprintPage();
+        else if (window.location.hash === '#audiocall') root.innerHTML = 'Аудиовызов';
       }, 4500);
     }
   });
