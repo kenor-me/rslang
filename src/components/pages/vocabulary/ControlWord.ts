@@ -95,6 +95,7 @@ export class ControlWord extends BaseComponent {
         if (this.node.classList.contains('learn-word')) {
           await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
           this.node.classList.remove('learn-word');
+        //  window.location.reload()
         }
         await setWordHard(this.user!.userId, this.user!.token, wordInfo);
         addWordButton.node.textContent = 'Удалить слово';
@@ -105,6 +106,10 @@ export class ControlWord extends BaseComponent {
         await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
         addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
+      }
+      const settings = (JSON.parse(localStorage.getItem('settings') as string));
+      if (settings.part === 6) {
+        window.location.reload();
       }
     });
     if (hard) {
@@ -117,6 +122,10 @@ export class ControlWord extends BaseComponent {
           await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
           addWordButton.node.textContent = 'Добавить слово';
           this.node.classList.remove('hard-word');
+          const settings = (JSON.parse(localStorage.getItem('settings') as string));
+          if (settings.part === 6) {
+            window.location.reload();
+          }
         }
         await setWordLearned(this.user!.userId, this.user!.token, wordInfo);
         addLearnedWordButton.node.textContent = 'Не знаю';
