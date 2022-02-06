@@ -37,7 +37,7 @@
   flex-direction: column;
 }
 .book-word-item.hard-word {
-  box-shadow: 7px -6px 33px #7c0101;
+  box-shadow: 7px -6px 33px #ff8888;
 }
 .book-word-item.learn-word {
   box-shadow: 7px -6px 33px #0b7c01ee;
@@ -98,13 +98,13 @@
   margin-bottom: 10px;
 }
 .hard-word .btn-add {
-  background-color: red;
+  background-color: #ff8888;
 }
 .learn-word .btn-learn {
   background-color: green;
 }
 .btn-hard-word {
-  background-color: #7c0101;
+  background-color: #ff8888;
 }
 .card__btn-adddifficult,
 .card__btn-deldifficult {
@@ -130,8 +130,7 @@
 }
 .navigation {
   background-color: #2a39507a;
-  height: 120px;
-  padding: 0 18px;
+  padding: 30px 18px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   display: flex;
@@ -245,7 +244,6 @@
   .book-page-nav-audio {
     width: 50px;
     height: 60px;
-    margin-top: 30px;
   }
   .book-page-nav-sprint div,
   .book-page-nav-audio div {
@@ -253,6 +251,7 @@
     height: 40px;
     top: 5px;
     left: 5px;
+    display: block;
   }
   .book-page-nav-audio span,
   .book-page-nav-sprint span {
@@ -270,18 +269,27 @@
     font-size: 18px;
   }
 }
-@media screen and (max-width: 600px) {
-  .book-page-number-page {
-    font-size: 14px;
+@media screen and (max-width: 680px) {
+  .navigation {
+    flex-direction: column;
+    padding: 0 0 10px 0;
   }
+  .book-page-nav-sprint,
+  .book-page-nav-audio,
+  .nav-right {
+    margin: 0 auto;
+  }
+  .book-page-nav-audio span,
+  .book-page-nav-sprint span {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
   .book-word-item {
     width: 350px;
   }
   .word-img {
     width: 320px;
-  }
-  .nav-right {
-    margin-left: 10px;
   }
 }
 @media screen and (max-width: 450px) {
