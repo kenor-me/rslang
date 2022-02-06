@@ -3,10 +3,11 @@ import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
+// import { renderSprintPage } from '../pages/sprint';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
 import Vocabulury from '../pages/vocabulary/index';
 
-const root = document.querySelector('#root') as HTMLElement;
+// const root = document.querySelector('#root') as HTMLElement;
 export const locationResolver = (location: string): void => {
   switch (location) {
     case '#textbook':
@@ -14,7 +15,6 @@ export const locationResolver = (location: string): void => {
       const vocabulury = new Vocabulury(root);
       break;
     case '#games':
-      root.innerHTML = 'Мини-игры';
       renderGamesPage();
       break;
     case '#statistics':
@@ -25,7 +25,7 @@ export const locationResolver = (location: string): void => {
     case '#about':
       renderAdvantagesAboutUs();
       break;
-    case '#savannah':
+    case '#sprint':
       renderLevelsGamePage(sprintDescription);
       break;
     case '#audiocall':
