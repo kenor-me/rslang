@@ -2,6 +2,7 @@ import './index.css';
 import { getTimer } from '../timer';
 import { renderSprintPage } from '../sprint';
 import { renderAudiocallPage } from '../audiocall';
+import { currentWords } from '../audiocall/getWords';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -56,9 +57,12 @@ export const renderLevelsGamePage = (description: string): string => {
     </div>
   `;
   root.innerHTML = content;
-  document.querySelector('.levels')?.addEventListener('click', (e) => {
+  document.querySelector('.levels')?.addEventListener('click', async (e) => {
     const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
     if (target.classList.contains('level')) {
+      const page = currentWords.getRandomPageNum();
+      const part = Number((target.querySelector('span') as HTMLElement).textContent);
+      await currentWords.getGameWords(part, page);
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {
         if (window.location.hash === '#sprint') renderSprintPage();
