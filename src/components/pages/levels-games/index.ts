@@ -1,6 +1,7 @@
 import './index.css';
 import { getTimer } from '../timer';
 import { renderSprintPage } from '../sprint';
+import { renderAudiocallPage } from '../audiocall';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -63,7 +64,7 @@ export const renderLevelsGamePage = (description: string): string => {
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {
         if (window.location.hash === '#sprint') renderSprintPage();
-        else if (window.location.hash === '#audiocall') root.innerHTML = 'Аудиовызов';
+        else if (window.location.hash === '#audiocall') renderAudiocallPage();
       }, 4500);
     }
   });
