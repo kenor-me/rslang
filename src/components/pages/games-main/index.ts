@@ -4,26 +4,30 @@ const root = document.getElementById('root') as HTMLElement;
 
 export const renderGamesPage = (): void => {
   const content = `
-    <h2 class="header-games">Выбери игру</h2>
+  <div class="main-games-wrapper">
+    <h1 class="header-games">Выбери игру</h1>
     <div class="wrapper-games">
       <div class="wrapper-games-savannah">
         <a class="games-mark games-mark-savanah" href="#sprint">
-        <span class="games-mark-bg"></span>
-        <div></div>
-        <a class="games-mark games-mark-savanah" href="#sprint">Спринт</a>
+          <span class="games-mark-bg"></span>
+          <span class="games-mark-img"></span>
+          <span class="games-mark-name">Спринт</span>
+        </a>
         <p class="games-description">Тренировка Спринт поможет проверить знаешь ли ты правильный перевод. 
         Чем больше слов ты знаешь, тем больше очков опыта получишь.
         </p>
       </div>
       <div class="wrapper-games-audiocall">
         <a class="games-mark games-mark-audiocall" href="#audiocall">
-        <span class="games-mark-bg"></span>
-        <div></div>
-        <span class="games-mark-name">Аудиовызов</span>
+          <span class="games-mark-bg"></span>
+          <span class="games-mark-img"></span>
+          <span class="games-mark-name">Аудиовызов</span>
         </a>
-        <p class="games-description">Тренировка улучшает восприятие речи на слух.</p>
+        <p class="games-description">Тренировка Аудиовызов улучшает восприятие речи на слух.
+        Выбирай перевод слова, которое услышишь.</p>
       </div>
     </div>
+  </div>
   `;
   root.innerHTML = content;
 };

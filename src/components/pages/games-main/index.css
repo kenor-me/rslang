@@ -1,31 +1,35 @@
-.wrapper-games {
-  display: flex;
-  justify-content: space-around;
-  max-width: 100vw;
-  min-height: calc(100vh - 251px);
+.main-games-wrapper {
+  min-height: calc(100vh - 230px);
+  padding: 50px 20px;
   background-color: var(--bg-dark);
   background-image: url(./../../../assets/img/bg-map.png);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-size: cover;
 }
 
-.header-games {
-  padding: 60px 0 0 0;
-  font-family: Forum;
-  font-size: 3.3rem;
-  font-weight: 700;
-  color: var(--font-color-green);
-  text-align: center;
-  text-transform: uppercase;
-  background-color: rgb(38,66,87);
+.main-games-wrapper h1 {
+  color: #ffc86d;
+}
+
+.wrapper-games {
+  display: flex;
+  padding-top: 80px;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 .wrapper-games-savannah,
 .wrapper-games-audiocall {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.games-mark {
   position: relative;
-  margin: 300px auto;
+  display: block;
+  height: 185px;
+  width: 150px;
 }
 
 .games-mark-bg {
@@ -35,82 +39,68 @@
   width: 103px;
   height: 125px;
   position: relative;
-  margin: 0px auto;
+  margin: 0px auto 10px;
 }
 
-.wrapper-games-savannah div,
-.wrapper-games-audiocall div {
+.games-mark-img,
+.games-mark-img {
+  display: block;
   z-index: 0;
   position: absolute;
   width: 90px;
   height: 90px;
   border-radius: 50px;
   top: 8px;
-  left: 6px;
+  left: 30px;
 }
 
-.wrapper-games-savannah div {
+.wrapper-games-savannah .games-mark-img {
   background: url(./../../../assets/vocabulary/icon-2.png) no-repeat;
   background-size: cover;
 }
 
-.wrapper-games-audiocall div {
+.wrapper-games-audiocall .games-mark-img {
   background: url(./../../../assets/vocabulary/icon-4.jpg) no-repeat;
   background-size: cover;
 }
 
 .games-mark-name {
-  position: absolute;
-  top: 130px;
-  left: 5px;
-}
-
-.games-mark-audiocall .games-mark-name {
-  left: -10px;
-}
-
-.games-description {
-  position: absolute;
-  width: 300px;
-  top: 170px;
-  left: -90px;
   font-family: Forum;
+  font-size: 2rem;
+  color: #ffc86d;
+  text-align: center;
+  position: absolute;
+  align-self: center;
+  transition: 0.6s;
+}
+
+.games-mark-savanah .games-mark-name {
+  left: 25px;
+}
+
+.games-mark:hover .games-mark-name {
+  color: var(--font-color-green);
+}
+.games-description {
   font-size: 1.2rem;
+  width: 300px;
+  padding: 0 7px;
   color: var(--font-color-light);
   text-align: justify;
 }
 
-@media (max-width: 1440px) {
-  .wrapper-games-savannah,
-  .wrapper-games-audiocall {
-    margin: 80px auto;
-  }
-}
-
-@media (max-width: 1024px) {
-  .wrapper-games {
-    background-size: cover;
-  }
-
-  .wrapper-games-savannah,
-  .wrapper-games-audiocall {
-    margin: 80px auto;
-  }
-}
-
 @media (max-width: 640px) {
-  .header-games {
-    font-size: 2rem;
+  .main-games-wrapper {
+    min-height: calc(100vh - 358px);
   }
 
   .wrapper-games {
-    background-size: cover;
     flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
   }
 
-  .games-description {
-    font-size: 0.9rem;
+  .wrapper-games-savannah {
+    margin-bottom: 25px;
   }
 }
-
-
