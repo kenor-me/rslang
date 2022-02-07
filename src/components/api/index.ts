@@ -103,3 +103,18 @@ export const deleteUserWord = async (userId:string, token:string, word:Word):Pro
     },
   });
 };
+
+export const setWordLearned = async (userId:string, token:string, word:Word):Promise<void> => {
+  const newWord = {
+    difficulty: 'learned',
+    optional: {},
+  };
+  await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWord),
+  });
+};

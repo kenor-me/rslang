@@ -7,8 +7,6 @@ import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
 
-// import { locationResolver } from '../../routing';
-
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
 
@@ -16,7 +14,11 @@ class Vocabulary extends BaseComponent {
 
   settings: Settings;
 
+  allUserWords: ContentWord[] | undefined = [];
+
   hardWords: ContentWord[] | undefined = [];
+
+  learnWords: ContentWord[] | undefined = [];
 
   navigation: Navigation;
 
@@ -71,7 +73,9 @@ class Vocabulary extends BaseComponent {
 
   updatePage = async (): Promise<void> => {
     if (this.user) {
-      this.hardWords = await getWordsUser(this.user.userId, this.user.token);
+      this.allUserWords = await getWordsUser(this.user.userId, this.user.token);
+      this.hardWords = this.allUserWords.filter((hardword) => hardword.difficulty === ('hard').toString());
+      this.learnWords = this.allUserWords.filter((hardword) => hardword.difficulty === ('learned').toString());
       if (this.settings.part === this.MAX_COUNT_PART) {
         this.navigation.pageSwitcher.node.style.display = 'none';
         this.currentPage = await Promise.all(this.hardWords.map((hardword) => getWordById(hardword.wordId)));
@@ -87,10 +91,10 @@ class Vocabulary extends BaseComponent {
       }
     } else {
       this.currentPage = await getWordPage(this.settings.part, this.settings.page);
-      this.navigation.pageSwitcher.setNumberPage(this.settings.page);
       this.navigation.pageSwitcher.node.style.visibility = 'visible';
     }
-    this.wordsArray.updateBookListPage(this.currentPage!, this.hardWords);
+    this.navigation.pageSwitcher.setNumberPage(this.settings.page);
+    this.wordsArray.updateBookListPage(this.currentPage!, this.hardWords, this.learnWords);
   };
 
   changePage = async (param: string): Promise<void> => {

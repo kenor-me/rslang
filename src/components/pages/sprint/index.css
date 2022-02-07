@@ -152,6 +152,10 @@
   fill: white;
 }
 
+.sprint__fullscreen-open {
+  fill: white;
+}
+
 /* .sprint__timer-counte {
   animation: counter 60s steps(3, end) forwards;
 } */
