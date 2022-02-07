@@ -2,15 +2,15 @@ import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
-// import { renderSprintPage } from '../pages/sprint';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
-import { mountedVocabulary } from '../pages/vocabulary';
+import { renderVocabulary } from '../pages/vocabulary';
 
-// const root = document.querySelector('#root') as HTMLElement;
+const root = document.querySelector('#root') as HTMLElement;
 export const locationResolver = (location: string): void => {
   switch (location) {
     case '#textbook':
-      mountedVocabulary();
+      root.innerHTML = '';
+      renderVocabulary();
       break;
     case '#games':
       renderGamesPage();

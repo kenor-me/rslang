@@ -33,3 +33,15 @@ export type Token = {
   userId: string;
   name: string;
 };
+
+export type ContentWord = {
+  difficulty: 'string',
+  id: string
+  wordId: string,
+  optional:Record<string, unknown>
+};
+
+export type Settings = {
+  part: number;
+  page: number;
+};

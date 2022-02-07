@@ -6,10 +6,10 @@
 @keyframes bookPage {
   0% {
     opacity: 0;
-  };
+  }
   100% {
     opacity: 1;
-  };
+  }
 }
 
 .container__book-page {
@@ -25,15 +25,22 @@
 }
 .book-word-item {
   width: 400px;
-  height: 550px;
+  height: 650px;
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 10px;
   background-color: #2a3950;
+  border: 2px solid #2a3950;
   color: azure;
   margin: 20px;
   display: flex;
   flex-direction: column;
+}
+.book-word-item.hard-word {
+  box-shadow: 7px -6px 33px #ff8888;
+}
+.book-word-item.learn-word {
+  box-shadow: 7px -6px 33px #0b7c01ee;
 }
 .word-img {
   width: 380px;
@@ -41,22 +48,63 @@
 }
 .card-content {
   text-align: center;
-  height: 180px;
+  height: 250px;
 }
 .card__word {
   font-size: 30px;
+}
+.card__translate {
+  margin-bottom: 10px;
 }
 .card__btn-audio {
   background-image: url("./../../../assets/vocabulary/audio.png");
   background-repeat: no-repeat;
   background-size: cover;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   margin: 0 auto;
 }
 .card__example,
 .card__meaning {
   font-size: 12px;
+  margin-bottom: 10px;
+}
+.card__example-value,
+.card__meaning-value {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.btn-add,
+.btn-learn {
+  display: block;
+  width: 170px;
+  height: 44px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2a3950;
+  background-color: #00e0c7;
+  border: 1.5px solid #ffffff;
+  box-shadow: 3px 3px 10px rgb(0 224 199 / 25%);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.6s;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.btn-learn {
+  margin-bottom: 10px;
+}
+.hard-word .btn-add {
+  background-color: #ff8888;
+}
+.learn-word .btn-learn {
+  background-color: green;
+}
+.btn-hard-word {
+  background-color: #ff8888;
 }
 .card__btn-adddifficult,
 .card__btn-deldifficult {
@@ -69,6 +117,7 @@
   text-align: center;
   align-items: center;
   margin: 0 auto;
+  cursor: pointer;
 }
 .card__btn-deldifficult {
   margin-top: 10px;
@@ -81,8 +130,7 @@
 }
 .navigation {
   background-color: #2a39507a;
-  height: 120px;
-  padding: 0 18px;
+  padding: 30px 18px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   display: flex;
@@ -106,27 +154,26 @@
 .book-page-number-page {
   margin: auto;
   font-size: 20px;
-  font-style: oblique;
-  font-family: cursive;
+  font-family: Forum;
   width: 160px;
   text-align: center;
   color: azure;
 }
 .select-partition {
-  width: 80px;
+  width: 125px;
   height: 70px;
   font-size: 20px;
   text-align: center;
   margin-top: 30px;
-  margin-right: 15px;
   border-radius: 50px;
+  cursor: pointer;
 }
 .select-partition option {
   font-size: 22px;
   line-height: 50px;
   padding: 10px;
 }
-.book-page-nav-savannah,
+.book-page-nav-sprint,
 .book-page-nav-audio {
   display: block;
   background: url("./../../../assets/vocabulary/vector.png") no-repeat;
@@ -136,7 +183,7 @@
   position: relative;
   margin-top: 10px;
 }
-.book-page-nav-savannah div,
+.book-page-nav-sprint div,
 .book-page-nav-audio div {
   position: absolute;
   width: 50px;
@@ -145,7 +192,7 @@
   top: 8px;
   left: 6px;
 }
-.book-page-nav-savannah div {
+.book-page-nav-sprint div {
   background: url("./../../../assets/vocabulary/icon-2.png") no-repeat;
   background-size: cover;
 }
@@ -154,12 +201,11 @@
   background-size: cover;
 }
 .book-page-nav-audio span,
-.book-page-nav-savannah span {
+.book-page-nav-sprint span {
   position: absolute;
   bottom: 0;
   font-size: 20px;
-  font-style: oblique;
-  font-family: cursive;
+  font-family: Forum;
   top: 73px;
   color: azure;
 }
@@ -172,6 +218,7 @@
   height: 70px;
   background-size: contain;
   margin: auto;
+  cursor: pointer;
 }
 .pagination-prev {
   background-image: url("./../../../assets/vocabulary/prev.png");
@@ -181,26 +228,33 @@
   background-image: url("./../../../assets/vocabulary/next.png");
   background-repeat: no-repeat;
 }
+.text-errors {
+  height: 90vh;
+  color: black;
+  font-size: 40px;
+  margin-top: 50px;
+  justify-content: center;
+}
 @media screen and (max-width: 768px) {
   .book-page-nav-logo {
     width: 60px;
     height: 60px;
   }
-  .book-page-nav-savannah,
+  .book-page-nav-sprint,
   .book-page-nav-audio {
     width: 50px;
     height: 60px;
-    margin-top: 30px;
   }
-  .book-page-nav-savannah div,
+  .book-page-nav-sprint div,
   .book-page-nav-audio div {
     width: 40px;
     height: 40px;
     top: 5px;
     left: 5px;
+    display: block;
   }
   .book-page-nav-audio span,
-  .book-page-nav-savannah span {
+  .book-page-nav-sprint span {
     font-size: 16px;
   }
   .book-page-nav-audio span {
@@ -215,18 +269,27 @@
     font-size: 18px;
   }
 }
-@media screen and (max-width: 600px) {
-  .book-page-number-page {
-    font-size: 14px;
+@media screen and (max-width: 680px) {
+  .navigation {
+    flex-direction: column;
+    padding: 0 0 10px 0;
   }
+  .book-page-nav-sprint,
+  .book-page-nav-audio,
+  .nav-right {
+    margin: 0 auto;
+  }
+  .book-page-nav-audio span,
+  .book-page-nav-sprint span {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
   .book-word-item {
     width: 350px;
   }
   .word-img {
     width: 320px;
-  }
-  .nav-right {
-    margin-left: 10px;
   }
 }
 @media screen and (max-width: 450px) {
