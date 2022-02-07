@@ -12,7 +12,7 @@ export class PageSwitcher extends BaseComponent {
   }
 
   setNumberPage(pageNumber: number): void {
-    this.title.node.innerText = `Страница №${pageNumber + 1}`;
+    this.title.node.innerText = `Страница №  ${pageNumber + 1}`;
     if (pageNumber + 1 === 30) {
       this.nextButton.node.style.visibility = 'hidden';
     } else this.nextButton.node.style.visibility = 'visible';
