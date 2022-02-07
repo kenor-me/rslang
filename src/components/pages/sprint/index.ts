@@ -32,22 +32,6 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-const renderResultForm = () => {
-  root.innerHTML = `
-  <div class="sprint-wrapper">
-    <div class="sprint__inf-block">
-      <div class="sprint__btn-block-top">
-        ${renderFullscreenOpen()}
-        <a href="#games">${renderCloseSVG()}</a>
-      </div>
-      <div class="sprint-text-block">
-        <p class="sprint__title">РЕЗУЛЬТАТ</p>
-      </div>
-    </div>
-  </div>
-`;
-};
-
 const toggleFullScreen = () => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
   const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
@@ -56,18 +40,37 @@ const toggleFullScreen = () => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('sprint__fullscreen-open')) {
       fullscreen.innerHTML = `${renderFullscreenClose()}`;
+      if (wrapper.requestFullscreen) {
+        wrapper.requestFullscreen();
+      }
     }
     if (target.classList.contains('sprint__fullscreen-close')) {
       fullscreen.innerHTML = `${renderFullscreenOpen()}`;
-    }
-
-    if (wrapper.requestFullscreen) {
-      wrapper.requestFullscreen();
-    }
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
     }
   });
+};
+
+const renderResultForm = () => {
+  root.innerHTML = `
+  <div class="sprint-wrapper">
+    <div class="sprint__inf-block">
+      <div class="sprint__btn-block-top">
+        <div class="fullscreen">
+          ${renderFullscreenOpen()}
+        </div>
+        <a href="#games">${renderCloseSVG()}</a>
+      </div>
+      <div class="sprint-text-block">
+        <p class="sprint__title">РЕЗУЛЬТАТ</p>
+      </div>
+    </div>
+  </div>
+`;
+
+  toggleFullScreen();
 };
 
 const getSeconds = () => {
@@ -75,7 +78,7 @@ const getSeconds = () => {
   const second = document.querySelector('.sprint__seconds') as HTMLElement;
   setTimeout(function run() {
     second.innerHTML = `${seconds - 1}`;
-    if (seconds > 1) {
+    if (seconds > 0) {
       setTimeout(run, 1000);
       seconds -= 1;
     } else {
