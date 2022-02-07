@@ -13,7 +13,7 @@ export const renderGamesPage = (): void => {
           <span class="games-mark-img"></span>
           <span class="games-mark-name">Спринт</span>
         </a>
-        <p class="games-description">Тренировка Спринт поможет проверить знаешь ли ты правильный перевод. 
+        <p class="games-description">Тренировка Спринт поможет проверить знаешь ли ты правильный перевод слова. 
         Чем больше слов ты знаешь, тем больше очков опыта получишь.
         </p>
       </div>
@@ -24,7 +24,7 @@ export const renderGamesPage = (): void => {
           <span class="games-mark-name">Аудиовызов</span>
         </a>
         <p class="games-description">Тренировка Аудиовызов улучшает восприятие речи на слух.
-        Выбирай перевод слова, которое услышишь.</p>
+        Выбирай перевод слова, которое услышишь и получай баллы.</p>
       </div>
     </div>
   </div>

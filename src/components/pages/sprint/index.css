@@ -1,7 +1,6 @@
 .sprint-wrapper {
   padding: 50px 20px;
   min-height: calc(100vh - 230px);
-  /* background-color: var(--bg-dark); */
   background-image: url("./../../../assets/img/bg-sprint.jpg");
   background-size: cover;
   display: flex;
@@ -10,6 +9,7 @@
 }
 
 .sprint__inf-block {
+  max-width: 1200px;
   height: 500px;
   width: 80%;
   padding: 15px;
@@ -116,6 +116,14 @@
   justify-content: space-between;
 }
 
+.sprint__btn-block-top path {
+  transition: 0.4s;
+}
+
+.sprint__btn-block-top svg:hover path {
+  fill: tomato;
+}
+
 .sprint__btn-block-top svg {
   cursor: pointer;
 }
@@ -156,9 +164,16 @@
   fill: white;
 }
 
-/* .sprint__timer-counte {
-  animation: counter 60s steps(3, end) forwards;
-} */
+@media (max-width: 740px) {
+  .sprint__btn {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .sprint__inf-block {
+    height: auto;
+  }
+}
 
 @media (max-width: 639px) {
   .sprint-wrapper {
@@ -169,5 +184,13 @@
 @media (max-width: 440px) {
   .sprint-wrapper {
     min-height: calc(100vh - 425px);
+  }
+
+  .sprint__title {
+    font-size: 2.2rem;
+  }
+  
+  .sprint__subtitle {
+    font-size: 1.2rem;
   }
 }

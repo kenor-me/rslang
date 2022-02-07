@@ -4,7 +4,7 @@ import './index.css';
 const root = document.getElementById('root') as HTMLElement;
 
 export const renderFullscreenOpen = (): string => `
-  <svg class="sprint__fullscreen-open fullscreen-open" xmlns="http://www.w3.org/2000/svg"
+  <svg class="sprint__fullscreen-open" xmlns="http://www.w3.org/2000/svg"
   width="36" height="36" viewBox="0 0 36 36" fill="none">
     <path d="M31.48 31.6299H23.05V35.8599H35.7001V23.1499H31.48V31.6299Z" />
     <path d="M4.22 23.1499H0V35.8599H12.65V31.6299H4.22V23.1499Z" />
@@ -22,7 +22,7 @@ export const renderCloseSVG = (): string => `
 `;
 
 const renderFullscreenClose = (): string => `
-  <svg class="fullscreen-close fullscreen-hidden"
+  <svg class="sprint__fullscreen-close"
   xmlns="http://www.w3.org/2000/svg" width="36"
       height="36" viewBox="0 0 36 36" fill="none">
     <path d="M28.2554 7.74495H35.9764V12.8119H23.1874V0.0229492H28.2544V7.74395L28.2554
@@ -32,24 +32,80 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-export const renderSprintPage = (): void => {
+const renderResultForm = () => {
   root.innerHTML = `
   <div class="sprint-wrapper">
     <div class="sprint__inf-block">
       <div class="sprint__btn-block-top">
         ${renderFullscreenOpen()}
-        ${renderCloseSVG()}
+        <a href="#games">${renderCloseSVG()}</a>
+      </div>
+      <div class="sprint-text-block">
+        <p class="sprint__title">РЕЗУЛЬТАТ</p>
+      </div>
+    </div>
+  </div>
+`;
+};
+
+const toggleFullScreen = () => {
+  const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
+  const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
+
+  fullscreen.addEventListener('click', (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('sprint__fullscreen-open')) {
+      fullscreen.innerHTML = `${renderFullscreenClose()}`;
+    }
+    if (target.classList.contains('sprint__fullscreen-close')) {
+      fullscreen.innerHTML = `${renderFullscreenOpen()}`;
+    }
+
+    if (wrapper.requestFullscreen) {
+      wrapper.requestFullscreen();
+    }
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  });
+};
+
+const getSeconds = () => {
+  let seconds = 60;
+  const second = document.querySelector('.sprint__seconds') as HTMLElement;
+  setTimeout(function run() {
+    second.innerHTML = `${seconds - 1}`;
+    if (seconds > 1) {
+      setTimeout(run, 1000);
+      seconds -= 1;
+    } else {
+      renderResultForm();
+    }
+  }, 1000);
+};
+
+export const renderSprintPage = (): void => {
+  root.innerHTML = `
+  <div class="sprint-wrapper">
+    <div class="sprint__inf-block">
+      <div class="sprint__btn-block-top">
+        <div class="fullscreen">
+          ${renderFullscreenOpen()}
+        </div>
+        <a href="#games">${renderCloseSVG()}</a>
       </div>
       <div class="sprint__timer">
         <div class="sprint__timer-line"></div>
         <div class="sprint__timer-body">
           <div class="sprint__timer-counter">
-            <span>60</span>
+            <span class="sprint__seconds">60</span>
           </div>
         </div>
       </div>
-      <p class="sprint__title">environment</p>
-      <p class="sprint__subtitle">окружающая обстановка</p>
+      <div class="sprint-text-block">
+        <p class="sprint__title">environment</p>
+        <p class="sprint__subtitle">окружающая обстановка</p>
+      </div>
       <div class="sprint__btn-block">
         <div class="sprint__btn sprint__left">Верно</div>
         <div class="sprint__btn sprint__right">Неверно</div>
@@ -57,4 +113,7 @@ export const renderSprintPage = (): void => {
     </div>
   </div>
 `;
+
+  toggleFullScreen();
+  getSeconds();
 };
