@@ -36,7 +36,7 @@ export type Token = {
 
 export type ContentWord = {
   difficulty: 'string',
-  id: string
+  id: string,
   wordId: string,
   optional: {
     correctAnswer: number
@@ -48,8 +48,15 @@ export type Settings = {
   page: number;
 };
 
+export type WordResult = {
+  audio: string,
+  word: string,
+  transcription: string,
+  translate: string,
+};
+
 export type Statistic = {
-  id:string,
+  id: string,
   learnedWords: number,
   optional: Record<string, unknown>, // возможно изменить
 };

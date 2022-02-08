@@ -2,7 +2,9 @@ import { renderAdvantagesAboutUs } from '../pages/about-us';
 import { renderGamesPage } from '../pages/games-main';
 import { renderLevelsGamePage, sprintDescription, audioDescription } from '../pages/levels-games';
 import { renderDescription } from '../pages/main';
+import { renderSprintPage } from '../pages/sprint';
 import { renderStatisticPage, renderBaseStatisticPage } from '../pages/statistic';
+import { getTimer } from '../pages/timer';
 import { renderVocabulary } from '../pages/vocabulary';
 
 const root = document.querySelector('#root') as HTMLElement;
@@ -23,11 +25,17 @@ export const locationResolver = (location: string): void => {
     case '#about':
       renderAdvantagesAboutUs();
       break;
+    case '#sprint-description':
+      renderLevelsGamePage(sprintDescription, '#sprint');
+      break;
+    case '#audiocall-description':
+      renderLevelsGamePage(audioDescription, '#audiocall');
+      break;
     case '#sprint':
-      renderLevelsGamePage(sprintDescription);
+      root.innerHTML = `${getTimer()}`;
       break;
     case '#audiocall':
-      renderLevelsGamePage(audioDescription);
+      root.innerHTML = `${getTimer()}`;
       break;
     default:
       renderDescription();

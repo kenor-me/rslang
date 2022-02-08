@@ -8,7 +8,7 @@ export const renderGamesPage = (): void => {
     <h1 class="header-games">Выбери игру</h1>
     <div class="wrapper-games">
       <div class="wrapper-games-savannah">
-        <a class="games-mark games-mark-savanah" href="#sprint">
+        <a class="games-mark games-mark-savanah" href="#sprint-description">
           <span class="games-mark-bg"></span>
           <span class="games-mark-img"></span>
           <span class="games-mark-name">Спринт</span>
@@ -18,7 +18,7 @@ export const renderGamesPage = (): void => {
         </p>
       </div>
       <div class="wrapper-games-audiocall">
-        <a class="games-mark games-mark-audiocall" href="#audiocall">
+        <a class="games-mark games-mark-audiocall" href="#audiocall-description">
           <span class="games-mark-bg"></span>
           <span class="games-mark-img"></span>
           <span class="games-mark-name">Аудиовызов</span>

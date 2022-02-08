@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+import { Word, WordResult } from '../../types';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
@@ -32,7 +33,13 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-const toggleFullScreen = () => {
+const renderSoundSVG = (): string => `
+  <svg class="sprint__result-sound" focusable="false" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
+    <path fill="#3b4d68" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path>
+  </svg>
+`;
+
+const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
   const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
 
@@ -53,27 +60,55 @@ const toggleFullScreen = () => {
   });
 };
 
-const renderResultForm = () => {
+const BASE_URL = 'https://app-english-learn.herokuapp.com';
+
+const renderResultWord = (word: WordResult): string => `
+  <li>
+    <div>${renderSoundSVG()}
+      <audio src="${BASE_URL}/${word.audio}"></audio>
+    </div>
+    <div class="sprint__result-text-block">
+      <p class="sprint__result-word"> ${word.word} </p>
+      <p class="sprint__result-transcript"> ${word.transcription} </p>
+      <p class="sprint__result-transl"> - ${word.translate}</p>
+    </div>
+  </li>
+`;
+
+const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
   root.innerHTML = `
-  <div class="sprint-wrapper">
+  <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
       <div class="sprint__btn-block-top">
-        <div class="fullscreen">
-          ${renderFullscreenOpen()}
-        </div>
-        <a href="#games">${renderCloseSVG()}</a>
+        <a href="#games" class="sprint__link">${renderCloseSVG()}</a>
       </div>
-      <div class="sprint-text-block">
+      <div class="sprint-text-block sprint__result-inf-block">
         <p class="sprint__title">РЕЗУЛЬТАТ</p>
-      </div>
+        <div class="sprint__result">
+          <p class="sprint__result-title">Слова с ошибками <span class="result-title-wrong">${wrong.length}</span></p>
+          <ul class="sprint__wrong-words">
+            ${wrong.map((word: WordResult) => renderResultWord(word)).join('')}
+          </ul>
+        </div>
+        <div class="sprint__result">
+          <p class="sprint__result-title">Изученные слова <span class="result-title-right">${right.length}</span></p>
+          <ui class="sprint__right-words">
+            ${right.map((word: WordResult) => renderResultWord(word)).join('')}
+          </ui>
+        </div>
+        <a href="#sprint-description" class="sprint__result-btn">Играть еще раз</a>
     </div>
   </div>
 `;
 
-  toggleFullScreen();
+  const audioBlock = document.querySelector('.sprint__result-inf-block') as HTMLElement;
+
+  audioBlock.addEventListener('click', (e: Event): void => {
+    const target = e.target as HTMLElement;
+  });
 };
 
-const getSeconds = () => {
+const getSeconds = (): void => {
   let seconds = 60;
   const second = document.querySelector('.sprint__seconds') as HTMLElement;
   setTimeout(function run() {
@@ -81,8 +116,6 @@ const getSeconds = () => {
     if (seconds > 0) {
       setTimeout(run, 1000);
       seconds -= 1;
-    } else {
-      renderResultForm();
     }
   }, 1000);
 };
@@ -110,8 +143,8 @@ export const renderSprintPage = (): void => {
         <p class="sprint__subtitle">окружающая обстановка</p>
       </div>
       <div class="sprint__btn-block">
-        <div class="sprint__btn sprint__left">Верно</div>
-        <div class="sprint__btn sprint__right">Неверно</div>
+      <div class="sprint__btn sprint__left">Неверно</div>
+        <div class="sprint__btn sprint__right">Верно</div>
       </div>
     </div>
   </div>
@@ -119,4 +152,105 @@ export const renderSprintPage = (): void => {
 
   toggleFullScreen();
   getSeconds();
+};
+
+const getRandomIndex = (): number => {
+  const min = 0;
+  const max = 29;
+  const randomIndex = Math.floor(Math.random() * (max - min) + min);
+  return randomIndex;
+};
+
+const renderWord = (word: string, translate: string) => {
+  const title = document.querySelector('.sprint__title') as HTMLElement;
+  const subtitle = document.querySelector('.sprint__subtitle') as HTMLElement;
+  title.innerHTML = `${word}`;
+  subtitle.innerHTML = `${translate}`;
+};
+
+export const getSprintPlay = async (words: Word[]): Promise<void> => {
+  let i = 0;
+  const arrTranslate: string[] = [];
+  const arr: number[] = [0, 2, 3, 5, 7, 11, 13, 17, 19, 23, 26, 29, 31, 35, 37];
+  words.map((item: Word): number => arrTranslate.push(item.wordTranslate));
+
+  const randomTranslate: string[] = arrTranslate.map((item: string, ind: number, array: string[]): string => ((!arr.includes(ind) ? item : array[getRandomIndex()])));
+  renderWord(words[i].word, randomTranslate[i]);
+
+  const answerButton = document.querySelector('.sprint__btn-block') as HTMLElement;
+  const wrong: WordResult[] = [];
+  const right: WordResult[] = [];
+
+  const resultTimeout = setTimeout((): void => {
+    renderResultForm(wrong, right);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    document.removeEventListener('keydown', kayAnswer);
+  }, 60000);
+
+  const addWrongWord = (): void => {
+    wrong.push({
+      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+    });
+    i++;
+  };
+
+  const addRightWord = (): void => {
+    right.push({
+      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+    });
+    i++;
+  };
+
+  function kayAnswer(e: KeyboardEvent) {
+    // console.log(e.code);
+    if (i < words.length) {
+      if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
+        addWrongWord();
+      } else if (e.code === 'ArrowLeft' && words[i].wordTranslate !== randomTranslate[i]) {
+        addRightWord();
+      }
+      if (e.code === 'ArrowRight' && words[i].wordTranslate !== randomTranslate[i]) {
+        addWrongWord();
+      } else if (e.code === 'ArrowRight' && words[i].wordTranslate === randomTranslate[i]) {
+        addRightWord();
+      }
+      if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
+    } else {
+      renderResultForm(wrong, right);
+      clearTimeout(resultTimeout);
+      document.removeEventListener('keydown', kayAnswer);
+      // console.log(wrong);
+      // console.log(right);
+    }
+  }
+
+  document.addEventListener('keydown', kayAnswer);
+
+  answerButton.addEventListener('click', (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (i < words.length) {
+      if (target.classList.contains('sprint__left') && words[i].wordTranslate === randomTranslate[i]) {
+        addWrongWord();
+      } else if (target.classList.contains('sprint__left') && words[i].wordTranslate !== randomTranslate[i]) {
+        addRightWord();
+      }
+      if (target.classList.contains('sprint__right') && words[i].wordTranslate !== randomTranslate[i]) {
+        addWrongWord();
+      } else if (target.classList.contains('sprint__right') && words[i].wordTranslate === randomTranslate[i]) {
+        addRightWord();
+      }
+      if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
+    } else {
+      renderResultForm(wrong, right);
+      clearTimeout(resultTimeout);
+      document.removeEventListener('keydown', kayAnswer);
+      // console.log(wrong);
+      // console.log(right);
+    }
+  });
+
+  window.addEventListener('hashchange', () => {
+    clearTimeout(resultTimeout);
+    document.removeEventListener('keydown', kayAnswer);
+  });
 };
