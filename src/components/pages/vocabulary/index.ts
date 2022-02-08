@@ -34,7 +34,7 @@ class Vocabulary extends BaseComponent {
     '#6b66a6',
     '#d76565',
     '#e6cccb',
-    '#d9bb63',
+    '#ffc86d',
     '#fdfdc7',
   ];
 

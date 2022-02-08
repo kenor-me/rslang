@@ -2,13 +2,13 @@ import './index.css';
 import { getTimer } from '../timer';
 import { renderSprintPage } from '../sprint';
 import { renderAudiocallPage } from '../audiocall';
+import { currentWords } from '../audiocall/getWords';
 
 const root = document.getElementById('root') as HTMLElement;
 
 export const sprintDescription = `
     <div class="wrapper-desc">
-      <h2>Спринт</h2>
-      <p>Тренировка Спринт развивает словарный запас. Чем больше слов ты знаешь, тем больше очков опыта получишь.</p>
+      <h1>Спринт</h1>
       <p>Игра длится 1 минуту или пока не закончатся слова</p>
       <p>Кликай на слова или нажимай на клавиши-стрелки</p>
       </div>
@@ -16,11 +16,10 @@ export const sprintDescription = `
 
 export const audioDescription = `
     <div class="wrapper-desc">
-      <h2>Аудиовызов</h2>
-      <p>Тренировка улучшает восприятие речи на слух.</p>
-      <p>Используй клавиши 1,2,3,4,5, чтобы дать ответ</p>
+      <h1>Аудиовызов</h1>
+      <p>Кликай на слова или используй клавиши 1,2,3,4,5, чтобы дать ответ</p>
       <p>Space - для воспроизведения звука</p>
-      <p>Стрелка-вправо - переход к следующему вопросу</p>
+      <p>Стрелка-вправо - переход к следующему слову</p>
       </div>
   `;
 
@@ -58,9 +57,12 @@ export const renderLevelsGamePage = (description: string): string => {
     </div>
   `;
   root.innerHTML = content;
-  document.querySelector('.levels')?.addEventListener('click', (e) => {
+  document.querySelector('.levels')?.addEventListener('click', async (e) => {
     const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
     if (target.classList.contains('level')) {
+      const page = currentWords.getRandomPageNum();
+      const part = Number((target.querySelector('span') as HTMLElement).textContent);
+      await currentWords.getGameWords(part, page);
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {
         if (window.location.hash === '#sprint') renderSprintPage();

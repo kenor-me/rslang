@@ -6,6 +6,10 @@
   background-size: cover;
 }
 
+.statistic-wrapper h1 {
+  color: #ffc86d;
+}
+
 .statistic-text {
   font-size: 1.3rem;
   font-weight: 400;

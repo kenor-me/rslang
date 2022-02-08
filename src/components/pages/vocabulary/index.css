@@ -37,10 +37,13 @@
   flex-direction: column;
 }
 .book-word-item.hard-word {
-  box-shadow: 7px -6px 33px #ff8888;
+  outline: 7px solid tomato;
+  outline-offset: 2px;
 }
 .book-word-item.learn-word {
-  box-shadow: 7px -6px 33px #0b7c01ee;
+  outline: 7px solid #62ac43;
+  outline-offset: 2px;
+  /* box-shadow: 7px -6px 33px #0b7c01ee; */
 }
 .word-img {
   width: 380px;
@@ -98,13 +101,13 @@
   margin-bottom: 10px;
 }
 .hard-word .btn-add {
-  background-color: #ff8888;
+  background-color: tomato;
 }
 .learn-word .btn-learn {
-  background-color: green;
+  background-color: #62ac43;
 }
 .btn-hard-word {
-  background-color: #ff8888;
+  background-color: tomato;
 }
 .card__btn-adddifficult,
 .card__btn-deldifficult {
