@@ -29,8 +29,8 @@
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 10px;
-  background-color: #2a3950;
-  border: 2px solid #2a3950;
+  background-color: var(--bg-dark);
+  border: 2px solid var(--bg-dark);
   color: azure;
   margin: 20px;
   display: flex;
@@ -84,7 +84,7 @@
   height: 44px;
   font-size: 1rem;
   font-weight: bold;
-  color: #2a3950;
+  color: var(--bg-dark);
   background-color: #00e0c7;
   border: 1.5px solid #ffffff;
   box-shadow: 3px 3px 10px rgb(0 224 199 / 25%);
@@ -114,7 +114,7 @@
   width: 220px;
   background: #00e0c7;
   border-radius: 5px;
-  color: #2a3950;
+  color: var(--bg-dark);
   font-size: 20px;
   padding: 10px 0;
   text-align: center;
@@ -235,8 +235,8 @@
   height: 90vh;
   color: black;
   font-size: 40px;
-  margin-top: 50px;
   justify-content: center;
+  padding-top: 60px;
 }
 @media screen and (max-width: 768px) {
   .book-page-nav-logo {
