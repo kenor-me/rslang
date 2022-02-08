@@ -1,5 +1,5 @@
 import {
-  User, Sign, Token, Word, ContentWord,
+  User, Sign, Token, Word, ContentWord, Statistic,
 } from '../types';
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
@@ -54,6 +54,22 @@ export const addUser = async (user: User): Promise<void> => {
   });
 };
 
+export const setStatisticUser = async (id: string, token: string, statistic = {
+  learnedWords: 0,
+  optional: {},
+}):Promise<void> => {
+  const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(statistic),
+  });
+  return response.json();
+};
+
 export const signIn = async (user: Sign): Promise<void> => {
   const err = document.getElementById('signin-error') as HTMLElement;
 
@@ -68,6 +84,7 @@ export const signIn = async (user: Sign): Promise<void> => {
   await response.json().then((res: Token): void => {
     // const popup = document.getElementById('popup') as HTMLElement;
     // popup.classList.remove('open');
+    setStatisticUser(res.userId, res.token);
     localStorage.setItem('userAuth', JSON.stringify(res));
   }).catch((): void => {
     if (err) {
@@ -117,4 +134,18 @@ export const setWordLearned = async (userId:string, token:string, word:Word):Pro
     },
     body: JSON.stringify(newWord),
   });
+};
+
+// get statistic
+export const getStatisticUser = async (id: string, token: string):Promise<Statistic> => {
+  const url = `${BASE_URL}/users/${id}/statistics`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
 };
