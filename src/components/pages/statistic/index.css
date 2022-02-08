@@ -17,8 +17,7 @@
 }
 
 .statistic-table {
-  width: 100%;
-  height: 100%;
+  width: 80%;
   background-color: #00e0c752;
   color: white;
   margin: 0 auto;
@@ -46,10 +45,10 @@
   letter-spacing: 1.5px;
   padding: 5px;
 }
-.statistic__header-day.active,
+/* .statistic__header-day.active,
 .statistic__header-all.active {
   border-bottom: 4px solid white;
-}
+} */
 .statistic-table__body {
   margin: 0 20px;
   padding-bottom: 40px;
@@ -57,32 +56,29 @@
 .statistic-table__body h3 {
   font-family: "Forum";
   letter-spacing: 1.5px;
-  margin: 20px;
   font-size: 40px;
   font-weight: normal;
+  margin: 20px;
+  padding-top: 40px;
 }
-
-.statistic-per-day,
-.statistic-per-sprint,
-.statistic-per-audio {
+.statistic-all,
+.statistic-sprint,
+.statistic-audiocall {
   width: 40%;
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
     0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
   padding: 20px;
   font-family: "Forum";
 }
-.statistic-per-day {
-  width: 40%;
-}
-.statistic-per-day div,
-.statistic-per-sprint div,
-.statistic-per-audio div {
+
+.statistic-all div,
+.statistic-sprint div,
+.statistic-audiocall div {
   margin: 5px 0;
   font-family: "Forum";
 }
-
-.statistic-per-sprint h4,
-.statistic-per-audio h4 {
+.statistic-sprint h4,
+.statistic-audiocall h4 {
   margin-bottom: 20px;
   font-weight: normal;
   font-size: 32px;
@@ -93,39 +89,61 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.count-game-day,
-.count-word-learn-day,
-.count-percent-day,
-.count-series-day {
+
+.count-game-all,
+.count-words-learn-all,
+.count-words-learn-sprint,
+.count-words-learn-audiocall,
+.count-percent-all,
+.count-series-all {
   display: flex;
   justify-content: space-between;
 }
-.statistic-per-day .statistic-games {
+.count-game-sprint,
+.count-words-learn-sprint,
+.count-words-learn-sprint,
+.count-series-sprint,
+.count-game-audiocall,
+.count-words-learn-audiocall,
+.count-percent-audiocall,
+.count-series-audiocall {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
 }
 @media (max-width: 1200px) {
-  .statistic-per-day,
-  .statistic-per-sprint,
-  .statistic-per-audio {
+  .statistic-all,
+  .statistic-sprint,
+  .statistic-audiocall {
     width: 90%;
   }
-  .statistic-per-audio {
+  .statistic-audiocall {
     margin-top: 40px;
+  }
+  .statistic-games {
+    display: block;
   }
 }
 @media (max-width: 639px) {
   .statistic-wrapper {
     min-height: calc(100vh - 358px);
   }
-  .statistic-table__header {
+  /*   .statistic-table__header {
     flex-direction: column;
     margin: 0;
   }
   .statistic__header-day,
   .statistic__header-all {
     font-size: 24px;
+  }*/
+  .statistic-table__body h3 {
+    font-size: 32px;
+  }
+  .statistic-sprint h4,
+  .statistic-audiocall h4 {
+    font-size: 24px;
+  }
+  .statistic-table__body {
+    font-size: 14px;
   }
 }
 
@@ -133,9 +151,14 @@
   .statistic-wrapper {
     min-height: calc(100vh - 425px);
   }
-  .statistic__header-day,
+  /*   .statistic__header-day,
   .statistic__header-all {
     text-transform: none;
     font-size: 20px;
+  } */
+  .count-series-sprint-title,
+  .count-series-all-title,
+  .count-series-audiocall-title {
+    font-size: 12px;
   }
 }

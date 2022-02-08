@@ -59,8 +59,8 @@ class Vocabulary extends BaseComponent {
     this.navigation.pageSwitcher.nextButton.node.addEventListener('click', () => {
       this.changePage('next');
     });
-    this.textErr = new BaseComponent(this.node, 'div', 'text-errors',
-      'Вы не добавили еще ни одного слова в сложные слова');
+    this.textErr = new BaseComponent(this.wordsArray.node, 'div', 'text-errors',
+      'В этом разделе еще нет слов');
     this.textErr.node.style.display = 'none';
     this.navigation.select.node.addEventListener('change', this.changePart);
     this.getWordsArray(this.settings?.part, this.settings?.page);
