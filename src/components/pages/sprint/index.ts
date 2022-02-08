@@ -170,45 +170,73 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const answerButton = document.querySelector('.sprint__btn-block') as HTMLElement;
   const wrong: WordResult[] = [];
   const right: WordResult[] = [];
-  const resultTimeout = setTimeout(() => {
+
+  const resultTimeout = setTimeout((): void => {
     renderResultForm(wrong, right);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    document.removeEventListener('keydown', kayAnswer);
   }, 60000);
+
+  const addWrongWord = (): void => {
+    wrong.push({
+      audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+    });
+    i++;
+  };
+
+  const addRightWord = (): void => {
+    right.push({
+      audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+    });
+    i++;
+  };
+
+  function kayAnswer(e: KeyboardEvent) {
+    // console.log(e.code);
+    if (i < words.length) {
+      if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
+        addWrongWord();
+      } else if (e.code === 'ArrowLeft' && words[i].wordTranslate !== randomTranslate[i]) {
+        addRightWord();
+      }
+      if (e.code === 'ArrowRight' && words[i].wordTranslate !== randomTranslate[i]) {
+        addWrongWord();
+      } else if (e.code === 'ArrowRight' && words[i].wordTranslate === randomTranslate[i]) {
+        addRightWord();
+      }
+      if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
+    } else {
+      renderResultForm(wrong, right);
+      clearTimeout(resultTimeout);
+      document.removeEventListener('keydown', kayAnswer);
+    }
+  }
+
+  document.addEventListener('keydown', kayAnswer);
 
   answerButton.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;
     if (i < words.length) {
       if (target.classList.contains('sprint__left') && words[i].wordTranslate === randomTranslate[i]) {
-        wrong.push({
-          audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
-        });
-        i++;
+        addWrongWord();
       } else if (target.classList.contains('sprint__left') && words[i].wordTranslate !== randomTranslate[i]) {
-        right.push({
-          audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
-        });
-        i++;
+        addRightWord();
       }
       if (target.classList.contains('sprint__right') && words[i].wordTranslate !== randomTranslate[i]) {
-        wrong.push({
-          audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
-        });
-        i++;
+        addWrongWord();
       } else if (target.classList.contains('sprint__right') && words[i].wordTranslate === randomTranslate[i]) {
-        right.push({
-          audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
-        });
-        i++;
+        addRightWord();
       }
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
       renderResultForm(wrong, right);
-      clearInterval(resultTimeout);
-      // console.log(wrong);
-      // console.log(right);
+      clearTimeout(resultTimeout);
+      document.removeEventListener('keydown', kayAnswer);
     }
   });
 
   window.addEventListener('hashchange', () => {
-    clearInterval(resultTimeout);
+    clearTimeout(resultTimeout);
+    document.removeEventListener('keydown', kayAnswer);
   });
 };
