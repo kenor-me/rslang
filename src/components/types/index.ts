@@ -36,12 +36,19 @@ export type Token = {
 
 export type ContentWord = {
   difficulty: 'string',
-  id: string
+  id: string,
   wordId: string,
-  optional:Record<string, unknown>
+  optional: Record<string, unknown>,
 };
 
 export type Settings = {
   part: number;
   page: number;
+};
+
+export type WordResult = {
+  audio: string,
+  word: string,
+  transcription: string,
+  translate: string,
 };

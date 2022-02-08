@@ -1,8 +1,9 @@
 import './index.css';
 import { getTimer } from '../timer';
-import { renderSprintPage } from '../sprint';
+import { getSprintPlay, renderSprintPage } from '../sprint';
 import { renderAudiocallPage } from '../audiocall';
 import { currentWords } from '../audiocall/getWords';
+import { Word } from '../../types';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -63,10 +64,18 @@ export const renderLevelsGamePage = (description: string): string => {
       const page = currentWords.getRandomPageNum();
       const part = Number((target.querySelector('span') as HTMLElement).textContent);
       await currentWords.getGameWords(part, page);
+
+      const randomThreePages = Promise.all([
+        await currentWords.getGameWords(part, currentWords.getRandomPageNum()),
+        await currentWords.getGameWords(part, currentWords.getRandomPageNum())]);
+      const result: Word[] = (await randomThreePages).flat().sort(() => Math.random() - 0.5);
+
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {
-        if (window.location.hash === '#sprint') renderSprintPage();
-        else if (window.location.hash === '#audiocall') renderAudiocallPage();
+        if (window.location.hash === '#sprint') {
+          renderSprintPage();
+          getSprintPlay(result);
+        } else if (window.location.hash === '#audiocall') renderAudiocallPage();
       }, 4500);
     }
   });
