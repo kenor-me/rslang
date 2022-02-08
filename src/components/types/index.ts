@@ -38,10 +38,18 @@ export type ContentWord = {
   difficulty: 'string',
   id: string
   wordId: string,
-  optional:Record<string, unknown>
+  optional: {
+    correctAnswer: number
+  }
 };
 
 export type Settings = {
   part: number;
   page: number;
+};
+
+export type Statistic = {
+  id:string,
+  learnedWords: number,
+  optional: Record<string, unknown>, // возможно изменить
 };
