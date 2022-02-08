@@ -1,11 +1,14 @@
+import { getStatisticUser } from '../../api/index';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
+const user = JSON.parse(localStorage.getItem('userAuth') as string);
 /* <div class="statistic-table__header">
   <div class="statistic__header-day active">За сегодня</div>
   <div class="statistic__header-all">За весь период</div>
 </div> */
-export const renderStatisticPage = (): void => {
+export const renderStatisticPage = async (): Promise<void> => {
+  const statistic = await getStatisticUser(user.userId, user.token);
   root.innerHTML = `
     <div class="statistic-wrapper">
       <div class="statistic-table">
@@ -20,7 +23,7 @@ export const renderStatisticPage = (): void => {
             <div class="count-word-learn-all-title">
               Количество изученных слов
             </div>
-            <div class="count-word-all-count">13</div>
+            <div class="count-word-all-count">${statistic.learnedWords}</div>
           </div>
           <div class="count-percent-all">
             <div class="count-percent-all-title">
