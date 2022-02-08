@@ -6,6 +6,7 @@ import './index.css';
 import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
+import { getTimer } from '../timer';
 
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
@@ -15,6 +16,8 @@ class Vocabulary extends BaseComponent {
   settings: Settings;
 
   allUserWords: ContentWord[] | undefined = [];
+
+  wordsForGame:Word[] = [];
 
   hardWords: ContentWord[] | undefined = [];
 
@@ -40,6 +43,8 @@ class Vocabulary extends BaseComponent {
 
   MAX_COUNT_PART = 6;
 
+  gameTimeout: NodeJS.Timeout | undefined;
+
   constructor(parent: HTMLElement) {
     super(parent, 'div', 'book-page');
     this.wordsArray = new BookWordsList(this.node);
@@ -59,6 +64,17 @@ class Vocabulary extends BaseComponent {
     this.navigation.pageSwitcher.nextButton.node.addEventListener('click', () => {
       this.changePage('next');
     });
+    this.navigation.sprintButton.node.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await this.updatePage();
+      this.wordsForGame = await this.getWordForGame();
+      this.gameTimeout = setTimeout(() => {
+        // getSprintPlay(this.wordsForGame);
+      }, 3800);
+    });
+    /*    window.addEventListener('hashchange', () => {
+     clearTimeout(this.gameTimeout!);
+   }); */
     this.textErr = new BaseComponent(this.wordsArray.node, 'div', 'text-errors',
       'В этом разделе еще нет слов');
     this.textErr.node.style.display = 'none';
@@ -69,6 +85,7 @@ class Vocabulary extends BaseComponent {
 
   async getWordsArray(part = 0, page = 0): Promise<void> {
     this.currentPage = await getWordPage(part, page);
+    this.wordsForGame = await getWordPage(part, page);
   }
 
   updatePage = async (): Promise<void> => {
@@ -79,6 +96,7 @@ class Vocabulary extends BaseComponent {
       if (this.settings.part === this.MAX_COUNT_PART) {
         this.navigation.pageSwitcher.node.style.display = 'none';
         this.currentPage = await Promise.all(this.hardWords.map((hardword) => getWordById(hardword.wordId)));
+        //  this.wordsForGame = this.currentPage;
         if (this.currentPage.length === 0) {
           this.textErr.node.style.display = 'flex';
         } else {
@@ -93,6 +111,8 @@ class Vocabulary extends BaseComponent {
       this.currentPage = await getWordPage(this.settings.part, this.settings.page);
       this.navigation.pageSwitcher.node.style.visibility = 'visible';
     }
+
+    this.wordsForGame = this.currentPage;
     this.navigation.pageSwitcher.setNumberPage(this.settings.page);
     this.wordsArray.updateBookListPage(this.currentPage!, this.hardWords, this.learnWords);
   };
@@ -134,6 +154,28 @@ class Vocabulary extends BaseComponent {
     if (this.settings.page === this.lastPageNumber - 1) {
       this.navigation.pageSwitcher.nextButton.node.style.visibility = 'hidden';
     }
+  };
+
+  getWordForGame = async ():Promise<Word[]> => {
+    if (this.settings.page > 1) {
+      const onePart = await getWordPage(this.settings.part, this.settings.page - 1);
+      const twoPart = await getWordPage(this.settings.part, this.settings.page);
+      this.wordsForGame = [...onePart, ...twoPart];
+    }
+    const ind:number[] = [];
+    this.wordsForGame?.forEach((item, index) => {
+      if (this.learnWords) {
+        this.learnWords.forEach((itemleart) => {
+          if (item.id === itemleart.wordId) {
+            ind.push(index);
+          }
+        });
+      }
+    });
+    for (let i = ind.length - 1; i >= 0; i--) {
+      this.wordsForGame.splice(ind[i], 1);
+    }
+    return this.wordsForGame;
   };
 }
 

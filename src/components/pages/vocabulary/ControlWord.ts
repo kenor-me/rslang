@@ -120,6 +120,7 @@ export class ControlWord extends BaseComponent {
     if (hard) {
       addWordButton.node.textContent = 'Удалить слово';
     }
+
     addLearnedWordButton.node.addEventListener('click', async () => {
       if (!this.node.classList.contains('learn-word')) {
         if (this.node.classList.contains('hard-word')) {
