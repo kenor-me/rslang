@@ -60,9 +60,13 @@ const toggleFullScreen = (): void => {
   });
 };
 
+const BASE_URL = 'https://app-english-learn.herokuapp.com';
+
 const renderResultWord = (word: WordResult): string => `
   <li>
-    <div>${renderSoundSVG()}</div>
+    <div>${renderSoundSVG()}
+      <audio src="${BASE_URL}/${word.audio}"></audio>
+    </div>
     <div class="sprint__result-text-block">
       <p class="sprint__result-word"> ${word.word} </p>
       <p class="sprint__result-transcript"> ${word.transcription} </p>
@@ -78,7 +82,7 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
       <div class="sprint__btn-block-top">
         <a href="#games" class="sprint__link">${renderCloseSVG()}</a>
       </div>
-      <div class="sprint-text-block">
+      <div class="sprint-text-block sprint__result-inf-block">
         <p class="sprint__title">РЕЗУЛЬТАТ</p>
         <div class="sprint__result">
           <p class="sprint__result-title">Слова с ошибками <span class="result-title-wrong">${wrong.length}</span></p>
@@ -92,10 +96,16 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
             ${right.map((word: WordResult) => renderResultWord(word)).join('')}
           </ui>
         </div>
-        <a href="#games" class="sprint__result-btn">Играть еще раз</a>
+        <a href="#sprint-description" class="sprint__result-btn">Играть еще раз</a>
     </div>
   </div>
 `;
+
+  const audioBlock = document.querySelector('.sprint__result-inf-block') as HTMLElement;
+
+  audioBlock.addEventListener('click', (e: Event): void => {
+    const target = e.target as HTMLElement;
+  });
 };
 
 const getSeconds = (): void => {
@@ -179,14 +189,14 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
 
   const addWrongWord = (): void => {
     wrong.push({
-      audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
   };
 
   const addRightWord = (): void => {
     right.push({
-      audio: words[i].audioMeaning, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
   };
@@ -209,6 +219,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
+      // console.log(wrong);
+      // console.log(right);
     }
   }
 
@@ -232,6 +244,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
+      // console.log(wrong);
+      // console.log(right);
     }
   });
 

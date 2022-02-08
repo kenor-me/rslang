@@ -1,5 +1,5 @@
 import './index.css';
-import { getTimer } from '../timer';
+// import { getTimer } from '../timer';
 import { getSprintPlay, renderSprintPage } from '../sprint';
 import { renderAudiocallPage } from '../audiocall';
 import { currentWords } from '../audiocall/getWords';
@@ -24,33 +24,33 @@ export const audioDescription = `
       </div>
   `;
 
-export const renderLevelsGamePage = (description: string): string => {
+export const renderLevelsGamePage = (description: string, hash: string): string => {
   const content = `
     <div class="wrapper-levels">
       ${description}
       <h2 class="wrapper-levels-header">Выбери уровень сложности</h2>
       <div class="levels">
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>1</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>2</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>3</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>4</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>5</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>6</span>
         </a>
@@ -70,14 +70,19 @@ export const renderLevelsGamePage = (description: string): string => {
         await currentWords.getGameWords(part, currentWords.getRandomPageNum())]);
       const result: Word[] = (await randomThreePages).flat().sort(() => Math.random() - 0.5);
 
-      root.innerHTML = `${getTimer()}`;
-      setTimeout(() => {
+      // root.innerHTML = `${getTimer()}`;
+      const gameTimeout = setTimeout(() => {
         if (window.location.hash === '#sprint') {
           renderSprintPage();
           getSprintPlay(result);
         } else if (window.location.hash === '#audiocall') renderAudiocallPage();
-      }, 4500);
+      }, 3800);
+
+      window.addEventListener('hashchange', () => {
+        clearTimeout(gameTimeout);
+      });
     }
   });
+
   return content;
 };
