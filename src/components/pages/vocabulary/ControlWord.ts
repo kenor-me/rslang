@@ -123,7 +123,7 @@ export class ControlWord extends BaseComponent {
           addWordButton.node.textContent = 'Добавить слово';
           this.node.classList.remove('hard-word');
           const settings = (JSON.parse(localStorage.getItem('settings') as string));
-          if (settings.part === 6) {
+          if (settings && settings.part === 6) {
             window.location.reload();
           }
         }
