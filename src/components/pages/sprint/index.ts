@@ -32,9 +32,10 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-const toggleFullScreen = () => {
+export const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
-  const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
+  const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement
+  || document.querySelector('.wrapper-audiocall') as HTMLElement;
 
   fullscreen.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;

@@ -1,4 +1,4 @@
-import { renderFullscreenOpen, renderCloseSVG } from '../sprint';
+import { renderFullscreenOpen, renderCloseSVG, toggleFullScreen } from '../sprint';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
@@ -24,8 +24,8 @@ export const renderAudiocallPage = (): void => {
     <div class="wrapper-audiocall">
       <div class="audiocall">
         <div class="audiocall-btn-block">
-          <div class="audiocall-fullscreen">${renderFullscreenOpen()}</div>
-          <div class="audiocall-close">${renderCloseSVG()}</div>
+          <div class="audiocall-fullscreen fullscreen">${renderFullscreenOpen()}</div>
+          <a href="#games" class="audiocall-close">${renderCloseSVG()}</a>
         </div>
         <button class="audiocall-sound">
           <img class="audiocall-sound-img" src="./../../../assets/pictures/loud.svg" alt="Sound">
@@ -36,4 +36,5 @@ export const renderAudiocallPage = (): void => {
     </div>
   `;
   root.innerHTML = content;
+  toggleFullScreen();
 };
