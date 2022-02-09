@@ -18,8 +18,21 @@ div.sprint__result-wrapper {
   min-height: 500px;
   width: 80%;
   padding: 15px;
-  border: 8px dashed white;
+  border: 8px dashed #edfef0;
   background-color:#ffc86d;
+}
+
+.sprint__inf-block.wrong-border {
+  animation: sprintBorder 0.5s forwards;
+}
+
+@keyframes sprintBorder {
+  0% {
+    border-color: tomato;
+  }
+  100% {
+    border-color: #edfef0;
+  }
 }
 
 .sprint__result-wrapper .sprint__inf-block {
@@ -252,7 +265,7 @@ div.sprint__result-wrapper {
 }
 
 .sprint__result-sound {
-  width: 36px;
+  min-width: 36px;
   height: 36px;
   margin-right: 10px;
   cursor: pointer;
@@ -278,9 +291,9 @@ div.sprint__result-wrapper {
 }
 
 .sprint__result-transcript {
-  margin: 0 10px;
   font-size: 23px;
   font-weight: 400;
+  padding: 0 10px;
   color: #3b4d68;
 }
 
@@ -332,6 +345,24 @@ div.sprint__result-wrapper {
 
   .sprint__result-title {
     font-size: 26px;
+  }
+
+  .sprint__wrong-words,
+  .sprint__result-text-block {
+    flex-direction: column;
+    min-width: 100%;
+  }
+
+  .sprint__result-word {
+    font-size: 20px;
+  }
+  
+  .sprint__result-transcript {
+    font-size: 20px;
+  }
+  
+  .sprint__result-transl {
+    font-size: 20px;
   }
 
   .sprint__result-btn {

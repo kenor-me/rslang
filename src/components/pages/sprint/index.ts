@@ -184,11 +184,16 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
 
+  const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
+
   const addWrongWord = (): void => {
+    wrongBorder.classList.add('wrong-border');
+    // wrongBorder.style.animation = 'sprintBorder 0.5s forwards';
     wrong.push({
       audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
+    setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
   };
 
   const addRightWord = (): void => {
@@ -200,6 +205,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
 
   function kayAnswer(e: KeyboardEvent) {
     // console.log(e.code);
+    // wrongBorder.style.animation = 'none';
     if (i < words.length) {
       if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
         addWrongWord();
