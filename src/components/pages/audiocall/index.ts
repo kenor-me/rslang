@@ -31,7 +31,7 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
     const str = `
       <div class="audiocall-answer">
         <span class="number-answer">${i}</span>
-        <span class="name-answer">${shuffleAnswers[i - 1].word}</span>
+        <span class="name-answer">${shuffleAnswers[i - 1].wordTranslate}</span>
       </div>
     `;
     result += str;

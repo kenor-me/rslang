@@ -55,13 +55,14 @@ export class Answers extends GamesWords {
     nextButton.textContent = 'Далее';
     nextButton.style.backgroundColor = '#90c47a';
     const nameAnswers = document.querySelectorAll('.name-answer');
-    const res = Array.from(nameAnswers).find((v) => v.textContent === this.word.word)?.parentNode as HTMLElement;
+    let res = Array.from(nameAnswers).find((v) => v.textContent === this.word.wordTranslate) as HTMLElement;
+    res = res?.parentNode as HTMLElement;
     res.style.backgroundColor = '#00E0C7';
   }
 
   compareWithRightAnswer(answer: HTMLElement): void {
     const userSelect = answer.parentNode?.lastElementChild?.textContent;
-    if (userSelect === this.word.word) this.showRightAnswer();
+    if (userSelect === this.word.wordTranslate) this.showRightAnswer();
     else {
       const elem = answer as HTMLElement;
       elem.style.backgroundColor = 'tomato';
