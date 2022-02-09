@@ -252,8 +252,18 @@ div.sprint__result-wrapper {
 }
 
 .sprint__result-sound {
+  width: 36px;
+  height: 36px;
   margin-right: 10px;
   cursor: pointer;
+  background: url(./../../../assets/svg/sound.svg) no-repeat;
+  background-size: 36px 36px;
+  transition: 0.4s;
+}
+
+.sprint__result-sound:hover {
+  background: url(./../../../assets/svg/sound-hover.svg) no-repeat;
+  background-size: 36px 36px;
 }
 
 .sprint__result-text-block {

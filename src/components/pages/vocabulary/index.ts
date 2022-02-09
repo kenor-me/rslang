@@ -1,4 +1,3 @@
-import { renderSprintPage } from './../sprint/index';
 import {
   Settings, Token, ContentWord, Word,
 } from '../../types/index';
@@ -7,7 +6,7 @@ import './index.css';
 import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
-import { getSprintPlay } from '../sprint';
+import { getSprintPlay, renderSprintPage } from '../sprint';
 
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
@@ -18,7 +17,7 @@ class Vocabulary extends BaseComponent {
 
   allUserWords: ContentWord[] | undefined = [];
 
-  wordsForGame:Word[] = [];
+  wordsForGame: Word[] = [];
 
   hardWords: ContentWord[] | undefined = [];
 
@@ -74,7 +73,7 @@ class Vocabulary extends BaseComponent {
       }, 3800);
     });
     window.addEventListener('hashchange', () => {
-     clearTimeout(this.gameTimeout!);
+      clearTimeout(this.gameTimeout!);
     });
     this.textErr = new BaseComponent(this.wordsArray.node, 'div', 'text-errors',
       'В этом разделе еще нет слов');
@@ -156,13 +155,13 @@ class Vocabulary extends BaseComponent {
     }
   };
 
-  getWordForGame = async ():Promise<Word[]> => {
-    if (this.settings.page > 1) {
+  getWordForGame = async (): Promise<Word[]> => {
+    if (this.settings.page > 0) {
       const onePart = await getWordPage(this.settings.part, this.settings.page - 1);
       const twoPart = await getWordPage(this.settings.part, this.settings.page);
       this.wordsForGame = [...onePart, ...twoPart];
     }
-    const ind:number[] = [];
+    const ind: number[] = [];
     this.wordsForGame?.forEach((item, index) => {
       if (this.learnWords) {
         this.learnWords.forEach((itemleart) => {
