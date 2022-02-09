@@ -46,7 +46,7 @@ export const addUser = async (user: User): Promise<void> => {
       <p class="popup-auth-text">Регистрация прошла успешно</p>
     `;
     localStorage.setItem('userAdd', JSON.stringify(res));
-    // setTimeout((): void => {
+      // setTimeout((): void => {
     //   popup.classList.remove('open');
     // }, 3000);
   }).catch((): void => {
@@ -56,7 +56,10 @@ export const addUser = async (user: User): Promise<void> => {
 
 export const setStatisticUser = async (id: string, token: string, statistic = {
   learnedWords: 0,
-  optional: {},
+  optional: {
+    countSprint: 0,
+    countAudioCall: 0
+  },
 }):Promise<void> => {
   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
     method: 'PUT',
@@ -70,7 +73,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
   return response.json();
 };
 
-export const signIn = async (user: Sign): Promise<void> => {
+export const signIn = async (user: Sign, first:boolean = false): Promise<void> => {
   const err = document.getElementById('signin-error') as HTMLElement;
 
   const response = await fetch(`${BASE_URL}/signin`, {
@@ -81,11 +84,13 @@ export const signIn = async (user: Sign): Promise<void> => {
     },
   });
 
-  await response.json().then((res: Token): void => {
+  await response.json().then(async (res: Token): Promise<void> => {
     // const popup = document.getElementById('popup') as HTMLElement;
     // popup.classList.remove('open');
-    setStatisticUser(res.userId, res.token);
     localStorage.setItem('userAuth', JSON.stringify(res));
+    if(first) {
+     setStatisticUser(res.userId, res.token);
+    }
   }).catch((): void => {
     if (err) {
       err.classList.add('visible');

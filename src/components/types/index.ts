@@ -58,5 +58,8 @@ export type WordResult = {
 export type Statistic = {
   id: string,
   learnedWords: number,
-  optional: Record<string, unknown>, // возможно изменить
+  optional:{  // возможно изменить
+    countSprint: number,
+    countAudioCall: number,
+  }
 };
