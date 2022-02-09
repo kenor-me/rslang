@@ -62,7 +62,7 @@ export const renderLevelsGamePage = (description: string): string => {
     const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
     if (target.classList.contains('level')) {
       const page = currentWords.getRandomPageNum();
-      const part = Number((target.querySelector('span') as HTMLElement).textContent);
+      const part = Number((target.querySelector('span') as HTMLElement).textContent) - 1;
       GAME_WORDS.wordsArr = await currentWords.getGameWords(part, page);
       root.innerHTML = `${getTimer()}`;
       setTimeout(() => {

@@ -64,7 +64,6 @@ export class Answers extends GamesWords {
     if (userSelect === this.word.word) this.showRightAnswer();
     else {
       const elem = answer as HTMLElement;
-      console.log(elem);
       elem.style.backgroundColor = 'tomato';
       this.showRightAnswer();
     }
