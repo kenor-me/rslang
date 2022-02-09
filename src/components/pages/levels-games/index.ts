@@ -1,7 +1,6 @@
 import './index.css';
 // import { getTimer } from '../timer';
 import { getSprintPlay, renderSprintPage } from '../sprint';
-import { currentWords } from '../audiocall/getWords';
 import { Word } from '../../types';
 import { renderAudiocallPage, GAME_WORDS } from '../audiocall';
 import { GamesWords } from '../audiocall/getWords';
