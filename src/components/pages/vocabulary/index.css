@@ -36,6 +36,10 @@
   display: flex;
   flex-direction: column;
 }
+.book-word-item.selection {
+  background-color: #2a3950a4;
+  border: 2px solid #2a3950a4;
+}
 .book-word-item.hard-word {
   outline: 7px solid tomato;
   outline-offset: 2px;
@@ -185,6 +189,15 @@
   height: 77px;
   position: relative;
   margin-top: 10px;
+}
+.book-page-nav-sprint.disabled,
+.book-page-nav-audio.disabled {
+  pointer-events: none; /* делаем элемент неактивным для взаимодействия */
+  cursor: default; /*  курсор в виде стрелки */
+}
+.book-page-nav-sprint.disabled div,
+.book-page-nav-audio.disabled div {
+  filter: grayscale(100%);
 }
 .book-page-nav-sprint div,
 .book-page-nav-audio div {

@@ -29,6 +29,18 @@ export const getWordById = async (wordId:string):Promise<Word> => {
   const response = await fetch(`${BASE_URL}/words/${wordId}`);
   return response.json();
 };
+// get word by ID by User
+/* export const getWordByIdUserInfo = async (userId:string, token:string, wordId:string):Promise<ContentWord> => {
+  const url = `${BASE_URL}/users/${userId}/words/${wordId}`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.json();
+}; */
 
 export const addUser = async (user: User): Promise<void> => {
   const err = document.getElementById('registration-error') as HTMLElement;

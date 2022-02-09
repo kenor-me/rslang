@@ -116,6 +116,9 @@ export class ControlWord extends BaseComponent {
       if (settings && settings.part === 6) {
         window.location.reload();
       }
+      const hardtoPage = document.querySelectorAll('.hard-word').length;
+      const learntoPage = document.querySelectorAll('.learn-word').length;
+     this.updateCountLearnandHardWord(hardtoPage, learntoPage);
     });
     if (hard) {
       addWordButton.node.textContent = 'Удалить слово';
@@ -143,6 +146,9 @@ export class ControlWord extends BaseComponent {
       const allUserWord = await getWordsUser(this.user!.userId, this.user!.token);
       const learnedWords = allUserWord.filter((item) => item.difficulty === ('learned').toString());
       this.updateStatistic(learnedWords.length);
+      const hardtoPage = document.querySelectorAll('.hard-word').length;
+      const learntoPage = document.querySelectorAll('.learn-word').length;
+      this.updateCountLearnandHardWord(hardtoPage, learntoPage);
     });
     if (learn) {
       addLearnedWordButton.node.textContent = 'Не знаю';
@@ -162,4 +168,20 @@ export class ControlWord extends BaseComponent {
     };
     await setStatisticUser(this.user!.userId, this.user!.token, stats);
   };
+
+  updateCountLearnandHardWord(countHard:number, countLearn:number) {
+    const sprintBtn = document.querySelector('.book-page-nav-sprint') as HTMLElement;
+    const audioCallBtn = document.querySelector('.book-page-nav-audio') as HTMLElement;
+    const cardWord = document.querySelectorAll('.book-word-item');
+    if (countHard + countLearn >= 20) {
+      sprintBtn.classList.add('disabled');
+      audioCallBtn.classList.add('disabled');
+      cardWord.forEach((card) => card.classList.add('selection'))
+    }
+    else {
+      sprintBtn.classList.remove('disabled');
+      audioCallBtn.classList.remove('disabled');
+      cardWord.forEach((card) => card.classList.remove('selection'))
+    }
+  }
 }
