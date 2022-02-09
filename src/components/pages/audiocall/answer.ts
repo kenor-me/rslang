@@ -45,4 +45,28 @@ export class Answers extends GamesWords {
     }
     return Array.from(set);
   }
+
+  showRightAnswer(): void {
+    const picture = document.querySelector('.audiocall-sound-img') as HTMLImageElement;
+    picture.classList.add('right-answer-picture');
+    picture.src = `${this.BASE_URL}/${this.word.image}`;
+    const nextButton = document.querySelector('.audiocall-next-button') as HTMLButtonElement;
+    nextButton.classList.add('next-question');
+    nextButton.textContent = 'Далее';
+    nextButton.style.backgroundColor = '#90c47a';
+    const nameAnswers = document.querySelectorAll('.name-answer');
+    const res = Array.from(nameAnswers).find((v) => v.textContent === this.word.word)?.parentNode as HTMLElement;
+    res.style.backgroundColor = '#00E0C7';
+  }
+
+  compareWithRightAnswer(answer: HTMLElement): void {
+    const userSelect = answer.parentNode?.lastElementChild?.textContent;
+    if (userSelect === this.word.word) this.showRightAnswer();
+    else {
+      const elem = answer as HTMLElement;
+      console.log(elem);
+      elem.style.backgroundColor = 'tomato';
+      this.showRightAnswer();
+    }
+  }
 }

@@ -1,9 +1,14 @@
 import { renderFullscreenOpen, renderCloseSVG, toggleFullScreen } from '../sprint';
 import './index.css';
-import { Word } from '../../types/index';
+import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
 
+export const GAME_WORDS: WordsArray = {
+  wordsArr: [],
+};
+
 const root = document.getElementById('root') as HTMLElement;
+let countAnswer = 0;
 
 const shuffleArray = (array: Word[]) => {
   let currentIndex = array.length;
@@ -18,12 +23,11 @@ const shuffleArray = (array: Word[]) => {
 };
 
 const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
-  const amountAnswers = 5;
   let result = '';
   const pageAnswers = await answers;
   const shuffleAnswers = shuffleArray(pageAnswers);
 
-  for (let i = 1; i <= amountAnswers; i++) {
+  for (let i = 1; i <= shuffleAnswers.length; i++) {
     const str = `
       <div class="audiocall-answer">
         <span class="number-answer">${i}</span>
@@ -36,7 +40,7 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 };
 
 export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
-  const answers = new Answers(words[0]);
+  const answers = new Answers(words[countAnswer]);
   const content = `
     <div class="wrapper-audiocall">
       <div class="audiocall">
@@ -56,5 +60,18 @@ export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
   answers.setAnswers();
   root.innerHTML = content;
   document.querySelector('.audiocall-sound')?.addEventListener('click', () => answers.getSound());
+  document.querySelector('.audiocall-next-button')?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.textContent === 'Не знаю') {
+      answers.showRightAnswer();
+    } else {
+      countAnswer++;
+      renderAudiocallPage(GAME_WORDS.wordsArr);
+    }
+  });
+  document.querySelector('.audiocall-answers')?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    answers.compareWithRightAnswer(target);
+  });
   toggleFullScreen();
 };

@@ -45,3 +45,7 @@ export type Settings = {
   part: number;
   page: number;
 };
+
+export type WordsArray = {
+  wordsArr: Word[];
+};
