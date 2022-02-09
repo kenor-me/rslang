@@ -64,8 +64,13 @@ export class Answers extends GamesWords {
     const userSelect = answer.parentNode?.lastElementChild?.textContent;
     if (userSelect === this.word.wordTranslate) this.showRightAnswer();
     else {
-      const elem = answer as HTMLElement;
-      elem.style.backgroundColor = 'tomato';
+      let elem = answer as HTMLElement;
+      if (elem.classList.contains('name-answer')) {
+        elem = elem.parentNode as HTMLElement;
+        elem.style.backgroundColor = 'tomato';
+      } else {
+        elem.style.backgroundColor = 'tomato';
+      }
       this.showRightAnswer();
     }
   }
