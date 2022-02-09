@@ -1,6 +1,8 @@
 import './index.css';
-import { getTimer } from '../timer';
-import { renderSprintPage } from '../sprint';
+// import { getTimer } from '../timer';
+import { getSprintPlay, renderSprintPage } from '../sprint';
+import { currentWords } from '../audiocall/getWords';
+import { Word } from '../../types';
 import { renderAudiocallPage, GAME_WORDS } from '../audiocall';
 import { GamesWords } from '../audiocall/getWords';
 
@@ -23,33 +25,33 @@ export const audioDescription = `
       </div>
   `;
 
-export const renderLevelsGamePage = (description: string): string => {
+export const renderLevelsGamePage = (description: string, hash: string): string => {
   const content = `
     <div class="wrapper-levels">
       ${description}
       <h2 class="wrapper-levels-header">Выбери уровень сложности</h2>
       <div class="levels">
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>1</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>2</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>3</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>4</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>5</span>
         </a>
-        <a class="level">
+        <a href="${hash}" class="level">
           <div class="bg-level"></div>
           <span>6</span>
         </a>
@@ -64,12 +66,25 @@ export const renderLevelsGamePage = (description: string): string => {
       const page = currentWords.getRandomPageNum();
       const part = Number((target.querySelector('span') as HTMLElement).textContent) - 1;
       GAME_WORDS.wordsArr = await currentWords.getGameWords(part, page);
-      root.innerHTML = `${getTimer()}`;
-      setTimeout(() => {
-        if (window.location.hash === '#sprint') renderSprintPage();
-        else if (window.location.hash === '#audiocall') renderAudiocallPage(GAME_WORDS.wordsArr);
-      }, 4500);
+
+      const randomThreePages = Promise.all([
+        await currentWords.getGameWords(part, currentWords.getRandomPageNum()),
+        await currentWords.getGameWords(part, currentWords.getRandomPageNum())]);
+      const result: Word[] = (await randomThreePages).flat().sort(() => Math.random() - 0.5);
+
+      // root.innerHTML = `${getTimer()}`;
+      const gameTimeout = setTimeout(() => {
+        if (window.location.hash === '#sprint') {
+          renderSprintPage();
+          getSprintPlay(result);
+        } else if (window.location.hash === '#audiocall') renderAudiocallPage(GAME_WORDS.wordsArr);
+      }, 3800);
+
+      window.addEventListener('hashchange', () => {
+        clearTimeout(gameTimeout);
+      });
     }
   });
+
   return content;
 };

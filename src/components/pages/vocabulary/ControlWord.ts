@@ -1,5 +1,7 @@
-import { deleteUserWord, setWordHard, setWordLearned } from '../../api';
-import { Token, Word } from '../../types/index';
+import {
+  deleteUserWord, getStatisticUser, getWordsUser, setStatisticUser, setWordHard, setWordLearned,
+} from '../../api';
+import { Statistic, Token, Word } from '../../types/index';
 import BaseComponent from './BaseComponent';
 
 export class ControlWord extends BaseComponent {
@@ -35,6 +37,8 @@ export class ControlWord extends BaseComponent {
 
   allAudio: HTMLAudioElement[] = [];
 
+  statistic: Statistic | undefined;
+
   constructor(parentNode: HTMLElement, wordInfo: Word, hard:boolean, learn:boolean) {
     super(parentNode, 'div', 'book-word-item');
     this.imageWord.node.src = `${this.BASE_URL}/${wordInfo.image}`;
@@ -53,6 +57,7 @@ export class ControlWord extends BaseComponent {
     this.user = JSON.parse(localStorage.getItem('userAuth') as string);
     if (this.user) {
       this.setButtonUser(wordInfo, hard, learn);
+      this.loadStatistic();
     }
     if (hard) {
       this.node.classList.add('hard-word');
@@ -87,7 +92,7 @@ export class ControlWord extends BaseComponent {
     });
   };
 
-  setButtonUser = (wordInfo: Word, hard:boolean, learn:boolean): void => {
+  setButtonUser = async (wordInfo: Word, hard:boolean, learn:boolean): Promise<void> => {
     const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
     const addLearnedWordButton = new BaseComponent(this.node, 'button', 'btn-learn', 'Знаю');
     addWordButton.node.addEventListener('click', async () => {
@@ -108,7 +113,7 @@ export class ControlWord extends BaseComponent {
         this.node.classList.remove('hard-word');
       }
       const settings = (JSON.parse(localStorage.getItem('settings') as string));
-      if (settings.part === 6) {
+      if (settings && settings.part === 6) {
         window.location.reload();
       }
     });
@@ -123,7 +128,7 @@ export class ControlWord extends BaseComponent {
           addWordButton.node.textContent = 'Добавить слово';
           this.node.classList.remove('hard-word');
           const settings = (JSON.parse(localStorage.getItem('settings') as string));
-          if (settings.part === 6) {
+          if (settings && settings.part === 6) {
             window.location.reload();
           }
         }
@@ -131,13 +136,30 @@ export class ControlWord extends BaseComponent {
         addLearnedWordButton.node.textContent = 'Не знаю';
         this.node.classList.add('learn-word');
       } else {
-        deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
         addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.remove('learn-word');
       }
+      const allUserWord = await getWordsUser(this.user!.userId, this.user!.token);
+      const learnedWords = allUserWord.filter((item) => item.difficulty === ('learned').toString());
+      this.updateStatistic(learnedWords.length);
     });
     if (learn) {
       addLearnedWordButton.node.textContent = 'Не знаю';
     }
+  };
+
+  loadStatistic = async () :Promise<Statistic> => {
+    this.statistic = await getStatisticUser(this.user!.userId, this.user!.token);
+    return this.statistic;
+  };
+
+  updateStatistic = async (learnedWords:number):Promise<void> => {
+    this.statistic!.learnedWords = learnedWords;
+    const stats = {
+      learnedWords: this.statistic!.learnedWords,
+      optional: this.statistic!.optional,
+    };
+    await setStatisticUser(this.user!.userId, this.user!.token, stats);
   };
 }
