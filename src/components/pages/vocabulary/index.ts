@@ -1,3 +1,4 @@
+import { renderSprintPage } from './../sprint/index';
 import {
   Settings, Token, ContentWord, Word,
 } from '../../types/index';
@@ -6,7 +7,7 @@ import './index.css';
 import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
-import { getTimer } from '../timer';
+import { getSprintPlay } from '../sprint';
 
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
@@ -65,16 +66,16 @@ class Vocabulary extends BaseComponent {
       this.changePage('next');
     });
     this.navigation.sprintButton.node.addEventListener('click', async (e) => {
-      e.preventDefault();
       await this.updatePage();
       this.wordsForGame = await this.getWordForGame();
       this.gameTimeout = setTimeout(() => {
-        // getSprintPlay(this.wordsForGame);
+        renderSprintPage();
+        getSprintPlay(this.wordsForGame);
       }, 3800);
     });
-    /*    window.addEventListener('hashchange', () => {
+    window.addEventListener('hashchange', () => {
      clearTimeout(this.gameTimeout!);
-   }); */
+    });
     this.textErr = new BaseComponent(this.wordsArray.node, 'div', 'text-errors',
       'В этом разделе еще нет слов');
     this.textErr.node.style.display = 'none';
@@ -96,7 +97,6 @@ class Vocabulary extends BaseComponent {
       if (this.settings.part === this.MAX_COUNT_PART) {
         this.navigation.pageSwitcher.node.style.display = 'none';
         this.currentPage = await Promise.all(this.hardWords.map((hardword) => getWordById(hardword.wordId)));
-        //  this.wordsForGame = this.currentPage;
         if (this.currentPage.length === 0) {
           this.textErr.node.style.display = 'flex';
         } else {
