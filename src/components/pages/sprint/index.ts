@@ -33,12 +33,6 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
-const renderSoundSVG = (): string => `
-  <svg class="sprint__result-sound" focusable="false" viewBox="0 0 24 24" aria-hidden="true" width="36" height="36">
-    <path fill="#3b4d68" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path>
-  </svg>
-`;
-
 const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
   const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
@@ -64,7 +58,7 @@ const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
 const renderResultWord = (word: WordResult): string => `
   <li>
-    <div>${renderSoundSVG()}
+    <div class="sprint__result-sound">
       <audio src="${BASE_URL}/${word.audio}"></audio>
     </div>
     <div class="sprint__result-text-block">
@@ -105,6 +99,10 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
 
   audioBlock.addEventListener('click', (e: Event): void => {
     const target = e.target as HTMLElement;
+    if (target.classList.contains('sprint__result-sound')) {
+      const audio = target.querySelector('audio') as HTMLAudioElement;
+      audio.play();
+    }
   });
 };
 
@@ -154,9 +152,7 @@ export const renderSprintPage = (): void => {
   getSeconds();
 };
 
-const getRandomIndex = (): number => {
-  const min = 0;
-  const max = 29;
+const getRandomIndex = (min: number, max: number): number => {
   const randomIndex = Math.floor(Math.random() * (max - min) + min);
   return randomIndex;
 };
@@ -171,10 +167,11 @@ const renderWord = (word: string, translate: string) => {
 export const getSprintPlay = async (words: Word[]): Promise<void> => {
   let i = 0;
   const arrTranslate: string[] = [];
-  const arr: number[] = [0, 2, 3, 5, 7, 11, 13, 17, 19, 23, 26, 29, 31, 35, 37];
   words.map((item: Word): number => arrTranslate.push(item.wordTranslate));
 
-  const randomTranslate: string[] = arrTranslate.map((item: string, ind: number, array: string[]): string => ((!arr.includes(ind) ? item : array[getRandomIndex()])));
+  const arrRandomIndex: number[] = Array(Math.floor(words.length / 2)).fill(0).map((): number => getRandomIndex(0, words.length));
+
+  const randomTranslate: string[] = arrTranslate.map((item: string, ind: number, array: string[]): string => ((!arrRandomIndex.includes(ind) ? item : array[getRandomIndex(0, words.length)])));
   renderWord(words[i].word, randomTranslate[i]);
 
   const answerButton = document.querySelector('.sprint__btn-block') as HTMLElement;
@@ -219,8 +216,6 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
-      // console.log(wrong);
-      // console.log(right);
     }
   }
 
@@ -244,8 +239,6 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
-      // console.log(wrong);
-      // console.log(right);
     }
   });
 
