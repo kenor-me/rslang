@@ -62,7 +62,7 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
     const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
     if (target.classList.contains('level')) {
       const page = currentWords.getRandomPageNum();
-      const part = Number((target.querySelector('span') as HTMLElement).textContent);
+      const part = Number((target.querySelector('span') as HTMLElement).textContent) - 1;
       await currentWords.getGameWords(part, page);
 
       const randomThreePages = Promise.all([
