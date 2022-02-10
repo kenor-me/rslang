@@ -12,7 +12,7 @@ export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => 
 };
 
 // all users word
-export const getWordsUser = async (id: string, token: string):Promise<ContentWord[]> => {
+export const getWordsUser = async (id: string, token: string): Promise<ContentWord[]> => {
   const url = `${BASE_URL}/users/${id}/words`;
   const response = await fetch(url, {
     method: 'GET',
@@ -25,7 +25,7 @@ export const getWordsUser = async (id: string, token: string):Promise<ContentWor
 };
 
 // get word by ID
-export const getWordById = async (wordId:string):Promise<Word> => {
+export const getWordById = async (wordId: string): Promise<Word> => {
   const response = await fetch(`${BASE_URL}/words/${wordId}`);
   return response.json();
 };
@@ -75,7 +75,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
       '5e9f5ee35eb9e72bc21af4a0': { correct: 0, wrong: 0 },
     },
   },
-}):Promise<void> => {
+}): Promise<void> => {
   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
     method: 'PUT',
     headers: {
@@ -114,7 +114,7 @@ export const signIn = async (user: Sign, first = false): Promise<void> => {
 };
 
 // add word to hard
-export const setWordHard = async (userId:string, token:string, word:Word):Promise<void> => {
+export const setWordHard = async (userId: string, token: string, word: Word): Promise<void> => {
   const newWord = {
     difficulty: 'hard',
     optional: {},
@@ -130,7 +130,7 @@ export const setWordHard = async (userId:string, token:string, word:Word):Promis
 };
 
 // update word
-export const deleteUserWord = async (userId:string, token:string, wordId:string):Promise<void> => {
+export const deleteUserWord = async (userId: string, token: string, wordId: string): Promise<void> => {
   const url = `${BASE_URL}/users/${userId}/words/${wordId}`;
   await fetch(url, {
     method: 'DELETE',
@@ -141,7 +141,7 @@ export const deleteUserWord = async (userId:string, token:string, wordId:string)
   });
 };
 
-export const setWordLearned = async (userId:string, token:string, wordId:string):Promise<void> => {
+export const setWordLearned = async (userId: string, token: string, wordId: string): Promise<void> => {
   const newWord = {
     difficulty: 'learned',
     optional: {},
@@ -156,7 +156,12 @@ export const setWordLearned = async (userId:string, token:string, wordId:string)
   });
 };
 
-export const updateWordUser = async (userId:string, token:string, wordId:string, wordParams:string):Promise<void> => {
+export const updateWordUser = async (
+  userId: string,
+  token: string,
+  wordId: string,
+  wordParams: string,
+): Promise<void> => {
   const newWord = {
     difficulty: wordParams,
     optional: {},
@@ -169,10 +174,10 @@ export const updateWordUser = async (userId:string, token:string, wordId:string,
     },
     body: JSON.stringify(newWord),
   });
-}
+};
 
 // get statistic
-export const getStatisticUser = async (id: string, token: string):Promise<any> => {
+export const getStatisticUser = async (id: string, token: string): Promise<any> => {
   const url = `${BASE_URL}/users/${id}/statistics`;
   const response = await fetch(url, {
     method: 'GET',

@@ -63,9 +63,9 @@ export const toggleFullScreen = (): void => {
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
-const loadStatistic = async (userAut:Token):Promise<any> => getStatisticUser(userAut.userId, userAut.token);
+const loadStatistic = async (userAut: Token): Promise<any> => getStatisticUser(userAut.userId, userAut.token);
 
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[]):Promise<void> => {
+export const saveStatictic = async (right: WordResult[], wrong: WordResult[]): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   if (userAuth) {
     const statistic = await loadStatistic(userAuth);
@@ -74,7 +74,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[]):Pr
         statistic.optional.words[word.id].correct++;
         if (statistic.optional.words[word.id].correct >= 3) {
           statistic.optional.words[word.id].wrong = 0;
-          const params = 'learned'
+          const params = 'learned';
           await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
         }
       } else {
