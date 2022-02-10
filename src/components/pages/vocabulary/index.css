@@ -130,6 +130,12 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.correct-answer,
+.wrong-answer {
+  text-align: center;
+  margin: 5px;
+}
+
 .card__card__meaning-translate,
 .card__example,
 .card__example-translate {
