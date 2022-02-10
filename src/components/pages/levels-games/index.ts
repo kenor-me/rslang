@@ -1,9 +1,9 @@
 import './index.css';
 // import { getTimer } from '../timer';
 import { getSprintPlay, renderSprintPage } from '../sprint';
-import { renderAudiocallPage } from '../audiocall';
-import { currentWords } from '../audiocall/getWords';
 import { Word } from '../../types';
+import { renderAudiocallPage, GAME_WORDS } from '../audiocall';
+import { GamesWords } from '../audiocall/getWords';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -59,11 +59,12 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
   `;
   root.innerHTML = content;
   document.querySelector('.levels')?.addEventListener('click', async (e) => {
+    const currentWords = new GamesWords();
     const target = ((e.target as HTMLElement).parentNode) as HTMLElement;
     if (target.classList.contains('level')) {
       const page = currentWords.getRandomPageNum();
       const part = Number((target.querySelector('span') as HTMLElement).textContent) - 1;
-      await currentWords.getGameWords(part, page);
+      GAME_WORDS.wordsArr = await currentWords.getGameWords(part, page);
 
       const randomThreePages = Promise.all([
         await currentWords.getGameWords(part, currentWords.getRandomPageNum()),
@@ -75,7 +76,7 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
         if (window.location.hash === '#sprint') {
           renderSprintPage();
           getSprintPlay(result);
-        } else if (window.location.hash === '#audiocall') renderAudiocallPage();
+        } else if (window.location.hash === '#audiocall') renderAudiocallPage(GAME_WORDS.wordsArr);
       }, 3800);
 
       window.addEventListener('hashchange', () => {

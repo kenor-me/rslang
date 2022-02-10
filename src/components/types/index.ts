@@ -65,3 +65,7 @@ export type Statistic = {
     words: Record<string, unknown>
   }
 };
+
+export type WordsArray = {
+  wordsArr: Word[];
+};

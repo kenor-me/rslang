@@ -125,6 +125,10 @@ class Vocabulary extends BaseComponent {
       this.navigation.audioCallButton.node.classList.remove('disabled');
       cardWord.forEach((card) => card.classList.remove('selection'));
     }
+    if (this.settings.part === this.MAX_COUNT_PART) {
+      this.navigation.sprintButton.node.classList.remove('disabled');
+      this.navigation.audioCallButton.node.classList.remove('disabled');
+    }
   };
 
   changePage = async (param: string): Promise<void> => {

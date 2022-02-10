@@ -156,6 +156,21 @@ export const setWordLearned = async (userId:string, token:string, wordId:string)
   });
 };
 
+export const updateWordUser = async (userId:string, token:string, wordId:string, wordParams:string):Promise<void> => {
+  const newWord = {
+    difficulty: wordParams,
+    optional: {},
+  };
+  await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWord),
+  });
+}
+
 // get statistic
 export const getStatisticUser = async (id: string, token: string):Promise<any> => {
   const url = `${BASE_URL}/users/${id}/statistics`;

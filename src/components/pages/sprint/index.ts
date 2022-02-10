@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 import {
-  getStatisticUser, setStatisticUser, setWordLearned,
+  getStatisticUser, setStatisticUser, setWordLearned, updateWordUser,
 } from '../../api';
 import {
   Token, Word, WordResult,
 } from '../../types';
+import { getPercentCircle } from '../statistic';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
@@ -34,13 +35,14 @@ const renderFullscreenClose = (): string => `
     <path d="M28.2554 7.74495H35.9764V12.8119H23.1874V0.0229492H28.2544V7.74395L28.2554
     7.74495ZM23.1884 35.976V23.1869H35.9774V28.2539H28.2564V35.9749H23.1894L23.1884 35.976ZM7.74544
     7.74495V0.0239492H12.8124V12.8129H0.0234375V7.74595H7.74444L7.74544
-    7.74495ZM0.0244375 28.2549V23.1879H12.8134V35.977H7.74644V28.2559H0.0254375L0.0244375 28.2549Z" fill="#FFFFFF">
+    7.74495ZM0.0244375 28.2549V23.1879H12.8134V35.977H7.74644V28.2559H0.0254375L0.0244375 28.2549Z">
   </svg>
 `;
 
-const toggleFullScreen = (): void => {
+export const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
-  const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement;
+  const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement
+    || document.querySelector('.wrapper-audiocall') as HTMLElement;
 
   fullscreen.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;
@@ -67,13 +69,13 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[]):Pr
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   if (userAuth) {
     const statistic = await loadStatistic(userAuth);
-    right.forEach((word) => {
+    right.forEach(async (word) => {
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].correct++;
         if (statistic.optional.words[word.id].correct >= 3) {
-          statistic.optional.words[word.id].correct = 0;
           statistic.optional.words[word.id].wrong = 0;
-          setWordLearned(userAuth.userId, userAuth.token, word.id);
+          const params = 'learned'
+          await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
         }
       } else {
         statistic.optional.words[word.id] = {
@@ -111,7 +113,10 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-const renderResultForm = async (wrong: WordResult[], right: WordResult[]): Promise<void> => {
+const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+  const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
+  const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
+
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
@@ -120,6 +125,10 @@ const renderResultForm = async (wrong: WordResult[], right: WordResult[]): Promi
       </div>
       <div class="sprint-text-block sprint__result-inf-block">
         <p class="sprint__title">РЕЗУЛЬТАТ</p>
+        <div class="sprint__result-diagram ">
+                  ${getPercentCircle(persentRight, persentWrong)}
+                  <span>${persentRight}%</span>
+                </div>
         <div class="sprint__result">
           <p class="sprint__result-title">Слова с ошибками <span class="result-title-wrong">${wrong.length}</span></p>
           <ul class="sprint__wrong-words">
@@ -220,18 +229,27 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const answerButton = document.querySelector('.sprint__btn-block') as HTMLElement;
   const wrong: WordResult[] = [];
   const right: WordResult[] = [];
+  let seriesRightAnswer = '';
 
   const resultTimeout = setTimeout((): void => {
+    const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+    console.log(longestSeries);
+
     renderResultForm(wrong, right);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
 
+  const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
+
   const addWrongWord = (): void => {
+    wrongBorder.classList.add('wrong-border');
     wrong.push({
       id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
+    seriesRightAnswer += ' ';
+    setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
   };
 
   const addRightWord = (): void => {
@@ -239,10 +257,10 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
+    seriesRightAnswer += '1';
   };
 
   function kayAnswer(e: KeyboardEvent) {
-    // console.log(e.code);
     if (i < words.length) {
       if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
         addWrongWord();
@@ -256,6 +274,9 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       }
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
+      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+      console.log(longestSeries);
+
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
@@ -279,6 +300,9 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       }
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
+      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+      console.log(longestSeries);
+
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
