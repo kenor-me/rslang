@@ -48,6 +48,20 @@ div.sprint__result-wrapper {
   text-transform: uppercase;
 }
 
+.sprint__result-diagram {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.sprint__result-diagram span{
+  position: absolute;
+  top: 35%;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--font-color-dark);
+}
+
 .sprint__subtitle {
   font-size: 1.8rem;
   font-weight: 700;

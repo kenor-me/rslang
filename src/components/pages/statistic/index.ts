@@ -1,13 +1,13 @@
 import { getStatisticUser } from '../../api/index';
 import './index.css';
 
-const getPercentCircle = (start: number, end: number): string => `
-<svg class="" width="100px" height="100px" viewBox="0 0 42 42" class="donut">
+export const getPercentCircle = (start: number, end: number): string => `
+<svg class="" width="120px" height="120px" viewBox="0 0 42 42" class="donut">
   <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="transparent"></circle>
-  <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="tomato" stroke-width="6">
+  <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="tomato" stroke-width="8">
   </circle>
   <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" 
-  stroke="#90c47a" stroke-width="6" stroke-dasharray="${start} ${end}" stroke-dashoffset="25">
+  stroke="#90c47a" stroke-width="8" stroke-dasharray="${start} ${end}" stroke-dashoffset="25">
   </circle>
 </svg>
 `;
@@ -21,6 +21,12 @@ const getDayStatistic = (learnedWords: number) => `
     </div>
     <div class="count-words-learn-all">
       <div class="count-word-learn-all-title">
+        Количество новых слов за день
+      </div>
+      <div class="count-word-all-count count">${11}</div>
+    </div>
+    <div class="count-words-learn-all">
+      <div class="count-word-learn-all-title">
         Количество изученных слов
       </div>
       <div class="count-word-all-count count">${learnedWords}</div>
@@ -29,7 +35,7 @@ const getDayStatistic = (learnedWords: number) => `
       <div class="count-percent-all-title">
         Процент правильных ответов
       </div>
-      <div class="count-percent-all-value count">3</div>
+      <div class="count-percent-all-value count">${60}%</div>
     </div>
     <div class="count-series-all">
       <div class="count-series-all-title">
@@ -57,7 +63,7 @@ const getAllStatistic = () => `
       <div class="count-percent-all-title">
         Процент правильных ответов
       </div>
-      <div class="count-percent-all-value count">3</div>
+      <div class="count-percent-all-value count">${60}%</div>
     </div>
     <div class="count-series-all">
       <div class="count-series-all-title">
@@ -85,7 +91,7 @@ export const renderStatisticPage = async (): Promise<void> => {
             <div class="statistic-games">
               <div class="statistic-sprint">
                 <h4>Спринт</h4>
-                <div class="statistic-games__diagram ">
+                <div class="statistic-games__diagram">
                   ${getPercentCircle(40, 60)}
                   <span>${40}%</span>
                 </div>
@@ -95,7 +101,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                 </div>
                 <div class="count-words-learn-sprint">
                   <div class="count-word-learn-sprint-title">
-                    Количество изученных слов
+                    Количество новых слов за день
                   </div>
                   <div class="count-word-sprint-count count">13</div>
                 </div>
@@ -103,7 +109,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <div class="count-percent-sprint-title">
                     Процент правильных ответов
                   </div>
-                  <div class="count-percent-sprint-count count">3</div>
+                  <div class="count-percent-sprint-count count">${40} %</div>
                 </div>
                 <div class="count-series-sprint">
                   <div class="count-series-sprint-title">
@@ -124,7 +130,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                 </div>
                 <div class="count-words-learn-audiocall">
                   <div class="count-word-learn-audiocall-title">
-                    Количество изученных слов
+                    Количество новых слов за день
                   </div>
                   <div class="count-word-audiocall-count count">13</div>
                 </div>
@@ -132,7 +138,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <div class="count-percent-audiocall-title">
                     Процент правильных ответов
                   </div>
-                  <div class="count-percent-audiocall-count count">3</div>
+                  <div class="count-percent-audiocall-count count">${80} %</div>
                 </div>
                 <div class="count-series-audiocall">
                   <div class="count-series-audiocall-title">

@@ -167,18 +167,14 @@
     display: block;
   }
 }
+
 @media (max-width: 639px) {
   .statistic-wrapper {
     min-height: calc(100vh - 358px);
   }
-  /*   .statistic-table__header {
-    flex-direction: column;
-    margin: 0;
+  .statistic-table {
+    width: 100%;
   }
-  .statistic__header-day,
-  .statistic__header-all {
-    font-size: 24px;
-  }*/
   .statistic-table__body h3 {
     font-size: 32px;
   }
@@ -189,17 +185,19 @@
   .statistic-table__body {
     font-size: 14px;
   }
+  .statistic-all,
+  .statistic-sprint,
+  .statistic-audiocall {
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+  }
 }
 
 @media (max-width: 440px) {
   .statistic-wrapper {
     min-height: calc(100vh - 425px);
   }
-  /*   .statistic__header-day,
-  .statistic__header-all {
-    text-transform: none;
-    font-size: 20px;
-  } */
   .count-series-sprint-title,
   .count-series-all-title,
   .count-series-audiocall-title {
