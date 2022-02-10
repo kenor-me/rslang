@@ -147,6 +147,10 @@ div.sprint__result-wrapper {
   padding-bottom: 20px;
 }
 
+.sprint__btn-block-top .fullscreen svg {
+  fill: #FFFFFF;
+}
+
 .sprint__btn,
 .sprint__result-btn {
   min-width: 220px;
@@ -325,7 +329,7 @@ div.sprint__result-wrapper {
   .sprint__title {
     font-size: 2.2rem;
   }
-  
+
   .sprint__subtitle {
     font-size: 1.2rem;
   }

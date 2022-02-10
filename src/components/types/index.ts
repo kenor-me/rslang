@@ -60,3 +60,7 @@ export type Statistic = {
   learnedWords: number,
   optional: Record<string, unknown>, // возможно изменить
 };
+
+export type WordsArray = {
+  wordsArr: Word[];
+};
