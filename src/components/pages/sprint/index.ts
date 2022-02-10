@@ -1,5 +1,10 @@
 /* eslint-disable max-len */
-import { Word, WordResult } from '../../types';
+import {
+  getStatisticUser, setStatisticUser, setWordLearned,
+} from '../../api';
+import {
+  Token, Word, WordResult,
+} from '../../types';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
@@ -56,6 +61,43 @@ const toggleFullScreen = (): void => {
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
+const loadStatistic = async (userAut:Token):Promise<any> => getStatisticUser(userAut.userId, userAut.token);
+
+export const saveStatictic = async (right: WordResult[], wrong: WordResult[]):Promise<void> => {
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  if (userAuth) {
+    const statistic = await loadStatistic(userAuth);
+    right.forEach((word) => {
+      if (statistic.optional.words[word.id]) {
+        statistic.optional.words[word.id].correct++;
+        if (statistic.optional.words[word.id].correct >= 3) {
+          statistic.optional.words[word.id].correct = 0;
+          statistic.optional.words[word.id].wrong = 0;
+          setWordLearned(userAuth.userId, userAuth.token, word.id);
+        }
+      } else {
+        statistic.optional.words[word.id] = {
+          correct: 1,
+          wrong: 0,
+        };
+      }
+    });
+    wrong.forEach((word) => {
+      if (statistic.optional.words[word.id]) {
+        statistic.optional.words[word.id].wrong++;
+        statistic.optional.words[word.id].correct = 0;
+      } else {
+        statistic.optional.words[word.id] = {
+          correct: 0,
+          wrong: 1,
+        };
+      }
+    });
+    delete statistic.id;
+    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
+  }
+};
+
 const renderResultWord = (word: WordResult): string => `
   <li>
     <div class="sprint__result-sound">
@@ -69,7 +111,7 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+const renderResultForm = async (wrong: WordResult[], right: WordResult[]): Promise<void> => {
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
@@ -104,6 +146,7 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
       audio.play();
     }
   });
+  saveStatictic(right, wrong);
 };
 
 const getSeconds = (): void => {
@@ -186,14 +229,14 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
 
   const addWrongWord = (): void => {
     wrong.push({
-      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
   };
 
   const addRightWord = (): void => {
     right.push({
-      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
   };

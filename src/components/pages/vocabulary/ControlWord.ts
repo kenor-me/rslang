@@ -99,7 +99,7 @@ export class ControlWord extends BaseComponent {
     addWordButton.node.addEventListener('click', async () => {
       if (!this.node.classList.contains('hard-word')) {
         if (this.node.classList.contains('learn-word')) {
-          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo.id);
           this.node.classList.remove('learn-word');
         }
         await setWordHard(this.user!.userId, this.user!.token, wordInfo);
@@ -108,7 +108,7 @@ export class ControlWord extends BaseComponent {
         addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.add('hard-word');
       } else {
-        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo.id);
         addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
       }
@@ -118,7 +118,7 @@ export class ControlWord extends BaseComponent {
       }
       const hardtoPage = document.querySelectorAll('.hard-word').length;
       const learntoPage = document.querySelectorAll('.learn-word').length;
-     this.updateCountLearnandHardWord(hardtoPage, learntoPage);
+      this.updateCountLearnandHardWord(hardtoPage, learntoPage);
     });
     if (hard) {
       addWordButton.node.textContent = 'Удалить слово';
@@ -127,7 +127,7 @@ export class ControlWord extends BaseComponent {
     addLearnedWordButton.node.addEventListener('click', async () => {
       if (!this.node.classList.contains('learn-word')) {
         if (this.node.classList.contains('hard-word')) {
-          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+          await deleteUserWord(this.user!.userId, this.user!.token, wordInfo.id);
           addWordButton.node.textContent = 'Добавить слово';
           this.node.classList.remove('hard-word');
           const settings = (JSON.parse(localStorage.getItem('settings') as string));
@@ -135,11 +135,11 @@ export class ControlWord extends BaseComponent {
             window.location.reload();
           }
         }
-        await setWordLearned(this.user!.userId, this.user!.token, wordInfo);
+        await setWordLearned(this.user!.userId, this.user!.token, wordInfo.id);
         addLearnedWordButton.node.textContent = 'Не знаю';
         this.node.classList.add('learn-word');
       } else {
-        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo);
+        await deleteUserWord(this.user!.userId, this.user!.token, wordInfo.id);
         addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.remove('learn-word');
       }
@@ -169,32 +169,32 @@ export class ControlWord extends BaseComponent {
     await setStatisticUser(this.user!.userId, this.user!.token, stats);
   };
 
-  updateCountLearnandHardWord(countHard:number, countLearn:number) {
+  updateCountLearnandHardWord = (countHard:number, countLearn:number):void => {
     const sprintBtn = document.querySelector('.book-page-nav-sprint') as HTMLElement;
     const audioCallBtn = document.querySelector('.book-page-nav-audio') as HTMLElement;
     const cardWord = document.querySelectorAll('.book-word-item');
     if (countHard + countLearn >= 20) {
       sprintBtn.classList.add('disabled');
       audioCallBtn.classList.add('disabled');
-      cardWord.forEach((card) => card.classList.add('selection'))
-    }
-    else {
+      cardWord.forEach((card) => card.classList.add('selection'));
+    } else {
       sprintBtn.classList.remove('disabled');
       audioCallBtn.classList.remove('disabled');
-      cardWord.forEach((card) => card.classList.remove('selection'))
+      cardWord.forEach((card) => card.classList.remove('selection'));
     }
-  }
+  };
 
   async setInfoWord(wordInfo:Word):Promise<void> {
-    const correctAnswerWord = new BaseComponent (this.node, 'div', 'correct-answer', 'Правильных ответов: 0');
-    const wrongAnswerWord = new BaseComponent (this.node, 'div', 'wrong-answer', 'Неправильных ответов: 0');
+    const correctAnswerWord = new BaseComponent(this.node, 'div', 'correct-answer', 'Правильных ответов: 0');
+    const wrongAnswerWord = new BaseComponent(this.node, 'div', 'wrong-answer', 'Неправильных ответов: 0');
     if (this.statisticUser.optional.words[wordInfo.id]) {
-      correctAnswerWord.node.textContent = `Правильных ответов: ${this.statisticUser.optional.words[wordInfo.id].correct}`;
-      wrongAnswerWord.node.textContent = `Неправильных ответов: ${this.statisticUser.optional.words[wordInfo.id].wrong}`;
-    }
-    else {
-      correctAnswerWord.node.textContent = `Правильных ответов: 0`;
-      wrongAnswerWord.node.textContent = `Неправильных ответов: 0`;
+      correctAnswerWord.node.textContent = `Правильных ответов:
+      ${this.statisticUser.optional.words[wordInfo.id].correct}`;
+      wrongAnswerWord.node.textContent = `Неправильных ответов:
+      ${this.statisticUser.optional.words[wordInfo.id].wrong}`;
+    } else {
+      correctAnswerWord.node.textContent = 'Правильных ответов: 0';
+      wrongAnswerWord.node.textContent = 'Неправильных ответов: 0';
     }
   }
 }

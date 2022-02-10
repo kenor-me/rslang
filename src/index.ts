@@ -1,6 +1,6 @@
-import { setStatisticUser } from './components/api/index';
+import { addUser, signIn } from './components/api/index';
 import './style.css';
-import { addUser, signIn } from './components/api';
+
 import { renderRegistrationPage } from './components/pages/registration';
 import { createHeader, createFooter } from './components/pages/main';
 import { locationResolver } from './components/routing';

@@ -1,7 +1,7 @@
 import {
   Settings, Token, ContentWord, Word,
 } from '../../types/index';
-import { getWordPage, getWordsUser, getWordById} from '../../api/index';
+import { getWordPage, getWordsUser, getWordById } from '../../api/index';
 import './index.css';
 import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
@@ -116,15 +116,14 @@ class Vocabulary extends BaseComponent {
     const hardtoPage = document.querySelectorAll('.hard-word').length;
     const learntoPage = document.querySelectorAll('.learn-word').length;
     const cardWord = document.querySelectorAll('.book-word-item');
-    if(hardtoPage + learntoPage >= this.currentPage.length) {
+    if (hardtoPage + learntoPage >= this.currentPage.length) {
       this.navigation.sprintButton.node.classList.add('disabled');
       this.navigation.audioCallButton.node.classList.add('disabled');
-      cardWord.forEach((card) => card.classList.add('selection'))
-    }
-    else {
+      cardWord.forEach((card) => card.classList.add('selection'));
+    } else {
       this.navigation.sprintButton.node.classList.remove('disabled');
       this.navigation.audioCallButton.node.classList.remove('disabled');
-      cardWord.forEach((card) => card.classList.remove('selection'))
+      cardWord.forEach((card) => card.classList.remove('selection'));
     }
   };
 

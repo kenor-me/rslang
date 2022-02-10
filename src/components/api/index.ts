@@ -1,5 +1,5 @@
 import {
-  User, Sign, Token, Word, ContentWord, Statistic,
+  User, Sign, Token, Word, ContentWord,
 } from '../types';
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
@@ -58,7 +58,7 @@ export const addUser = async (user: User): Promise<void> => {
       <p class="popup-auth-text">Регистрация прошла успешно</p>
     `;
     localStorage.setItem('userAdd', JSON.stringify(res));
-      // setTimeout((): void => {
+    // setTimeout((): void => {
     //   popup.classList.remove('open');
     // }, 3000);
   }).catch((): void => {
@@ -72,8 +72,8 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     countSprint: 0,
     countAudioCall: 0,
     words: {
-      '5e9f5ee35eb9e72bc21af4a0': {correct:0, wrong: 0},
-    }
+      '5e9f5ee35eb9e72bc21af4a0': { correct: 0, wrong: 0 },
+    },
   },
 }):Promise<void> => {
   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
@@ -88,7 +88,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
   return response.json();
 };
 
-export const signIn = async (user: Sign, first:boolean = false): Promise<void> => {
+export const signIn = async (user: Sign, first = false): Promise<void> => {
   const err = document.getElementById('signin-error') as HTMLElement;
 
   const response = await fetch(`${BASE_URL}/signin`, {
@@ -103,8 +103,8 @@ export const signIn = async (user: Sign, first:boolean = false): Promise<void> =
     // const popup = document.getElementById('popup') as HTMLElement;
     // popup.classList.remove('open');
     localStorage.setItem('userAuth', JSON.stringify(res));
-    if(first) {
-     setStatisticUser(res.userId, res.token);
+    if (first) {
+      setStatisticUser(res.userId, res.token);
     }
   }).catch((): void => {
     if (err) {
@@ -130,8 +130,8 @@ export const setWordHard = async (userId:string, token:string, word:Word):Promis
 };
 
 // update word
-export const deleteUserWord = async (userId:string, token:string, word:Word):Promise<void> => {
-  const url = `${BASE_URL}/users/${userId}/words/${word.id}`;
+export const deleteUserWord = async (userId:string, token:string, wordId:string):Promise<void> => {
+  const url = `${BASE_URL}/users/${userId}/words/${wordId}`;
   await fetch(url, {
     method: 'DELETE',
     headers: {
@@ -141,12 +141,12 @@ export const deleteUserWord = async (userId:string, token:string, word:Word):Pro
   });
 };
 
-export const setWordLearned = async (userId:string, token:string, word:Word):Promise<void> => {
+export const setWordLearned = async (userId:string, token:string, wordId:string):Promise<void> => {
   const newWord = {
     difficulty: 'learned',
     optional: {},
   };
-  await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
+  await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -157,7 +157,7 @@ export const setWordLearned = async (userId:string, token:string, word:Word):Pro
 };
 
 // get statistic
-export const getStatisticUser = async (id: string, token: string):Promise<Statistic> => {
+export const getStatisticUser = async (id: string, token: string):Promise<any> => {
   const url = `${BASE_URL}/users/${id}/statistics`;
   const response = await fetch(url, {
     method: 'GET',
