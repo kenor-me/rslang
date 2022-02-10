@@ -17,18 +17,24 @@ preloadImg(IMG_URL);
 
 function createTeamAboutUs(): string {
   return `
+  <div class="wrapper-avatar">
     <h2 class="developers">Наша команда</h2>
-    <div class="wrapper-avatar">
       <div class="avatar-item">
         <img class="avatar-img" src="./../../../assets/pictures/avatarKaty.jpg" alt="avatar">
         <div class="avatar-text">
           <h2 class="avatar-name">Kanareikina Katherine</h2>
-          <p class="avatar-name-position">Разработчик</p>
+          <p class="avatar-name__subtitle">Разработчик</p>
           <a class="avatar-github" href="https://github.com/kenor-me">
-          <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
-          kenor-me</a>
+            <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
+            <span>kenor-me</span>
+          </a>
           <ol class="avatar-description">
-            <li>Создала страницу авторизации пользователя</li>
+            <li>Тимлид</li>
+            <li>Дизайн приложения</li>
+            <li>Разработка архитектуры приложения</li>
+            <li>Авторизация пользователя</li>
+            <li>Разработка игры "Спринт"</li>
+            <li>Разработка "Статистики"</li>
           </ol>
         </div>
       </div>
@@ -37,12 +43,17 @@ function createTeamAboutUs(): string {
         <img class="avatar-img" src="./../../../assets/pictures/avatarElena.jpg" alt="avatar">
         <div class="avatar-text">
           <h2 class="avatar-name">Shustova Elena</h2>
-          <p class="avatar-name-position">Разработчик</p>
+          <p class="avatar-name__subtitle">Разработчик</p>
           <a class="avatar-github" href="https://github.com/ShustovaElena">
-          <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
-          ShustovaElena</a>
+            <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
+            <span>ShustovaElena</span>
+          </a>
           <ol class="avatar-description">
-            <li>Создала "Главную страницу" и страницу "О команде"</li>
+            <li>Главная страница приложения</li>
+            <li>Страница "Описание игр"</li>
+            <li>Страница "О команде"</li>
+            <li>Разработка игры "Аудиовызов"</li>
+            <li>Разработка "Статистики"</li>
           </ol>
         </div>
       </div>
@@ -51,12 +62,16 @@ function createTeamAboutUs(): string {
         <img class="avatar-img" src="./../../../assets/pictures/avatarNasty.jpg" alt="avatar">
         <div class="avatar-text">
           <h2 class="avatar-name">Arzhanik Anastasia</h2>
-          <p class="avatar-name-position">Разработчик</p>
+          <p class="avatar-name__subtitle">Разработчик</p>
           <a class="avatar-github" href="https://github.com/Arzhanik-Anastasia">
-          <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
-          Arzhanik-Anastasia</a>
+            <img class="github-sign" src="./../../../assets/pictures/github.svg" alt="github">
+            <span>Arzhanik-Anastasia</span>
+          </a>
           <ol class="avatar-description">
-            <li>Создала страницу "Учебник"</li>
+            <li>Подключение Бекенда</li>
+            <li>Разработка "Учебника"</li>
+            <li>Список слов</li>
+            <li>Разработка "Статистики"</li>
           </ol>
         </div>
       </div>

@@ -1,5 +1,4 @@
 .wrapper-about {
-  min-width: 98vw;
   min-height: calc(100vh - 125px);
   background-color: #d3f1e2;
 }
@@ -15,11 +14,13 @@
   margin: 30px;
   background-color: #fff;
   color: #000;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 .wrapper-advantages {
+  max-width: 100%;
   animation: advantages 0.7s ease-in;
+  padding: 0 20px;
 }
 
 @keyframes advantages {
@@ -39,7 +40,7 @@
 
 .about-header-advantages,
 .avatar-name {
-  margin: 20px auto;
+  margin: 20px auto 10px;
   text-align: center;
   font-family: Forum;
   text-transform: uppercase;
@@ -55,6 +56,10 @@
   font-family: Roboto;
 }
 
+.avatar-description {
+  text-align: start;
+}
+
 .developers,
 .our-advantages {
   padding-top: 50px;
@@ -66,6 +71,8 @@
 }
 
 .wrapper-avatar {
+  padding: 0 20px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   animation: advantages 0.7s ease-in;
@@ -74,45 +81,55 @@
 .avatar-item {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin: 15px auto;
   padding: 30px;
   width: 50%;
   background-color: rgb(249, 252, 252);
-  color: #000;
-  border-radius: 20px;
+  color: var(--font-color-dark);
+  border-radius: 10px;
+  box-shadow: 6px 6px 16px rgb(83, 86 ,90 , 50%);
 }
 
 .avatar-img {
-  width: 40%;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
 }
 
 .avatar-text {
-  width: 50%;
+  padding-left: 15px;
 }
 
-.avatar-name-position {
-  margin-top: -10px;
-  color: rgba(0, 0, 0, 0.5);
+.avatar-name__subtitle{
   font-family: Roboto;
+  padding-bottom: 10px;
+  color: var(---font-color-dark);
   text-align: center;
   text-transform: uppercase;
 }
 
 .avatar-github {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: none;
+  color: var(--font-color-dark);
 }
 
 .github-sign {
-  width: 5%;
-  margin-top: 10px;
+  width: 25px;
+  margin-right: 10px;
 }
 
 .avatar-github:hover {
-  color: #2959a0;
+  color: tomato;
+}
+
+@media (max-width: 1200px) {
+  .avatar-item {
+    width: 80%;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -120,29 +137,34 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 
   .about-advantages {
-    width: 40%;
-    height: 400px;
+    width: 35%;
+    height: 350px;
   }
 
-  .avatar-item {
-    width: 80%;
+  .about-img-advantages {
+    margin: 18px auto;
+  }
+
+  .about-description-advantages {
+    padding-top: 0;
   }
 }
 
 @media (max-width: 768px) {
   .advantages {
-    flex-direction: column;
+    /* flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
 
   .about-advantages {
-    width: 50%;
-    height: 400px;
+    width: 40%;
+    margin: 20px 10px;
+    /* height: 400px; */
   }
 
   .about-img-advantages {
@@ -151,8 +173,13 @@
     align-items: center;
   }
 
+  .about-header-advantages {
+    font-size: 20px;
+  }
+
   .about-description-advantages {
-    font-size: 1.5em;
+    /* padding-top: 0; */
+    /* font-size: 1.5em; */
   }
 
   .avatar-item {
@@ -166,7 +193,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 640px) {
   .about-advantages {
     height: 300px;
   }
@@ -182,5 +209,24 @@
   .avatar-name-position,
   .avatar-github {
     font-size: 1rem;
+  }
+
+  .avatar-item {
+    width: calc(100% - 60px);
+  }
+}
+
+@media (max-width: 500px) {
+  .advantages {
+    flex-direction: column;
+  }
+
+  .about-advantages {
+    width: calc(100% - 20px);
+    height: 250px;
+  }
+
+  .about-img-advantages {
+    margin: 20px auto 10px;
   }
 }

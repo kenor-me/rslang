@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { Word, WordResult } from '../../types';
+import { getPercentCircle } from '../statistic';
 import './index.css';
 
 const root = document.getElementById('root') as HTMLElement;
@@ -36,7 +37,7 @@ const renderFullscreenClose = (): string => `
 export const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
   const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement
-  || document.querySelector('.wrapper-audiocall') as HTMLElement;
+    || document.querySelector('.wrapper-audiocall') as HTMLElement;
 
   fullscreen.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;
@@ -71,6 +72,8 @@ const renderResultWord = (word: WordResult): string => `
 `;
 
 const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+  const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
+  const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
@@ -79,6 +82,10 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
       </div>
       <div class="sprint-text-block sprint__result-inf-block">
         <p class="sprint__title">РЕЗУЛЬТАТ</p>
+        <div class="sprint__result-diagram ">
+                  ${getPercentCircle(persentRight, persentWrong)}
+                  <span>${persentRight}%</span>
+                </div>
         <div class="sprint__result">
           <p class="sprint__result-title">Слова с ошибками <span class="result-title-wrong">${wrong.length}</span></p>
           <ul class="sprint__wrong-words">
@@ -178,18 +185,27 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const answerButton = document.querySelector('.sprint__btn-block') as HTMLElement;
   const wrong: WordResult[] = [];
   const right: WordResult[] = [];
+  let seriesRightAnswer = '';
 
   const resultTimeout = setTimeout((): void => {
+    const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+    console.log(longestSeries);
+
     renderResultForm(wrong, right);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
 
+  const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
+
   const addWrongWord = (): void => {
+    wrongBorder.classList.add('wrong-border');
     wrong.push({
       audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
+    seriesRightAnswer += ' ';
+    setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
   };
 
   const addRightWord = (): void => {
@@ -197,10 +213,10 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
+    seriesRightAnswer += '1';
   };
 
   function kayAnswer(e: KeyboardEvent) {
-    // console.log(e.code);
     if (i < words.length) {
       if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
         addWrongWord();
@@ -214,6 +230,9 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       }
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
+      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+      console.log(longestSeries);
+
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
@@ -237,6 +256,9 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       }
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
+      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+      console.log(longestSeries);
+
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
