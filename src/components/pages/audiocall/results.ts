@@ -20,6 +20,7 @@ export class Results {
     const userSelect = this.answer.parentNode?.lastElementChild?.textContent;
     if (userSelect === this.word.wordTranslate) {
       this.right.push({
+        id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
@@ -29,6 +30,7 @@ export class Results {
     }
     if (userSelect !== this.word.wordTranslate) {
       this.wrong.push({
+        id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
