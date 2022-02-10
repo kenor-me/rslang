@@ -1,7 +1,10 @@
-import { renderFullscreenOpen, renderCloseSVG, toggleFullScreen } from '../sprint';
+import {
+  renderFullscreenOpen, renderCloseSVG, toggleFullScreen, renderResultForm,
+} from '../sprint';
 import './index.css';
 import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
+import { audiocallRight, audiocallWrong, Results } from './results';
 
 export const GAME_WORDS: WordsArray = {
   wordsArr: [],
@@ -23,7 +26,7 @@ const shuffleArray = (array: Word[]) => {
 };
 
 const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
-  let result = '';
+  let answersResult = '';
   const pageAnswers = await answers;
   const shuffleAnswers = shuffleArray(pageAnswers);
 
@@ -34,10 +37,17 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
         <span class="name-answer">${shuffleAnswers[i - 1].wordTranslate}</span>
       </div>
     `;
-    result += str;
+    answersResult += str;
   }
-  return result;
+  return answersResult;
 };
+
+function showResult(count: number, wordsGame: WordsArray) {
+  if (wordsGame.wordsArr.length === count) {
+    renderResultForm(audiocallWrong, audiocallRight);
+    countAnswer = 0;
+  }
+}
 
 export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
   const answers = new Answers(words[countAnswer]);
@@ -68,10 +78,13 @@ export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
       countAnswer++;
       renderAudiocallPage(GAME_WORDS.wordsArr);
     }
+    showResult(countAnswer, GAME_WORDS);
   });
   document.querySelector('.audiocall-answers')?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     answers.compareWithRightAnswer(target);
+    const results = new Results(target, answers.word);
+    results.getResult();
   });
   toggleFullScreen();
 };
