@@ -20,6 +20,12 @@
   background-color: #dffcf5;
 }
 
+.audiocall-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .audiocall-btn-block {
   display: flex;
   justify-content: space-between;

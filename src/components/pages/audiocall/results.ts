@@ -18,7 +18,6 @@ export class Results {
     if (this.answer.classList.contains('audiocall-answer')) {
       userSelect = this.answer.lastElementChild?.textContent;
     }
-    console.log(userSelect, this.word.wordTranslate);
     if (userSelect === this.word.wordTranslate) {
       audiocallRight.push({
         audio: this.word.audio,

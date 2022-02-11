@@ -49,26 +49,39 @@ function showResult(count: number, wordsGame: WordsArray) {
   }
 }
 
+export const renderAudiocallWrapper = (): void => {
+  const content = `
+  <div class="wrapper-audiocall">
+    <div class="audiocall">
+      <div class="audiocall-btn-block">
+        <div class="audiocall-fullscreen fullscreen">${renderFullscreenOpen()}</div>
+        <a href="#games" class="audiocall-close">${renderCloseSVG()}</a>
+      </div>
+      <div class="audiocall-controls"></div>
+    </div>
+  </div>
+`;
+
+  root.innerHTML = content;
+
+  toggleFullScreen();
+};
+
 export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
   const answers = new Answers(words[countAnswer]);
+
   const content = `
-    <div class="wrapper-audiocall">
-      <div class="audiocall">
-        <div class="audiocall-btn-block">
-          <div class="audiocall-fullscreen fullscreen">${renderFullscreenOpen()}</div>
-          <a href="#games" class="audiocall-close">${renderCloseSVG()}</a>
-        </div>
-        <button class="audiocall-sound">
-          <img class="audiocall-sound-img" src="./../../../assets/pictures/loud.svg" alt="Sound">
-        </button>
-        <div class="audiocall-answers">${await renderAnswers(answers.setAnswers())}</div>
-        <button class="audiocall-next-button">Не знаю</button>
-      </div>
-    </div>
-  `;
+      <button class="audiocall-sound">
+        <img class="audiocall-sound-img" src="./../../../assets/pictures/loud.svg" alt="Sound">
+      </button>
+      <div class="audiocall-answers">${await renderAnswers(answers.setAnswers())}</div>
+      <button class="audiocall-next-button">Не знаю</button>
+`;
+  (document.querySelector('.audiocall-controls') as HTMLElement).innerHTML = content;
+
   answers.getSound();
   answers.setAnswers();
-  root.innerHTML = content;
+
   document.querySelector('.audiocall-sound')?.addEventListener('click', () => answers.getSound());
   document.querySelector('.audiocall-next-button')?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
@@ -86,5 +99,4 @@ export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
     const results = new Results(target, answers.word);
     results.getResult();
   });
-  toggleFullScreen();
 };
