@@ -1,13 +1,10 @@
-import { Statistic } from './../../types/index';
 /* eslint-disable max-len */
-import {
-  getStatisticUser, getWordsUser, setStatisticUser, setWordNew, updateWordUser,
-} from '../../api';
 import {
   Word, WordResult,
 } from '../../types';
 import { getPercentCircle } from '../statistic';
 import './index.css';
+import { saveStatictic } from '../statistic/saveStatistic';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -63,7 +60,7 @@ export const toggleFullScreen = (): void => {
 };
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string): Promise<void> => {
+/* export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   if (userAuth) {
     const userWords = await getWordsUser(userAuth.userId, userAuth.token);
@@ -108,7 +105,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
     delete statistic.id;
     await setStatisticUser(userAuth.userId, userAuth.token, statistic);
   }
-};
+}; */
 
 const renderResultWord = (word: WordResult): string => `
   <li>
@@ -323,11 +320,9 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     clearTimeout(resultTimeout);
     document.removeEventListener('keydown', kayAnswer);
   });
-
-
 };
 
-
+/*
 export  const getToday = ():string => {
   const dateTodayObj = new Date();
   const year = dateTodayObj.getFullYear();
@@ -355,4 +350,4 @@ export const saveCountGameToday = (nameGame:string, statistic: any):any => {
     nameGame === 'sprint' ? statistic.optional.countSprintAll++:statistic.optional.countAudioCallAll++
     return statistic;
 }
-
+ */

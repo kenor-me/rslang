@@ -79,12 +79,12 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
       '1testDay': {
         countSprint: 0,
         countAudioCall: 0,
-      }
-    }
+        countNewWordFromSprint: 0,
+        countNewWordFromAudioCall: 0,
+      },
+    },
   },
 }): Promise<void> => {
-  console.log('сохранение статистики на бек')
-  console.log(statistic)
   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
     method: 'PUT',
     headers: {
