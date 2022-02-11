@@ -55,7 +55,7 @@ export class Answers extends GamesWords {
     rightWord.innerHTML = this.word.word;
     (document.querySelector('.audiocall-sound') as HTMLElement).appendChild(rightWord);
     const nextButton = document.querySelector('.audiocall-next-button') as HTMLButtonElement;
-    nextButton.classList.add('next-question');
+    nextButton.classList.toggle('next-question');
     nextButton.textContent = 'Далее';
     const nameAnswers = document.querySelectorAll('.name-answer');
     let res = Array.from(nameAnswers).find((v) => v.textContent === this.word.wordTranslate) as HTMLElement;

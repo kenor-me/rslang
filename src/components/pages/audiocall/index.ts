@@ -86,6 +86,8 @@ export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
   document.querySelector('.audiocall-next-button')?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     if (target.textContent === 'Не знаю') {
+      const results = new Results(target, answers.word);
+      results.getResult();
       answers.showRightAnswer();
     } else {
       countAnswer++;

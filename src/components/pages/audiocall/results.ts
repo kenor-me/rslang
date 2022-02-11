@@ -26,8 +26,17 @@ export class Results {
         translate: this.word.wordTranslate,
       });
     }
-    if ((userSelect !== this.word.wordTranslate && userSelect !== 'Не знаю' && userSelect !== 'Далее')
-    || (userSelect === 'Не знаю')) {
+
+    // const needAddToWrong1 = (userSelect === 'Далее' || userSelect !== 'Не знаю');
+    // const needAddToWrong2 = (userSelect !== this.word.wordTranslate
+    //   && userSelect !== 'Не знаю'
+    //   && userSelect !== 'Далее');
+
+    // console.log(userSelect);
+    // console.log(needAddToWrong1);
+    // console.log(needAddToWrong2);
+
+    if (userSelect !== this.word.wordTranslate) {
       audiocallWrong.push({
         audio: this.word.audio,
         word: this.word.word,
