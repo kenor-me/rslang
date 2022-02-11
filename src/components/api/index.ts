@@ -72,7 +72,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     countSprint: 0,
     countAudioCall: 0,
     words: {
-      '5e9f5ee35eb9e72bc21af4a0': { correct: 0, wrong: 0 },
+      '5testWord': { correct: 0, wrong: 0 },
     },
   },
 }): Promise<void> => {
@@ -144,6 +144,21 @@ export const deleteUserWord = async (userId: string, token: string, wordId: stri
 export const setWordLearned = async (userId: string, token: string, wordId: string): Promise<void> => {
   const newWord = {
     difficulty: 'learned',
+    optional: {},
+  };
+  await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWord),
+  });
+};
+
+export const setWordNew = async (userId: string, token: string, wordId: string): Promise<void> => {
+  const newWord = {
+    difficulty: 'new',
     optional: {},
   };
   await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {

@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import {
-  getStatisticUser, setStatisticUser, setWordLearned, updateWordUser,
+  getStatisticUser, getWordsUser, setStatisticUser, setWordNew, updateWordUser,
 } from '../../api';
 import {
-  Token, Word, WordResult,
+  Word, WordResult,
 } from '../../types';
 import { getPercentCircle } from '../statistic';
 import './index.css';
@@ -63,12 +63,16 @@ export const toggleFullScreen = (): void => {
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
-const loadStatistic = async (userAut: Token): Promise<any> => getStatisticUser(userAut.userId, userAut.token);
-
 export const saveStatictic = async (right: WordResult[], wrong: WordResult[]): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   if (userAuth) {
-    const statistic = await loadStatistic(userAuth);
+    const userWords = await getWordsUser(userAuth.userId, userAuth.token);
+    const statistic = await getStatisticUser(userAuth.userId, userAuth.token);
+    right.forEach(async (word) => {
+      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
+        await setWordNew(userAuth.userId, userAuth.token, word.id);
+      }
+    });
     right.forEach(async (word) => {
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].correct++;
@@ -82,6 +86,11 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[]): P
           correct: 1,
           wrong: 0,
         };
+      }
+    });
+    wrong.forEach(async (word) => {
+      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
+        await setWordNew(userAuth.userId, userAuth.token, word.id);
       }
     });
     wrong.forEach((word) => {

@@ -128,6 +128,7 @@ class Vocabulary extends BaseComponent {
     if (this.settings.part === this.MAX_COUNT_PART) {
       this.navigation.sprintButton.node.classList.remove('disabled');
       this.navigation.audioCallButton.node.classList.remove('disabled');
+      cardWord.forEach((card) => card.classList.remove('selection'));
     }
   };
 
