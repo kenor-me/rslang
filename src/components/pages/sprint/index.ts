@@ -1,3 +1,4 @@
+import { Statistic } from './../../types/index';
 /* eslint-disable max-len */
 import {
   getStatisticUser, getWordsUser, setStatisticUser, setWordNew, updateWordUser,
@@ -62,12 +63,12 @@ export const toggleFullScreen = (): void => {
 };
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
-
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[]): Promise<void> => {
+export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   if (userAuth) {
     const userWords = await getWordsUser(userAuth.userId, userAuth.token);
     const statistic = await getStatisticUser(userAuth.userId, userAuth.token);
+    nameGame === 'sprint' ? saveCountGameToday ('sprint', statistic) : saveCountGameToday ('audioCall', statistic)
     right.forEach(async (word) => {
       if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
         await setWordNew(userAuth.userId, userAuth.token, word.id);
@@ -76,7 +77,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[]): P
     right.forEach(async (word) => {
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].correct++;
-        if (statistic.optional.words[word.id].correct >= 3) {
+        if (statistic.optional.words[word.id].correct >= 5) {
           statistic.optional.words[word.id].wrong = 0;
           const params = 'learned';
           await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
@@ -164,7 +165,7 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
       audio.play();
     }
   });
-  saveStatictic(right, wrong);
+  saveStatictic(right, wrong, 'sprint');
 };
 
 const getSeconds = (): void => {
@@ -322,4 +323,36 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     clearTimeout(resultTimeout);
     document.removeEventListener('keydown', kayAnswer);
   });
+
+
 };
+
+
+export  const getToday = ():string => {
+  const dateTodayObj = new Date();
+  const year = dateTodayObj.getFullYear();
+  const month = dateTodayObj.getMonth() + 1 < 10 ? `0${dateTodayObj.getMonth() + 1}` : dateTodayObj.getMonth() + 1;
+  const day = dateTodayObj.getDate() < 10 ? `0${dateTodayObj.getDate()}` : dateTodayObj.getDate();
+  return `${day}${month}${year}`;
+}
+
+export const saveCountGameToday = (nameGame:string, statistic: any):any => {
+     const today = getToday();
+     if (statistic.optional.daysStatistic[today]) {
+      nameGame === 'sprint' ? statistic.optional.daysStatistic[today].countSprint++ :
+       statistic.optional.daysStatistic[today].countAudioCall++;
+     }
+     else {
+      nameGame === 'sprint'?
+       statistic.optional.daysStatistic[today] = {
+         countSprint: 1,
+         countAudioCall: 0,
+       }: statistic.optional.daysStatistic[today] = {
+        countSprint: 0,
+        countAudioCall: 1,
+      }
+     }
+    nameGame === 'sprint' ? statistic.optional.countSprintAll++:statistic.optional.countAudioCallAll++
+    return statistic;
+}
+

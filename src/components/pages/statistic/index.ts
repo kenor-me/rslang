@@ -1,4 +1,5 @@
 import { getStatisticUser } from '../../api/index';
+import { getToday } from '../sprint';
 import './index.css';
 
 export const getPercentCircle = (start: number, end: number): string => `
@@ -6,18 +7,18 @@ export const getPercentCircle = (start: number, end: number): string => `
   <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="transparent"></circle>
   <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="tomato" stroke-width="8">
   </circle>
-  <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" 
+  <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent"
   stroke="#90c47a" stroke-width="8" stroke-dasharray="${start} ${end}" stroke-dashoffset="25">
   </circle>
 </svg>
 `;
 
-const getDayStatistic = (learnedWords: number) => `
+const getDayStatistic = async (learnedWords: number) => `
   <h3 class="statistic__title">Статистика за день</h3>
   <div class="statistic-all">
     <div class="count-game-all">
-      <div class="count-game-title">Количество сыгранных игр</div>
-      <div class="count-game-all-value count">3</div>
+      <div class="count-game-title">Количество сыгранных игр за день</div>
+      <div class="count-game-all-value count">${await getCountGameSprintToDay() + await getCountGameAudioCallToDay()}</div>
     </div>
     <div class="count-words-learn-all">
       <div class="count-word-learn-all-title">
@@ -96,14 +97,14 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <span>${40}%</span>
                 </div>
                 <div class="count-game-sprint">
-                  <div class="count-game-title">Количество сыгранных игр</div>
-                  <div class="count-game-sprint-value count">3</div>
+                  <div class="count-game-title">Количество сыгранных игр за день</div>
+                  <div class="count-game-sprint-value count">${await getCountGameSprintToDay()}</div>
                 </div>
                 <div class="count-words-learn-sprint">
                   <div class="count-word-learn-sprint-title">
                     Количество новых слов за день
                   </div>
-                  <div class="count-word-sprint-count count">13</div>
+                  <div class="count-word-sprint-count count">${13}</div>
                 </div>
                 <div class="count-words-learn-sprint">
                   <div class="count-percent-sprint-title">
@@ -115,7 +116,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <div class="count-series-sprint-title">
                     Самая длинная серия правильных ответов
                   </div>
-                  <div class="count-series-sprint-count count">9</div>
+                  <div class="count-series-sprint-count count">${9}</div>
                 </div>
               </div>
               <div class="statistic-audiocall">
@@ -125,14 +126,14 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <span>${80}%</span>
                 </div>
                 <div class="count-game-audiocall">
-                  <div class="count-game-title">Количество сыгранных игр</div>
-                  <div class="count-game-audiocall-count count">3</div>
+                  <div class="count-game-title">Количество сыгранных игр за день</div>
+                  <div class="count-game-audiocall-count count">${await getCountGameAudioCallToDay()}</div>
                 </div>
                 <div class="count-words-learn-audiocall">
                   <div class="count-word-learn-audiocall-title">
                     Количество новых слов за день
                   </div>
-                  <div class="count-word-audiocall-count count">13</div>
+                  <div class="count-word-audiocall-count count">${15}</div>
                 </div>
                 <div class="count-percent-audiocall">
                   <div class="count-percent-audiocall-title">
@@ -144,13 +145,13 @@ export const renderStatisticPage = async (): Promise<void> => {
                   <div class="count-series-audiocall-title">
                     Самая длинная серия правильных ответов
                   </div>
-                  <div class="count-series-audiocall-count count">9</div>
+                  <div class="count-series-audiocall-count count">${8}</div>
                 </div>
               </div>
             </div>
 
             <div>
-              ${getDayStatistic(statistic.learnedWords)}
+              ${await getDayStatistic(statistic.learnedWords)}
               ${getAllStatistic()}
             </div>
           </div>
@@ -178,6 +179,27 @@ export const renderBaseStatisticPage = (): void => {
   `;
 };
 
+const getCountGameSprintToDay = async ():Promise<number> => {
+  const statistic = await getStatisticUser(user.userId, user.token);
+  const today = getToday();
+  if (statistic.optional.daysStatistic[today]) {
+    return Number(statistic.optional.daysStatistic[today].countSprint)
+  }
+  else {
+    return 0;
+  }
+}
+
+const getCountGameAudioCallToDay = async ():Promise<number> => {
+  const statistic = await getStatisticUser(user.userId, user.token);
+  const today = getToday();
+  if (statistic.optional.daysStatistic[today]) {
+    return Number(statistic.optional.daysStatistic[today].countAudioCall)
+  }
+  else {
+    return 0;
+  }
+}
 /* const renderGraficStatistic = ():void => {
   const containerGrafic = document.querySelector('.statistic-table__body') as HTMLElement;
   containerGrafic.innerHTML = 'График статистики';
