@@ -4,7 +4,7 @@ import {
 import './index.css';
 import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
-import { audiocallRight, audiocallWrong, Results } from './results';
+import { RightWrongArrays, Results } from './results';
 
 export const GAME_WORDS: WordsArray = {
   wordsArr: [],
@@ -44,8 +44,10 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 
 function showResult(count: number, wordsGame: WordsArray) {
   if (wordsGame.wordsArr.length === count) {
-    renderResultForm(audiocallWrong, audiocallRight);
+    renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight);
     countAnswer = 0;
+    RightWrongArrays.audiocallWrong = [];
+    RightWrongArrays.audiocallRight = [];
   }
 }
 

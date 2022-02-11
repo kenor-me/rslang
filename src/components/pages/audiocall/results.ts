@@ -1,7 +1,12 @@
-import { Word, WordResult } from '../../types';
+import { Word, UserAnswers } from '../../types';
 
-export const audiocallRight: WordResult[] = [];
-export const audiocallWrong: WordResult[] = [];
+// export const audiocallRight: WordResult[] = [];
+// export const audiocallWrong: WordResult[] = [];
+
+export const RightWrongArrays: UserAnswers = {
+  audiocallRight: [],
+  audiocallWrong: [],
+};
 
 export class Results {
   word: Word;
@@ -19,7 +24,7 @@ export class Results {
       userSelect = this.answer.lastElementChild?.textContent;
     }
     if (userSelect === this.word.wordTranslate) {
-      audiocallRight.push({
+      RightWrongArrays.audiocallRight.push({
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
@@ -27,17 +32,8 @@ export class Results {
       });
     }
 
-    // const needAddToWrong1 = (userSelect === 'Далее' || userSelect !== 'Не знаю');
-    // const needAddToWrong2 = (userSelect !== this.word.wordTranslate
-    //   && userSelect !== 'Не знаю'
-    //   && userSelect !== 'Далее');
-
-    // console.log(userSelect);
-    // console.log(needAddToWrong1);
-    // console.log(needAddToWrong2);
-
     if (userSelect !== this.word.wordTranslate) {
-      audiocallWrong.push({
+      RightWrongArrays.audiocallWrong.push({
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
