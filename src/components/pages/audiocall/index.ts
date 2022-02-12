@@ -32,8 +32,8 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 
   for (let i = 1; i <= shuffleAnswers.length; i++) {
     const str = `
-      <div class="audiocall-answer">
-        <span class="number-answer">${i}</span>
+      <div id="answer-${i}" class="audiocall-answer">
+        <span id="answer-num-${i}" class="number-answer">${i}</span>
         <span class="name-answer">${shuffleAnswers[i - 1].wordTranslate}</span>
       </div>
     `;
@@ -69,8 +69,39 @@ export const renderAudiocallWrapper = (): void => {
   toggleFullScreen();
 };
 
-export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
-  const answers = new Answers(words[countAnswer]);
+function keyPress(e: KeyboardEvent, answers: Answers) {
+  if (e.code === 'Space') {
+    answers.getSound();
+  }
+  const answerNum = Number((e.code).split('').pop());
+  if (answerNum >= 1 && answerNum <= 5) {
+    const userAnswer = document.getElementById(`answer-${answerNum}`) as HTMLElement;
+    answers.compareWithRightAnswer(userAnswer);
+    const results = new Results(userAnswer, answers.word);
+    results.getResult();
+  }
+  if (e.code === 'NumpadEnter') {
+    const target = document.querySelector('.audiocall-next-button') as HTMLElement;
+    if (target.innerHTML === 'Не знаю') {
+      const results = new Results(document.querySelector('.audiocall-next-button') as HTMLElement, answers.word);
+      answers.showRightAnswer();
+      results.getResult();
+      showResult(countAnswer, GAME_WORDS);
+    } else {
+      countAnswer++;
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      renderAudiocallPage(GAME_WORDS.wordsArr);
+    }
+  }
+  showResult(countAnswer, GAME_WORDS);
+}
+
+function createNewAnswers(words: Word[]) {
+  return new Answers(words[countAnswer]);
+}
+
+export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
+  const answers = createNewAnswers(words);
 
   const content = `
       <button class="audiocall-sound">
@@ -89,18 +120,23 @@ export const renderAudiocallPage = async (words: Word[]): Promise<void> => {
     const target = e.target as HTMLElement;
     if (target.textContent === 'Не знаю') {
       const results = new Results(target, answers.word);
-      results.getResult();
       answers.showRightAnswer();
+      results.getResult();
     } else {
       countAnswer++;
       renderAudiocallPage(GAME_WORDS.wordsArr);
     }
     showResult(countAnswer, GAME_WORDS);
+    document.removeEventListener('keydown', () => keyPress);
   });
+
   document.querySelector('.audiocall-answers')?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     answers.compareWithRightAnswer(target);
     const results = new Results(target, answers.word);
     results.getResult();
   });
+  return answers;
 };
+document.addEventListener('keydown', (e) => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
+document.removeEventListener('keydown', (e) => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));

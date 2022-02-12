@@ -4,8 +4,12 @@ import { getSprintPlay, renderSprintPage } from '../sprint';
 import { Word } from '../../types';
 import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audiocall';
 import { GamesWords } from '../audiocall/getWords';
+import { Answers } from '../audiocall/answer';
 
 const root = document.getElementById('root') as HTMLElement;
+export const newAnswers = {
+  answers: Answers,
+};
 
 export const sprintDescription = `
     <div class="wrapper-desc">
