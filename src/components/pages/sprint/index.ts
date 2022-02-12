@@ -60,52 +60,6 @@ export const toggleFullScreen = (): void => {
 };
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
-/* export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string): Promise<void> => {
-  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-  if (userAuth) {
-    const userWords = await getWordsUser(userAuth.userId, userAuth.token);
-    const statistic = await getStatisticUser(userAuth.userId, userAuth.token);
-    nameGame === 'sprint' ? saveCountGameToday ('sprint', statistic) : saveCountGameToday ('audioCall', statistic)
-    right.forEach(async (word) => {
-      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
-      }
-    });
-    right.forEach(async (word) => {
-      if (statistic.optional.words[word.id]) {
-        statistic.optional.words[word.id].correct++;
-        if (statistic.optional.words[word.id].correct >= 5) {
-          statistic.optional.words[word.id].wrong = 0;
-          const params = 'learned';
-          await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
-        }
-      } else {
-        statistic.optional.words[word.id] = {
-          correct: 1,
-          wrong: 0,
-        };
-      }
-    });
-    wrong.forEach(async (word) => {
-      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
-      }
-    });
-    wrong.forEach((word) => {
-      if (statistic.optional.words[word.id]) {
-        statistic.optional.words[word.id].wrong++;
-        statistic.optional.words[word.id].correct = 0;
-      } else {
-        statistic.optional.words[word.id] = {
-          correct: 0,
-          wrong: 1,
-        };
-      }
-    });
-    delete statistic.id;
-    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
-  }
-}; */
 
 const renderResultWord = (word: WordResult): string => `
   <li>
@@ -120,7 +74,7 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+const renderResultForm = (wrong: WordResult[], right: WordResult[], longestSeries:number): void => {
   const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
   const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
 
@@ -162,7 +116,7 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
       audio.play();
     }
   });
-  saveStatictic(right, wrong, 'sprint');
+  saveStatictic(right, wrong, 'sprint', longestSeries);
 };
 
 const getSeconds = (): void => {
@@ -238,11 +192,11 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const right: WordResult[] = [];
   let seriesRightAnswer = '';
 
-  const resultTimeout = setTimeout((): void => {
+  const resultTimeout = setTimeout(async (): Promise<void> => {
     const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-    console.log(longestSeries);
+    /*  saveLongestSeries(longestSeries) */
 
-    renderResultForm(wrong, right);
+    renderResultForm(wrong, right, longestSeries);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
@@ -284,7 +238,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       console.log(longestSeries);
 
-      renderResultForm(wrong, right);
+      renderResultForm(wrong, right, longestSeries);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
     }
@@ -310,7 +264,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       console.log(longestSeries);
 
-      renderResultForm(wrong, right);
+      renderResultForm(wrong, right, longestSeries);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
     }
@@ -321,33 +275,3 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     document.removeEventListener('keydown', kayAnswer);
   });
 };
-
-/*
-export  const getToday = ():string => {
-  const dateTodayObj = new Date();
-  const year = dateTodayObj.getFullYear();
-  const month = dateTodayObj.getMonth() + 1 < 10 ? `0${dateTodayObj.getMonth() + 1}` : dateTodayObj.getMonth() + 1;
-  const day = dateTodayObj.getDate() < 10 ? `0${dateTodayObj.getDate()}` : dateTodayObj.getDate();
-  return `${day}${month}${year}`;
-}
-
-export const saveCountGameToday = (nameGame:string, statistic: any):any => {
-     const today = getToday();
-     if (statistic.optional.daysStatistic[today]) {
-      nameGame === 'sprint' ? statistic.optional.daysStatistic[today].countSprint++ :
-       statistic.optional.daysStatistic[today].countAudioCall++;
-     }
-     else {
-      nameGame === 'sprint'?
-       statistic.optional.daysStatistic[today] = {
-         countSprint: 1,
-         countAudioCall: 0,
-       }: statistic.optional.daysStatistic[today] = {
-        countSprint: 0,
-        countAudioCall: 1,
-      }
-     }
-    nameGame === 'sprint' ? statistic.optional.countSprintAll++:statistic.optional.countAudioCallAll++
-    return statistic;
-}
- */

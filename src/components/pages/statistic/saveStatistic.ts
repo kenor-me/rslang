@@ -12,41 +12,64 @@ export const getToday = ():string => {
 };
 
 export const saveCountGameToday = (nameGame:string, statistic: any, countNewWordFromSprint = 0,
-  countNewWordFromAudioCall = 0):any => {
+  countNewWordFromAudioCall = 0, right:number, wrong:number, longestSeries:number):any => {
   const today = getToday();
+  /*  console.log('Пользователь ответил в этой игре правильно', right, 'Неправильно: ', wrong) */
   if (statistic.optional.daysStatistic[today]) {
     if (nameGame === 'sprint') {
       statistic.optional.daysStatistic[today].countSprint++;
+      statistic.optional.daysStatistic[today].countRightAnswerSprint += right;
+      statistic.optional.daysStatistic[today].countWrongAnswerSprint += wrong;
+      statistic.optional.daysStatistic[today].countNewWordFromSprint += countNewWordFromSprint;
+      statistic.optional.daysStatistic[today].seriesSprintToday = (statistic.optional.daysStatistic[today].seriesSprintToday
+         > longestSeries) ? statistic.optional.daysStatistic[today].seriesSprintToday : longestSeries;
     } else {
       statistic.optional.daysStatistic[today].countAudioCall++;
+      statistic.optional.daysStatistic[today].countRightAnswerAudioCall += right;
+      statistic.optional.daysStatistic[today].countWrongAnswerAudioCall += wrong;
+      statistic.optional.daysStatistic[today].countNewWordFromAudioCall += countNewWordFromAudioCall;
+      statistic.optional.daysStatistic[today].seriesAudioCallToday = (statistic.optional.daysStatistic[today].seriesAudioCallToday
+         > longestSeries)
+        ? statistic.optional.daysStatistic[today].seriesAudioCallToday : longestSeries;
     }
-    statistic.optional.daysStatistic[today].countNewWordFromSprint += countNewWordFromSprint;
-    statistic.optional.daysStatistic[today].countNewWordFromAudioCall += countNewWordFromAudioCall;
-  } else if (nameGame === 'sprint') {
+  } else if (!statistic.optional.daysStatistic[today] && nameGame === 'sprint') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 1,
-      countAudioCall: 0,
       countNewWordFromSprint,
-      countNewWordFromAudioCall,
+      countRightAnswerSprint: right,
+      countWrongAnswerSprint: wrong,
+      countAudioCall: 0,
+      countRightAnswerAudioCall: 0,
+      countWrongAnswerAudioCall: 0,
+      countNewWordFromAudioCall: 0,
+      seriesSprintToday: longestSeries,
+      seriesAudioCallToday: 0,
     };
-  } else {
+    statistic.optional.countSprintAll++;
+  } else if (!statistic.optional.daysStatistic[today] && nameGame === 'audioCall') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 0,
+      countNewWordFromSprint: 0,
+      countRightAnswerSprint: 0,
+      countWrongAnswerSprint: 0,
       countAudioCall: 1,
-      countNewWordFromSprint,
+      countRightAnswerAudioCall: right,
+      countWrongAnswerAudioCall: wrong,
       countNewWordFromAudioCall,
+      seriesSprintToday: 0,
+      seriesAudioCallToday: longestSeries,
     };
-  }
-  if (nameGame === 'sprint') {
-    statistic.optional.countSprintAll++;
-  } else {
     statistic.optional.countAudioCallAll++;
   }
-
+  statistic.optional.rightAnswerAll += right;
+  statistic.optional.wrongAnswerAll += wrong;
   return statistic;
 };
 
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string): Promise<void> => {
+export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string, longestSeries:number): Promise<void> => {
+  // приходит длинная серия
+
+  console.log('long', longestSeries);
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
@@ -90,10 +113,28 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
       }
     });
     if (nameGame === 'sprint') {
-      saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall);
-    } else { saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall); }
-
+      saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
+        right.length, wrong.length, longestSeries);
+      if (statistic.optional.seriesSprint < longestSeries) {
+        statistic.optional.seriesSprint = longestSeries;
+      }
+    } else {
+      saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
+      if (statistic.optional.seriesAudioCall < longestSeries) {
+        statistic.optional.seriesAudioCall = longestSeries;
+      }
+    }
+    /*     */
     delete statistic.id;
     await setStatisticUser(userAuth.userId, userAuth.token, statistic);
   }
 };
+
+/* export const saveLongestSeries  = async (longestSeries:number) =>{
+const user = JSON.parse(localStorage.getItem('userAuth') as string);
+if(user) {
+  const statistic = await getStatisticUser(user.userId, user.token)
+
+ await setStatisticUser(user.userId, user.token, statistic)
+}
+} */

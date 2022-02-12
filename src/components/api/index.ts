@@ -72,15 +72,25 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
   optional: {
     countSprintAll: 0,
     countAudioCallAll: 0,
+    rightAnswerAll: 0,
+    wrongAnswerAll: 0,
+    seriesSprint: 0,
+    seriesAudioCall: 0,
     words: {
       '5testWord': { correct: 0, wrong: 0 },
     },
     daysStatistic: {
       '1testDay': {
         countSprint: 0,
-        countAudioCall: 0,
         countNewWordFromSprint: 0,
+        countRightAnswerSprint: 0,
+        countWrongAnswerSprint: 0,
+        countAudioCall: 0,
+        countRightAnswerAudioCall: 0,
+        countWrongAnswerAudioCall: 0,
         countNewWordFromAudioCall: 0,
+        seriesSprintToday: 0,
+        seriesAudioCallToday: 0,
       },
     },
   },
