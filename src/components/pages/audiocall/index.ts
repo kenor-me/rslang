@@ -138,6 +138,7 @@ export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
     } else if (GAME_WORDS.wordsArr.length - 1 === countAnswer) {
       showResult();
     } else {
+      hasUserAnswer = false;
       countAnswer++;
       renderAudiocallPage(GAME_WORDS.wordsArr);
     }
