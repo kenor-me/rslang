@@ -71,7 +71,11 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+export const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+  let link = '#sprint-description';
+  if (window.location.hash === '#audiocall') {
+    link = '#audiocall-description';
+  }
   const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
   const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
   root.innerHTML = `
@@ -98,7 +102,7 @@ const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
             ${right.map((word: WordResult) => renderResultWord(word)).join('')}
           </ui>
         </div>
-        <a href="#sprint-description" class="sprint__result-btn">Играть еще раз</a>
+        <a href="${link}" class="sprint__result-btn">Играть еще раз</a>
     </div>
   </div>
 `;
