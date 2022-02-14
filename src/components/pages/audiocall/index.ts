@@ -49,6 +49,8 @@ function showResult() {
   RightWrongArrays.audiocallWrong = [];
   RightWrongArrays.audiocallRight = [];
   hasUserAnswer = false;
+  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
+    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
 }
 
 export const renderAudiocallWrapper = (): void => {
