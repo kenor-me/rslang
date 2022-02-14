@@ -43,6 +43,5 @@ export class Results {
       });
       RightWrongArrays.seriesRightAnswer += ' ';
     }
-    console.log(RightWrongArrays.seriesRightAnswer);
   }
 }

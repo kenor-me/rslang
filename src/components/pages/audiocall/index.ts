@@ -115,7 +115,6 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
 
 export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
   const answers = createNewAnswers(words);
-
   const content = `
       <button class="audiocall-sound">
         <img class="audiocall-sound-img" src="./../../../assets/pictures/loud.svg" alt="Sound">

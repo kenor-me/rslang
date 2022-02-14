@@ -7,6 +7,7 @@ import BaseComponent from './BaseComponent';
 import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
 import { getSprintPlay, renderSprintPage } from '../sprint';
+import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audiocall';
 
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
@@ -70,6 +71,16 @@ class Vocabulary extends BaseComponent {
       this.gameTimeout = setTimeout(() => {
         renderSprintPage();
         getSprintPlay(this.wordsForGame);
+      }, 3800);
+    });
+    this.navigation.audioCallButton.node.addEventListener('click', async (e) => {
+      await this.updatePage();
+      this.wordsForGame = await this.getWordForGame();
+      if (this.wordsForGame.length > 20) GAME_WORDS.wordsArr = this.wordsForGame.splice(20, 40);
+      else GAME_WORDS.wordsArr = this.wordsForGame;
+      this.gameTimeout = setTimeout(() => {
+        renderAudiocallWrapper();
+        renderAudiocallPage(GAME_WORDS.wordsArr);
       }, 3800);
     });
     window.addEventListener('hashchange', () => {
