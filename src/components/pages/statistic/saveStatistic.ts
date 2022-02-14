@@ -14,7 +14,6 @@ export const getToday = ():string => {
 export const saveCountGameToday = (nameGame:string, statistic: any, countNewWordFromSprint = 0,
   countNewWordFromAudioCall = 0, right:number, wrong:number, longestSeries:number):any => {
   const today = getToday();
-  /*  console.log('Пользователь ответил в этой игре правильно', right, 'Неправильно: ', wrong) */
   if (statistic.optional.daysStatistic[today]) {
     if (nameGame === 'sprint') {
       statistic.optional.daysStatistic[today].countSprint++;
@@ -67,9 +66,6 @@ export const saveCountGameToday = (nameGame:string, statistic: any, countNewWord
 };
 
 export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string, longestSeries:number): Promise<void> => {
-  // приходит длинная серия
-
-  console.log('long', longestSeries);
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
@@ -83,13 +79,11 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         } else {
           counterNewWordAudioCall++;
         }
-
         await setWordNew(userAuth.userId, userAuth.token, word.id);
       }
       if (statistic.optional.words[word.id]) {
+        statistic.optional.words[word.id].correct++;
         if (statistic.optional.words[word.id].correct >= 5) {
-          statistic.optional.words[word.id].wrong = 0;
-          statistic.optional.words[word.id].correct++;
           const params = 'learned';
           await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
         }
@@ -102,7 +96,6 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         if (nameGame === 'sprint') {
           counterNewWordSprint++;
         } else { counterNewWordAudioCall++; }
-
         await setWordNew(userAuth.userId, userAuth.token, word.id);
       }
       if (statistic.optional.words[word.id]) {
@@ -124,17 +117,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         statistic.optional.seriesAudioCall = longestSeries;
       }
     }
-    /*     */
     delete statistic.id;
     await setStatisticUser(userAuth.userId, userAuth.token, statistic);
   }
 };
-
-/* export const saveLongestSeries  = async (longestSeries:number) =>{
-const user = JSON.parse(localStorage.getItem('userAuth') as string);
-if(user) {
-  const statistic = await getStatisticUser(user.userId, user.token)
-
- await setStatisticUser(user.userId, user.token, statistic)
-}
-} */

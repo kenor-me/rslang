@@ -67,7 +67,6 @@ export const addUser = async (user: User): Promise<void> => {
 };
 
 export const setStatisticUser = async (id: string, token: string, statistic = {
-
   learnedWords: 0,
   optional: {
     countSprintAll: 0,
