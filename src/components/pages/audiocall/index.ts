@@ -12,6 +12,7 @@ export const GAME_WORDS: WordsArray = {
 
 const root = document.getElementById('root') as HTMLElement;
 let countAnswer = 0;
+let hasUserAnswer = false;
 
 const shuffleArray = (array: Word[]) => {
   let currentIndex = array.length;
@@ -42,13 +43,12 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
   return answersResult;
 };
 
-function showResult(count: number, wordsGame: WordsArray) {
-  if (wordsGame.wordsArr.length === count) {
-    renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight);
-    countAnswer = 0;
-    RightWrongArrays.audiocallWrong = [];
-    RightWrongArrays.audiocallRight = [];
-  }
+function showResult() {
+  renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight);
+  countAnswer = 0;
+  RightWrongArrays.audiocallWrong = [];
+  RightWrongArrays.audiocallRight = [];
+  hasUserAnswer = false;
 }
 
 export const renderAudiocallWrapper = (): void => {
@@ -69,35 +69,46 @@ export const renderAudiocallWrapper = (): void => {
   toggleFullScreen();
 };
 
-function keyPress(e: KeyboardEvent, answers: Answers) {
-  if (e.code === 'Space') {
-    answers.getSound();
-  }
-  const answerNum = Number((e.code).split('').pop());
-  if (answerNum >= 1 && answerNum <= 5) {
-    const userAnswer = document.getElementById(`answer-${answerNum}`) as HTMLElement;
-    answers.compareWithRightAnswer(userAnswer);
-    const results = new Results(userAnswer, answers.word);
-    results.getResult();
-  }
-  if (e.code === 'NumpadEnter') {
-    const target = document.querySelector('.audiocall-next-button') as HTMLElement;
-    if (target.innerHTML === 'Не знаю') {
-      const results = new Results(document.querySelector('.audiocall-next-button') as HTMLElement, answers.word);
-      answers.showRightAnswer();
-      results.getResult();
-      showResult(countAnswer, GAME_WORDS);
-    } else {
-      countAnswer++;
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
-      renderAudiocallPage(GAME_WORDS.wordsArr);
-    }
-  }
-  showResult(countAnswer, GAME_WORDS);
-}
-
 function createNewAnswers(words: Word[]) {
   return new Answers(words[countAnswer]);
+}
+
+function keyPress(e: KeyboardEvent, answers: Answers) {
+  if (window.location.hash === '#audiocall') {
+    if (e.code === 'Space') {
+      answers.getSound();
+    }
+    if (e.code === 'NumpadEnter') {
+      const target = document.querySelector('.audiocall-next-button') as HTMLElement;
+      if (target.innerHTML === 'Не знаю') {
+        hasUserAnswer = true;
+        document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
+        const results = new Results(document.querySelector('.audiocall-next-button') as HTMLElement, answers.word);
+        answers.showRightAnswer();
+        results.getResult();
+      } else if (GAME_WORDS.wordsArr.length - 1 === countAnswer) {
+        showResult();
+      } else {
+        countAnswer++;
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        renderAudiocallPage(GAME_WORDS.wordsArr);
+        hasUserAnswer = false;
+      }
+    }
+    const answerNum = Number((e.code).split('').pop());
+    if (answerNum >= 1 && answerNum <= 5) {
+      if (hasUserAnswer) {
+        document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
+      } else {
+        const userAnswer = document.getElementById(`answer-${answerNum}`) as HTMLElement;
+        answers.compareWithRightAnswer(userAnswer);
+        const results = new Results(userAnswer, answers.word);
+        results.getResult();
+        hasUserAnswer = true;
+      }
+    }
+    // document.removeEventListener('keydown', () => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
+  }
 }
 
 export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
@@ -119,18 +130,23 @@ export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
   document.querySelector('.audiocall-next-button')?.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     if (target.textContent === 'Не знаю') {
+      hasUserAnswer = true;
+      document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
       const results = new Results(target, answers.word);
       answers.showRightAnswer();
       results.getResult();
+    } else if (GAME_WORDS.wordsArr.length - 1 === countAnswer) {
+      showResult();
     } else {
       countAnswer++;
       renderAudiocallPage(GAME_WORDS.wordsArr);
     }
-    showResult(countAnswer, GAME_WORDS);
     document.removeEventListener('keydown', () => keyPress);
   });
 
   document.querySelector('.audiocall-answers')?.addEventListener('click', (e) => {
+    hasUserAnswer = true;
+    document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
     const target = e.target as HTMLElement;
     answers.compareWithRightAnswer(target);
     const results = new Results(target, answers.word);
@@ -139,4 +155,3 @@ export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
   return answers;
 };
 document.addEventListener('keydown', (e) => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
-document.removeEventListener('keydown', (e) => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
