@@ -145,6 +145,10 @@
   cursor: pointer;
 }
 
+.audiocall-disabled {
+  pointer-events: none;
+}
+
 @media (max-width: 1440px) {
   .audiocall-btn-block {
     margin: -100px auto 0 auto;
