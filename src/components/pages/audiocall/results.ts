@@ -25,7 +25,7 @@ export class Results {
       userSelect = this.answer.lastElementChild?.textContent;
     }
     if (userSelect === this.word.wordTranslate) {
-        RightWrongArrays.audiocallRight.push({
+      RightWrongArrays.audiocallRight.push({
         id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,

@@ -45,7 +45,7 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 
 function showResult() {
   const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
-  .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
   renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight, longestSeriesAudiocall);
   countAnswer = 0;
   RightWrongArrays.audiocallWrong = [];

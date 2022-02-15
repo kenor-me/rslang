@@ -1,4 +1,3 @@
-import { setStatisticUser } from './../../api/index';
 import { getStatisticUser } from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';

@@ -73,7 +73,7 @@ class Vocabulary extends BaseComponent {
         getSprintPlay(this.wordsForGame);
       }, 3800);
     });
-    this.navigation.audioCallButton.node.addEventListener('click', async (e) => {
+    this.navigation.audioCallButton.node.addEventListener('click', async () => {
       await this.updatePage();
       this.wordsForGame = await this.getWordForGame();
       if (this.wordsForGame.length > 20) GAME_WORDS.wordsArr = this.wordsForGame.splice(20, 40);

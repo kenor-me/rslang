@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   getStatisticUser, getWordsUser, setStatisticUser, setWordNew, updateWordUser,
 } from '../../api';
