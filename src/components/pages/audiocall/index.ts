@@ -49,6 +49,8 @@ function showResult() {
   RightWrongArrays.audiocallWrong = [];
   RightWrongArrays.audiocallRight = [];
   hasUserAnswer = false;
+  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
+    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
 }
 
 export const renderAudiocallWrapper = (): void => {
@@ -113,7 +115,6 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
 
 export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
   const answers = createNewAnswers(words);
-
   const content = `
       <button class="audiocall-sound">
         <img class="audiocall-sound-img" src="./../../../assets/pictures/loud.svg" alt="Sound">

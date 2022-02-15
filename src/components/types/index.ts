@@ -68,4 +68,5 @@ export type WordsArray = {
 export type UserAnswers = {
   audiocallRight: WordResult[];
   audiocallWrong: WordResult[];
+  seriesRightAnswer: string;
 };

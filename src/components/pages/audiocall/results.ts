@@ -6,6 +6,7 @@ import { Word, UserAnswers } from '../../types';
 export const RightWrongArrays: UserAnswers = {
   audiocallRight: [],
   audiocallWrong: [],
+  seriesRightAnswer: '',
 };
 
 export class Results {
@@ -30,6 +31,7 @@ export class Results {
         transcription: this.word.transcription,
         translate: this.word.wordTranslate,
       });
+      RightWrongArrays.seriesRightAnswer += '1';
     }
 
     if (userSelect !== this.word.wordTranslate) {
@@ -39,6 +41,7 @@ export class Results {
         transcription: this.word.transcription,
         translate: this.word.wordTranslate,
       });
+      RightWrongArrays.seriesRightAnswer += ' ';
     }
   }
 }
