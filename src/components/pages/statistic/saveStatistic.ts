@@ -88,6 +88,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         if (statistic.optional.words[word.id].correct >= 5) {
           const params = 'learned';
           await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
+          statistic.learnedWords++;
         }
       } else {
         statistic.optional.words[word.id] = { correct: 1, wrong: 0 };
