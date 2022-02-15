@@ -108,18 +108,20 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
       }
     });
     if (nameGame === 'sprint') {
-      saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
+      await saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
         right.length, wrong.length, longestSeries);
       if (statistic.optional.seriesSprint < longestSeries) {
         statistic.optional.seriesSprint = longestSeries;
       }
     } else {
-      saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
+      await saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
       if (statistic.optional.seriesAudioCall < longestSeries) {
         statistic.optional.seriesAudioCall = longestSeries;
       }
     }
     delete statistic.id;
-    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
+    setTimeout(async () => {
+      await setStatisticUser(userAuth.userId, userAuth.token, statistic);
+    }, 1000);
   }
 };
