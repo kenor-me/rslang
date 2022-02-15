@@ -36,7 +36,7 @@ export const saveCountGameToday = (nameGame:string, statistic: any, countNewWord
   } else if (!statistic.optional.daysStatistic[today] && nameGame === 'sprint') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 1,
-      countNewWordFromSprint,
+      countNewWordFromSprint: right + wrong,
       countRightAnswerSprint: right,
       countWrongAnswerSprint: wrong,
       countAudioCall: 0,
@@ -56,7 +56,7 @@ export const saveCountGameToday = (nameGame:string, statistic: any, countNewWord
       countAudioCall: 1,
       countRightAnswerAudioCall: right,
       countWrongAnswerAudioCall: wrong,
-      countNewWordFromAudioCall,
+      countNewWordFromAudioCall: right + wrong,
       seriesSprintToday: 0,
       seriesAudioCallToday: longestSeries,
     };

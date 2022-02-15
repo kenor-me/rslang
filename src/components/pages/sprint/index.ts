@@ -74,7 +74,7 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-export const renderResultForm = (wrong: WordResult[], right: WordResult[], longestSeries:number): void => {
+export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameGame = 'sprint', longestSeries:number): void => {
   let link = '#sprint-description';
   if (window.location.hash === '#audiocall') {
     link = '#audiocall-description';
@@ -121,7 +121,7 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], longe
       audio.play();
     }
   });
-  saveStatictic(right, wrong, 'sprint', longestSeries);
+  saveStatictic(right, wrong, nameGame, longestSeries);
 };
 
 const getSeconds = (): void => {
@@ -200,8 +200,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const resultTimeout = setTimeout(async (): Promise<void> => {
     const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
     /*  saveLongestSeries(longestSeries) */
-
-    renderResultForm(wrong, right, longestSeries);
+    const nameGame = 'sprint';
+    renderResultForm(wrong, right, nameGame, longestSeries);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
@@ -241,9 +241,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-      console.log(longestSeries);
-
-      renderResultForm(wrong, right, longestSeries);
+      const nameGame = 'sprint';
+      renderResultForm(wrong, right, nameGame, longestSeries);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
     }
@@ -267,9 +266,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
       if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
     } else {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-      console.log(longestSeries);
-
-      renderResultForm(wrong, right, longestSeries);
+      const nameGame = 'sprint';
+      renderResultForm(wrong, right, nameGame, longestSeries);
       clearTimeout(resultTimeout);
       document.removeEventListener('keydown', kayAnswer);
     }

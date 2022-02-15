@@ -18,7 +18,6 @@ const getCountGameSprintToDay = async (statistic:any):Promise<number> => {
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countSprint);
   }
-
   return 0;
 };
 
@@ -27,7 +26,6 @@ const getCountGameAudioCallToDay = async (statistic:any):Promise<number> => {
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countAudioCall);
   }
-
   return 0;
 };
 const getCountNewWordFromSprintToDay = async (statistic:any) => {
@@ -71,14 +69,14 @@ const getDayStatistic = async (statistic:any, percentRight:number): Promise<stri
         Количество новых слов за день
       </div>
       <div class="count-word-all-count count">
-      ${await getCountGameAudioCallToDay(statistic) + await getCountNewWordFromSprintToDay(statistic)}
+      ${await getCountNewWordFromSprintToDay(statistic) + await getCountNewWordFromAudioCallToDay(statistic)}
       </div>
     </div>
     <div class="count-words-learn-all">
       <div class="count-word-learn-all-title">
         Количество изученных слов
       </div>
-      <div class="count-word-all-count count">${0}</div>
+      <div class="count-word-all-count count">${statistic.learnedWords}</div>
     </div>
     <div class="count-percent-all">
       <div class="count-percent-all-title">
