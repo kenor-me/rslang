@@ -52,7 +52,6 @@ const getDayStatistic = async (statistic:any, percentRight:number): Promise<stri
   const today = getToday();
   let longSeriesToday = 0;
   if (statistic.optional.daysStatistic[today]) {
-    // есть статистика за день
     if (statistic.optional.daysStatistic[today].seriesSprintToday
       > statistic.optional.daysStatistic[today].seriesAudioCallToday) {
       longSeriesToday = statistic.optional.daysStatistic[today].seriesSprintToday;
@@ -86,7 +85,7 @@ const getDayStatistic = async (statistic:any, percentRight:number): Promise<stri
       <div class="count-percent-all-title">
         Процент правильных ответов
       </div>
-      <div class="count-percent-all-value count">${percentRight}</div>
+      <div class="count-percent-all-value count">${percentRight} %</div>
     </div>
     <div class="count-series-all">
       <div class="count-series-all-title">
@@ -123,7 +122,7 @@ const getAllStatistic = (statistic: any) => {
       <div class="count-percent-all-title">
         Процент правильных ответов
       </div>
-      <div class="count-percent-all-value count">${percentRightAll}</div>
+      <div class="count-percent-all-value count">${percentRightAll} %</div>
     </div>
     <div class="count-series-all">
       <div class="count-series-all-title">
