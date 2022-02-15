@@ -2,10 +2,14 @@ import './index.css';
 // import { getTimer } from '../timer';
 import { getSprintPlay, renderSprintPage } from '../sprint';
 import { Word } from '../../types';
-import { renderAudiocallPage, GAME_WORDS } from '../audiocall';
+import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audiocall';
 import { GamesWords } from '../audiocall/getWords';
+import { Answers } from '../audiocall/answer';
 
 const root = document.getElementById('root') as HTMLElement;
+export const newAnswers = {
+  answers: Answers,
+};
 
 export const sprintDescription = `
     <div class="wrapper-desc">
@@ -20,7 +24,7 @@ export const audioDescription = `
       <h1>Аудиовызов</h1>
       <p>Кликай на слова или используй клавиши 1,2,3,4,5, чтобы дать ответ</p>
       <p>Space - для воспроизведения звука</p>
-      <p>Стрелка-вправо - переход к следующему слову</p>
+      <p>NumPadEnter - переход к следующему слову</p>
       </div>
   `;
 
@@ -76,7 +80,10 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
         if (window.location.hash === '#sprint') {
           renderSprintPage();
           getSprintPlay(result);
-        } else if (window.location.hash === '#audiocall') renderAudiocallPage(GAME_WORDS.wordsArr);
+        } else if (window.location.hash === '#audiocall') {
+          renderAudiocallWrapper();
+          renderAudiocallPage(GAME_WORDS.wordsArr);
+        }
       }, 3800);
 
       window.addEventListener('hashchange', () => {

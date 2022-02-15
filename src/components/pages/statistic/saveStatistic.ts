@@ -31,6 +31,7 @@ export const saveCountGameToday = (nameGame:string, statistic: any, countNewWord
          > longestSeries)
         ? statistic.optional.daysStatistic[today].seriesAudioCallToday : longestSeries;
     }
+    statistic.optional.countSprintAll++;
   } else if (!statistic.optional.daysStatistic[today] && nameGame === 'sprint') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 1,

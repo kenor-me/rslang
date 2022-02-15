@@ -20,6 +20,12 @@
   background-color: #dffcf5;
 }
 
+.audiocall-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .audiocall-btn-block {
   display: flex;
   justify-content: space-between;
@@ -51,24 +57,40 @@
 
 .audiocall-sound {
   display: block;
-  margin: 0 auto;
-  width: 100px;
-  height: 100px;
+  margin: -50px auto 50px auto;
+  width: 140px;
+  height: 140px;
   background: rgba(42, 57, 80, 1);
   border-radius: 50%;
 }
 
+.audiocall-sound-img img {
+  width: 100px;
+  height: 100px;
+  color: #fff;
+}
+
 .audiocall-sound:hover,
 .audiocall-sound:active {
-  background: rgba(42, 57, 80, 0.5);
+  background: var(--bg-btn);
 }
 
 .right-answer-picture {
   display: block;
   margin: 0 auto;
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
+  border: 1px solid rgba(42, 57, 80, 1);
+}
+
+.right-answer-word {
+  padding-top: 25px;
+  font-family: Forum;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: rgba(42, 57, 80, 1);
 }
 
 .audiocall-answers {
@@ -94,11 +116,13 @@
 
 .audiocall-next-button:hover {
   background-color: rgba(42, 57, 80, 1);
+  color: #90c47a;
 }
 
 .audiocall-answer {
   display: flex;
   justify-content: space-around;
+  gap: 15px;
   width: 13vw;
   height: 45px;
   background-color: rgba(42, 57, 80, 1);
@@ -111,10 +135,18 @@
   transition: all 0.6s;
 }
 
+.name-answer {
+  text-align: center;
+}
+
 .audiocall-answer:hover {
   background-color: var(--bg-btn);
   color: #000000;
   cursor: pointer;
+}
+
+.audiocall-disabled {
+  pointer-events: none;
 }
 
 @media (max-width: 1440px) {
@@ -130,6 +162,10 @@
 }
 
 @media (max-width: 768px) {
+  .audiocall-btn-block {
+    margin: -140px auto 0 auto;
+  }
+
   .audiocall {
     padding-top: 150px;
     height: 650px;

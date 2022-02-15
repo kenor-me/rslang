@@ -1,43 +1,49 @@
-import { Word, WordResult } from '../../types';
+import { Word, UserAnswers } from '../../types';
+
+// export const audiocallRight: WordResult[] = [];
+// export const audiocallWrong: WordResult[] = [];
+
+export const RightWrongArrays: UserAnswers = {
+  audiocallRight: [],
+  audiocallWrong: [],
+  seriesRightAnswer: '',
+};
 
 export class Results {
   word: Word;
 
   answer: HTMLElement;
 
-  wrong: WordResult[];
-
-  right: WordResult[];
-
   constructor(answer: HTMLElement, word: Word) {
     this.word = word;
     this.answer = answer;
-    this.wrong = [];
-    this.right = [];
   }
 
-  getResult(): WordResult[] {
-    const userSelect = this.answer.parentNode?.lastElementChild?.textContent;
+  getResult(): void {
+    let userSelect = this.answer.parentNode?.lastElementChild?.textContent;
+    if (this.answer.classList.contains('audiocall-answer')) {
+      userSelect = this.answer.lastElementChild?.textContent;
+    }
     if (userSelect === this.word.wordTranslate) {
-      this.right.push({
+        RightWrongArrays.audiocallRight.push({
         id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
         translate: this.word.wordTranslate,
       });
-      return this.right;
+      RightWrongArrays.seriesRightAnswer += '1';
     }
+
     if (userSelect !== this.word.wordTranslate) {
-      this.wrong.push({
+      RightWrongArrays.audiocallWrong.push({
         id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
         translate: this.word.wordTranslate,
       });
-      return this.wrong;
+      RightWrongArrays.seriesRightAnswer += ' ';
     }
-    return this.right;
   }
 }

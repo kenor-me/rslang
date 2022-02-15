@@ -50,10 +50,16 @@ export class Answers extends GamesWords {
     const picture = document.querySelector('.audiocall-sound-img') as HTMLImageElement;
     picture.classList.add('right-answer-picture');
     picture.src = `${this.BASE_URL}/${this.word.image}`;
+
+    const rightWord = document.createElement('p');
+    rightWord.className = 'right-answer-word';
+    rightWord.innerHTML = this.word.word;
+    (document.querySelector('.audiocall-sound') as HTMLElement).append(rightWord);
+
     const nextButton = document.querySelector('.audiocall-next-button') as HTMLButtonElement;
-    nextButton.classList.add('next-question');
+    nextButton.classList.toggle('next-question');
     nextButton.textContent = 'Далее';
-    nextButton.style.backgroundColor = '#90c47a';
+
     const nameAnswers = document.querySelectorAll('.name-answer');
     let res = Array.from(nameAnswers).find((v) => v.textContent === this.word.wordTranslate) as HTMLElement;
     res = res?.parentNode as HTMLElement;
@@ -61,7 +67,7 @@ export class Answers extends GamesWords {
   }
 
   compareWithRightAnswer(answer: HTMLElement): void {
-    const userSelect = answer.parentNode?.lastElementChild?.textContent;
+    const userSelect = answer.lastElementChild?.textContent;
     if (userSelect === this.word.wordTranslate) this.showRightAnswer();
     else {
       let elem = answer as HTMLElement;

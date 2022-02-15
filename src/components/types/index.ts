@@ -69,3 +69,9 @@ export type Statistic = {
 export type WordsArray = {
   wordsArr: Word[];
 };
+
+export type UserAnswers = {
+  audiocallRight: WordResult[];
+  audiocallWrong: WordResult[];
+  seriesRightAnswer: string;
+};
