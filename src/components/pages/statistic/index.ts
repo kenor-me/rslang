@@ -154,7 +154,7 @@ export const renderStatisticPage = async (): Promise<void> => {
   const userWord = await getWordsUser(user.userId, user.token)
   userWord.forEach(async (item)=> {
     await deleteUserWord(user.userId, user.token, item.wordId)
-  });*/
+  }); */
   const today = getToday();
   let rightSprint = 0;
   let wrongSprint = 0;
