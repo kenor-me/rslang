@@ -218,7 +218,6 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-      console.log(longestSeries);
       const nameGame = 'sprint';
       renderResultForm(wrong, right, nameGame, longestSeries);
       clearTimeout(resultTimeout);
