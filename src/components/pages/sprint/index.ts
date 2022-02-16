@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
-import { Word, WordResult } from '../../types';
+import {
+  Word, WordResult,
+} from '../../types';
 import { getPercentCircle } from '../statistic';
 import './index.css';
+import { saveStatictic } from '../statistic/saveStatistic';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -71,13 +74,15 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-export const renderResultForm = (wrong: WordResult[], right: WordResult[]): void => {
+export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameGame = 'sprint', longestSeries: number): void => {
   let link = '#sprint-description';
   if (window.location.hash === '#audiocall') {
     link = '#audiocall-description';
   }
+
   const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
   const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
+
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
@@ -116,6 +121,7 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[]): void
       audio.play();
     }
   });
+  saveStatictic(right, wrong, nameGame, longestSeries);
 };
 
 const getSeconds = (): void => {
@@ -191,11 +197,11 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const right: WordResult[] = [];
   let seriesRightAnswer = '';
 
-  const resultTimeout = setTimeout((): void => {
+  const resultTimeout = setTimeout(async (): Promise<void> => {
     const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-    console.log(longestSeries);
-
-    renderResultForm(wrong, right);
+    /*  saveLongestSeries(longestSeries) */
+    const nameGame = 'sprint';
+    renderResultForm(wrong, right, nameGame, longestSeries);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
@@ -205,7 +211,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const addWrongWord = (): void => {
     wrongBorder.classList.add('wrong-border');
     wrong.push({
-      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
     seriesRightAnswer += ' ';
@@ -213,8 +219,8 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       console.log(longestSeries);
-
-      renderResultForm(wrong, right);
+      const nameGame = 'sprint';
+      renderResultForm(wrong, right, nameGame, longestSeries);
       clearTimeout(resultTimeout);
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       document.removeEventListener('keydown', kayAnswer);
@@ -223,15 +229,14 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
 
   const addRightWord = (): void => {
     right.push({
-      audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
+      id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
     seriesRightAnswer += '1';
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-      console.log(longestSeries);
-
-      renderResultForm(wrong, right);
+      const nameGame = 'sprint';
+      renderResultForm(wrong, right, nameGame, longestSeries);
       clearTimeout(resultTimeout);
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       document.removeEventListener('keydown', kayAnswer);

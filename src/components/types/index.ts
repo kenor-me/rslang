@@ -49,6 +49,7 @@ export type Settings = {
 };
 
 export type WordResult = {
+  id: string,
   audio: string,
   word: string,
   transcription: string,
@@ -58,7 +59,11 @@ export type WordResult = {
 export type Statistic = {
   id: string,
   learnedWords: number,
-  optional: Record<string, unknown>, // возможно изменить
+  optional: { // возможно изменить
+    countSprint: number,
+    countAudioCall: number,
+    words: Record<string, unknown>
+  }
 };
 
 export type WordsArray = {

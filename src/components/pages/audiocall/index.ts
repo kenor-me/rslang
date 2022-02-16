@@ -5,6 +5,7 @@ import './index.css';
 import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
 import { RightWrongArrays, Results } from './results';
+import { ControlWord } from '../vocabulary/ControlWord';
 
 export const GAME_WORDS: WordsArray = {
   wordsArr: [],
@@ -44,13 +45,14 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 };
 
 function showResult() {
-  renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight);
+  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
+    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+  const nameGame = 'audioCall';
+  renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight, nameGame, longestSeriesAudiocall);
   countAnswer = 0;
   RightWrongArrays.audiocallWrong = [];
   RightWrongArrays.audiocallRight = [];
   hasUserAnswer = false;
-  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
-    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
 }
 
 export const renderAudiocallWrapper = (): void => {
@@ -77,11 +79,16 @@ function createNewAnswers(words: Word[]) {
 
 function keyPress(e: KeyboardEvent, answers: Answers) {
   if (window.location.hash === '#audiocall') {
+    const target = document.querySelector('.audiocall-next-button') as HTMLElement;
+    if (!target) {
+      document.removeEventListener('keydown', () => keyPress);
+      return;
+    }
+
     if (e.code === 'Space') {
       answers.getSound();
     }
     if (e.code === 'NumpadEnter') {
-      const target = document.querySelector('.audiocall-next-button') as HTMLElement;
       if (target.innerHTML === 'Не знаю') {
         hasUserAnswer = true;
         document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
@@ -109,7 +116,7 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
         hasUserAnswer = true;
       }
     }
-    // document.removeEventListener('keydown', () => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
+    document.removeEventListener('keydown', () => keyPress);
   }
 }
 
