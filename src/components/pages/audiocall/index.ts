@@ -5,6 +5,7 @@ import './index.css';
 import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
 import { RightWrongArrays, Results } from './results';
+import { ControlWord } from '../vocabulary/ControlWord';
 
 export const GAME_WORDS: WordsArray = {
   wordsArr: [],
@@ -78,11 +79,16 @@ function createNewAnswers(words: Word[]) {
 
 function keyPress(e: KeyboardEvent, answers: Answers) {
   if (window.location.hash === '#audiocall') {
+    const target = document.querySelector('.audiocall-next-button') as HTMLElement;
+    if (!target) {
+      document.removeEventListener('keydown', () => keyPress);
+      return;
+    }
+
     if (e.code === 'Space') {
       answers.getSound();
     }
     if (e.code === 'NumpadEnter') {
-      const target = document.querySelector('.audiocall-next-button') as HTMLElement;
       if (target.innerHTML === 'Не знаю') {
         hasUserAnswer = true;
         document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
@@ -110,7 +116,7 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
         hasUserAnswer = true;
       }
     }
-    // document.removeEventListener('keydown', () => keyPress(e, createNewAnswers(GAME_WORDS.wordsArr)));
+    document.removeEventListener('keydown', () => keyPress);
   }
 }
 
