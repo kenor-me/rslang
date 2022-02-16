@@ -44,21 +44,21 @@ const getCountNewWordFromAudioCallToDay = async (statistic:any) => {
   return 0;
 };
 
-const getSeriesTodaySprint = async (statistic:any) =>{
-    const today = getToday();
+const getSeriesTodaySprint = async (statistic:any) => {
+  const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].seriesSprintToday);
   }
   return 0;
-}
+};
 
-const getSeriesTodayAudioCall = async (statistic:any) =>{
+const getSeriesTodayAudioCall = async (statistic:any) => {
   const today = getToday();
-if (statistic.optional.daysStatistic[today]) {
-  return Number(statistic.optional.daysStatistic[today].seriesAudioCallToday);
-}
-return 0;
-}
+  if (statistic.optional.daysStatistic[today]) {
+    return Number(statistic.optional.daysStatistic[today].seriesAudioCallToday);
+  }
+  return 0;
+};
 
 const getDayStatistic = async (statistic:any, percentRight:number): Promise<string> => {
   const today = getToday();
@@ -150,7 +150,11 @@ const root = document.getElementById('root') as HTMLElement;
 const user = JSON.parse(localStorage.getItem('userAuth') as string);
 export const renderStatisticPage = async (): Promise<void> => {
   const statistic = await getStatisticUser(user.userId, user.token);
-  console.log(statistic)
+  /* await setStatisticUser(user.userId, user.token)
+  const userWord = await getWordsUser(user.userId, user.token)
+  userWord.forEach(async (item)=> {
+    await deleteUserWord(user.userId, user.token, item.wordId)
+  });*/
   const today = getToday();
   let rightSprint = 0;
   let wrongSprint = 0;

@@ -85,7 +85,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
       }
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].correct++;
-        if (statistic.optional.words[word.id].correct >= 5) {
+        if (statistic.optional.words[word.id].correct >= 3) {
           const params = 'learned';
           await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
           statistic.learnedWords++;
