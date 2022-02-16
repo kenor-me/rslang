@@ -5,7 +5,6 @@ import './index.css';
 import { Word, WordsArray } from '../../types/index';
 import { Answers } from './answer';
 import { RightWrongArrays, Results } from './results';
-import { ControlWord } from '../vocabulary/ControlWord';
 
 export const GAME_WORDS: WordsArray = {
   wordsArr: [],

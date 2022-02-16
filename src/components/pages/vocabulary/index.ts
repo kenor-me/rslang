@@ -8,6 +8,7 @@ import { BookWordsList } from './BookWordsList';
 import { Navigation } from './Navigation';
 import { getSprintPlay, renderSprintPage } from '../sprint';
 import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audiocall';
+import Preloader from './Preloader';
 
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
@@ -31,6 +32,8 @@ class Vocabulary extends BaseComponent {
   lastPageNumber = 29;
 
   textErr: BaseComponent;
+
+  preloader: Preloader;
 
   COLOR_FOR_PART = [
     '#a5e8d6',
@@ -59,6 +62,9 @@ class Vocabulary extends BaseComponent {
     }
     this.navigation = new Navigation(this.node);
     this.loadPart();
+    this.preloader = new Preloader(this.wordsArray.node);
+    this.preloader.node.style.display = 'none';
+    this.preloader.node.style.backgroundColor = this.COLOR_FOR_PART[this.settings.part];
     this.navigation.pageSwitcher.prevButton.node.addEventListener('click', () => {
       this.changePage('prev');
     });
@@ -100,6 +106,7 @@ class Vocabulary extends BaseComponent {
   }
 
   updatePage = async (): Promise<void> => {
+    this.preloader.node.style.display = 'block';
     if (this.user) {
       this.allUserWords = await getWordsUser(this.user.userId, this.user.token);
       this.hardWords = this.allUserWords.filter((hardword) => hardword.difficulty === ('hard').toString());
@@ -141,6 +148,7 @@ class Vocabulary extends BaseComponent {
       this.navigation.audioCallButton.node.classList.remove('disabled');
       cardWord.forEach((card) => card.classList.remove('selection'));
     }
+    this.preloader.node.style.display = 'none';
   };
 
   changePage = async (param: string): Promise<void> => {
