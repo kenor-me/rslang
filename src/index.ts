@@ -1,5 +1,6 @@
+import { addUser, signIn } from './components/api/index';
 import './style.css';
-import { addUser, signIn } from './components/api';
+
 import { renderRegistrationPage } from './components/pages/registration';
 import { createHeader, createFooter } from './components/pages/main';
 import { locationResolver } from './components/routing';
@@ -50,7 +51,7 @@ const createNewUser = async (e: Event): Promise<void> => {
   //   signIn({ email: newEmail.value, password: newPassword.value });
   // }, 4000);
   if (JSON.parse(localStorage.getItem('userAdd') as string)) {
-    await signIn({ email: newEmail.value, password: newPassword.value });
+    await signIn({ email: newEmail.value, password: newPassword.value }, true);
   }
   if (JSON.parse(localStorage.getItem('userAuth') as string)) {
     exitBtn.classList.add('exit');

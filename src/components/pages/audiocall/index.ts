@@ -45,13 +45,14 @@ const renderAnswers = async (answers: Promise<Word[]>): Promise<string> => {
 };
 
 function showResult() {
-  renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight);
+  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
+    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+  const nameGame = 'audioCall';
+  renderResultForm(RightWrongArrays.audiocallWrong, RightWrongArrays.audiocallRight, nameGame, longestSeriesAudiocall);
   countAnswer = 0;
   RightWrongArrays.audiocallWrong = [];
   RightWrongArrays.audiocallRight = [];
   hasUserAnswer = false;
-  const longestSeriesAudiocall = RightWrongArrays.seriesRightAnswer.replace(/\s+/g, ' ')
-    .trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
 }
 
 export const renderAudiocallWrapper = (): void => {

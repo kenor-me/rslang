@@ -12,7 +12,7 @@ import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audi
 class Vocabulary extends BaseComponent {
   wordsArray: BookWordsList;
 
-  currentPage: Word[] | undefined = []; // словаа на одной странице
+  currentPage: Word[] | undefined = [];
 
   settings: Settings;
 
@@ -65,7 +65,7 @@ class Vocabulary extends BaseComponent {
     this.navigation.pageSwitcher.nextButton.node.addEventListener('click', () => {
       this.changePage('next');
     });
-    this.navigation.sprintButton.node.addEventListener('click', async (e) => {
+    this.navigation.sprintButton.node.addEventListener('click', async () => {
       await this.updatePage();
       this.wordsForGame = await this.getWordForGame();
       this.gameTimeout = setTimeout(() => {
@@ -73,7 +73,7 @@ class Vocabulary extends BaseComponent {
         getSprintPlay(this.wordsForGame);
       }, 3800);
     });
-    this.navigation.audioCallButton.node.addEventListener('click', async (e) => {
+    this.navigation.audioCallButton.node.addEventListener('click', async () => {
       await this.updatePage();
       this.wordsForGame = await this.getWordForGame();
       if (this.wordsForGame.length > 20) GAME_WORDS.wordsArr = this.wordsForGame.splice(20, 40);
@@ -121,10 +121,26 @@ class Vocabulary extends BaseComponent {
       this.currentPage = await getWordPage(this.settings.part, this.settings.page);
       this.navigation.pageSwitcher.node.style.visibility = 'visible';
     }
-
     this.wordsForGame = this.currentPage;
     this.navigation.pageSwitcher.setNumberPage(this.settings.page);
     this.wordsArray.updateBookListPage(this.currentPage!, this.hardWords, this.learnWords);
+    const hardtoPage = document.querySelectorAll('.hard-word').length;
+    const learntoPage = document.querySelectorAll('.learn-word').length;
+    const cardWord = document.querySelectorAll('.book-word-item');
+    if (hardtoPage + learntoPage >= this.currentPage.length) {
+      this.navigation.sprintButton.node.classList.add('disabled');
+      this.navigation.audioCallButton.node.classList.add('disabled');
+      cardWord.forEach((card) => card.classList.add('selection'));
+    } else {
+      this.navigation.sprintButton.node.classList.remove('disabled');
+      this.navigation.audioCallButton.node.classList.remove('disabled');
+      cardWord.forEach((card) => card.classList.remove('selection'));
+    }
+    if (this.settings.part === this.MAX_COUNT_PART) {
+      this.navigation.sprintButton.node.classList.remove('disabled');
+      this.navigation.audioCallButton.node.classList.remove('disabled');
+      cardWord.forEach((card) => card.classList.remove('selection'));
+    }
   };
 
   changePage = async (param: string): Promise<void> => {
@@ -141,16 +157,16 @@ class Vocabulary extends BaseComponent {
     }
     this.navigation.pageSwitcher.setNumberPage(this.settings.page);
     localStorage.setItem('settings', JSON.stringify(this.settings));
-    this.updatePage();
+    await this.updatePage();
   };
 
-  changePart = (): void => {
+  changePart = async (): Promise<void> => {
     this.settings.part = Number(this.navigation.select.node.value);
     this.settings.page = 0;
     this.node.style.backgroundColor = this.COLOR_FOR_PART[this.settings.part];
     this.navigation.select.setColorSelect(this.COLOR_FOR_PART[this.settings.part]);
     localStorage.setItem('settings', JSON.stringify(this.settings));
-    this.updatePage();
+    await this.updatePage();
   };
 
   loadPart = (): void => {

@@ -26,6 +26,7 @@ export class Results {
     }
     if (userSelect === this.word.wordTranslate) {
       RightWrongArrays.audiocallRight.push({
+        id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
@@ -36,6 +37,7 @@ export class Results {
 
     if (userSelect !== this.word.wordTranslate) {
       RightWrongArrays.audiocallWrong.push({
+        id: this.word.id,
         audio: this.word.audio,
         word: this.word.word,
         transcription: this.word.transcription,
