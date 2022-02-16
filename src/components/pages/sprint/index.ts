@@ -210,6 +210,15 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     i++;
     seriesRightAnswer += ' ';
     setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
+    if (i === words.length) {
+      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
+      console.log(longestSeries);
+
+      renderResultForm(wrong, right);
+      clearTimeout(resultTimeout);
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      document.removeEventListener('keydown', kayAnswer);
+    }
   };
 
   const addRightWord = (): void => {
@@ -218,55 +227,46 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     });
     i++;
     seriesRightAnswer += '1';
-  };
-
-  function kayAnswer(e: KeyboardEvent) {
-    if (i < words.length) {
-      if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
-        addWrongWord();
-      } else if (e.code === 'ArrowLeft' && words[i].wordTranslate !== randomTranslate[i]) {
-        addRightWord();
-      }
-      if (e.code === 'ArrowRight' && words[i].wordTranslate !== randomTranslate[i]) {
-        addWrongWord();
-      } else if (e.code === 'ArrowRight' && words[i].wordTranslate === randomTranslate[i]) {
-        addRightWord();
-      }
-      if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
-    } else {
+    if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       console.log(longestSeries);
 
       renderResultForm(wrong, right);
       clearTimeout(resultTimeout);
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       document.removeEventListener('keydown', kayAnswer);
     }
+  };
+
+  function kayAnswer(e: KeyboardEvent) {
+    if (e.code === 'ArrowLeft' && words[i].wordTranslate === randomTranslate[i]) {
+      addWrongWord();
+    } else if (e.code === 'ArrowLeft' && words[i].wordTranslate !== randomTranslate[i]) {
+      addRightWord();
+    }
+    if (e.code === 'ArrowRight' && words[i].wordTranslate !== randomTranslate[i]) {
+      addWrongWord();
+    } else if (e.code === 'ArrowRight' && words[i].wordTranslate === randomTranslate[i]) {
+      addRightWord();
+    }
+    if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
   }
 
   document.addEventListener('keydown', kayAnswer);
 
   answerButton.addEventListener('click', (e: Event) => {
     const target = e.target as HTMLElement;
-    if (i < words.length) {
-      if (target.classList.contains('sprint__left') && words[i].wordTranslate === randomTranslate[i]) {
-        addWrongWord();
-      } else if (target.classList.contains('sprint__left') && words[i].wordTranslate !== randomTranslate[i]) {
-        addRightWord();
-      }
-      if (target.classList.contains('sprint__right') && words[i].wordTranslate !== randomTranslate[i]) {
-        addWrongWord();
-      } else if (target.classList.contains('sprint__right') && words[i].wordTranslate === randomTranslate[i]) {
-        addRightWord();
-      }
-      if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
-    } else {
-      const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-      console.log(longestSeries);
-
-      renderResultForm(wrong, right);
-      clearTimeout(resultTimeout);
-      document.removeEventListener('keydown', kayAnswer);
+    if (target.classList.contains('sprint__left') && words[i].wordTranslate === randomTranslate[i]) {
+      addWrongWord();
+    } else if (target.classList.contains('sprint__left') && words[i].wordTranslate !== randomTranslate[i]) {
+      addRightWord();
     }
+    if (target.classList.contains('sprint__right') && words[i].wordTranslate !== randomTranslate[i]) {
+      addWrongWord();
+    } else if (target.classList.contains('sprint__right') && words[i].wordTranslate === randomTranslate[i]) {
+      addRightWord();
+    }
+    if (i < words.length) renderWord(words[i].word, randomTranslate[i]);
   });
 
   window.addEventListener('hashchange', () => {

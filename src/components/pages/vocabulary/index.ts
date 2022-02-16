@@ -87,7 +87,7 @@ class Vocabulary extends BaseComponent {
       clearTimeout(this.gameTimeout!);
     });
     this.textErr = new BaseComponent(this.wordsArray.node, 'div', 'text-errors',
-      'В этом разделе еще нет слов');
+      'В этом разделе еще нет слов, нажмите на кнопку "Добавить слово", на карточках в других разделах.');
     this.textErr.node.style.display = 'none';
     this.navigation.select.node.addEventListener('change', this.changePart);
     this.getWordsArray(this.settings?.part, this.settings?.page);
