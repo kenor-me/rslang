@@ -74,16 +74,20 @@ export class Answers extends GamesWords {
       if (elem.classList.contains('name-answer')) {
         elem = elem.parentNode as HTMLElement;
         elem.style.backgroundColor = 'tomato';
+        this.showRightAnswer();
       }
       if (elem.classList.contains('number-answer')) {
         elem = elem.parentNode as HTMLElement;
         elem.style.backgroundColor = 'tomato';
-      } if (elem.classList.contains('audiocall-answer')) {
+        this.showRightAnswer();
+      }
+      if (elem.classList.contains('audiocall-answer')) {
         elem.style.backgroundColor = 'tomato';
+        this.showRightAnswer();
       } else {
         elem.style.backgroundColor = '#dffcf5';
+        document.querySelector('.audiocall-answers')?.classList.remove('audiocall-disabled');
       }
-      this.showRightAnswer();
     }
   }
 }
