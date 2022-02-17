@@ -260,12 +260,8 @@
 
 .preloader {
   position: absolute;
-  /*   left: 50%;
-  top: 50%;
-  right: 50%;
-  bottom: 50%; */
   z-index: 1001;
-  height: 100%;
+  height: calc(100vh - 130px);
   width: 100%;
 }
 
@@ -361,6 +357,16 @@
   .book-page-nav-audio span,
   .book-page-nav-sprint span {
     display: none;
+  }
+}
+@media (max-width: 639px) {
+  .preloader {
+    height: calc(100vh - 258px);
+  }
+}
+@media (max-width: 441px) {
+  .preloader {
+    height: calc(100vh - 325px);
   }
 }
 @media screen and (max-width: 600px) {
