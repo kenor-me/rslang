@@ -2,7 +2,7 @@
 import {
   getStatisticUser, getWordsUser, setStatisticUser, setWordNew, updateWordUser,
 } from '../../api';
-import { WordResult } from '../../types';
+import { Statistic, WordResult } from '../../types';
 
 export const getToday = ():string => {
   const dateTodayObj = new Date();
@@ -12,8 +12,8 @@ export const getToday = ():string => {
   return `${day}${month}${year}`;
 };
 
-export const saveCountGameToday = (nameGame:string, statistic: any, countNewWordFromSprint = 0,
-  countNewWordFromAudioCall = 0, right:number, wrong:number, longestSeries:number):any => {
+export const saveCountGameToday = (nameGame:string, statistic: Statistic, countNewWordFromSprint = 0,
+  countNewWordFromAudioCall = 0, right:number, wrong:number, longestSeries:number):Statistic => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     if (nameGame === 'sprint') {
