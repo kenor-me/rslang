@@ -74,8 +74,14 @@ export class Answers extends GamesWords {
       if (elem.classList.contains('name-answer')) {
         elem = elem.parentNode as HTMLElement;
         elem.style.backgroundColor = 'tomato';
-      } else {
+      }
+      if (elem.classList.contains('number-answer')) {
+        elem = elem.parentNode as HTMLElement;
         elem.style.backgroundColor = 'tomato';
+      } if (elem.classList.contains('audiocall-answer')) {
+        elem.style.backgroundColor = 'tomato';
+      } else {
+        elem.style.backgroundColor = '#dffcf5';
       }
       this.showRightAnswer();
     }
