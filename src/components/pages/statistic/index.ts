@@ -1,6 +1,7 @@
 import { getStatisticUser } from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';
+import { langStatistic } from './schedule';
 
 export const getPercentCircle = (start: number, end: number): string => `
 <svg class="" width="120px" height="120px" viewBox="0 0 42 42" class="donut">
@@ -182,6 +183,7 @@ export const renderStatisticPage = async (): Promise<void> => {
   }
   root.innerHTML = `
     <div class="statistic-wrapper statistic-wrapper-auth">
+    <div><canvas id="myChart"></canvas></div>
       <div class="statistic-table">
         <div class="statistic-table__body">
           <div class="statistic-games__wrapper">
@@ -255,6 +257,7 @@ export const renderStatisticPage = async (): Promise<void> => {
     </div>
   </div>
   `;
+  langStatistic(statistic);
 };
 
 export const renderBaseStatisticPage = (): void => {

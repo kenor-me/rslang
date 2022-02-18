@@ -126,7 +126,7 @@
   justify-content: center;
 }
 
-.statistic-games__diagram span{
+.statistic-games__diagram span {
   position: absolute;
   top: 35%;
   font-size: 28px;
@@ -203,4 +203,8 @@
   .count-series-audiocall-title {
     font-size: 12px;
   }
+}
+canvas {
+  width: 80% !important;
+  margin: 0 auto !important;
 }
