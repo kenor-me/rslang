@@ -140,8 +140,7 @@ class Vocabulary extends BaseComponent {
       if (this.currentPage.length > 0) {
         this.navigation.sprintButton.node.classList.remove('disabled');
         this.navigation.audioCallButton.node.classList.remove('disabled');
-      }
-      else {
+      } else {
         this.navigation.sprintButton.node.classList.add('disabled');
         this.navigation.audioCallButton.node.classList.add('disabled');
       }
