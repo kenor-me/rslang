@@ -1,3 +1,4 @@
+import { Statistic } from '../../types/index';
 import { getStatisticUser } from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';
@@ -13,7 +14,7 @@ export const getPercentCircle = (start: number, end: number): string => `
 </svg>
 `;
 
-const getCountGameSprintToDay = async (statistic: any): Promise<number> => {
+const getCountGameSprintToDay = async (statistic:Statistic):Promise<number> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countSprint);
@@ -21,14 +22,15 @@ const getCountGameSprintToDay = async (statistic: any): Promise<number> => {
   return 0;
 };
 
-const getCountGameAudioCallToDay = async (statistic: any): Promise<number> => {
+const getCountGameAudioCallToDay = async (statistic:Statistic):Promise<number> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countAudioCall);
   }
   return 0;
 };
-const getCountNewWordFromSprintToDay = async (statistic: any) => {
+
+const getCountNewWordFromSprintToDay = async (statistic:Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countNewWordFromSprint);
@@ -36,7 +38,7 @@ const getCountNewWordFromSprintToDay = async (statistic: any) => {
   return 0;
 };
 
-const getCountNewWordFromAudioCallToDay = async (statistic: any) => {
+const getCountNewWordFromAudioCallToDay = async (statistic:Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countNewWordFromAudioCall);
@@ -44,7 +46,7 @@ const getCountNewWordFromAudioCallToDay = async (statistic: any) => {
   return 0;
 };
 
-const getSeriesTodaySprint = async (statistic: any) => {
+const getSeriesTodaySprint = async (statistic:Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].seriesSprintToday);
@@ -52,7 +54,7 @@ const getSeriesTodaySprint = async (statistic: any) => {
   return 0;
 };
 
-const getSeriesTodayAudioCall = async (statistic: any) => {
+const getSeriesTodayAudioCall = async (statistic:Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].seriesAudioCallToday);
@@ -60,7 +62,7 @@ const getSeriesTodayAudioCall = async (statistic: any) => {
   return 0;
 };
 
-const getDayStatistic = async (statistic: any, percentRight: number): Promise<string> => {
+const getDayStatistic = async (statistic:Statistic, percentRight:number): Promise<string> => {
   const today = getToday();
   let longSeriesToday = 0;
   if (statistic.optional.daysStatistic[today]) {
@@ -108,7 +110,7 @@ const getDayStatistic = async (statistic: any, percentRight: number): Promise<st
   </div>
   `;
 };
-const getAllStatistic = (statistic: any) => {
+const getAllStatistic = (statistic: Statistic) => {
   let percentRightAll = 0;
   if (statistic.optional.rightAnswerAll + statistic.optional.wrongAnswerAll !== 0) {
     percentRightAll = Math.floor((statistic.optional.rightAnswerAll * 100)
@@ -178,8 +180,8 @@ export const renderStatisticPage = async (): Promise<void> => {
       persentRightAudioCall = Math.floor((rightAudioCall * 100) / (wrongAudioCall + rightAudioCall));
       persentWrongAudioCall = Math.floor((wrongAudioCall * 100) / (wrongAudioCall + rightAudioCall));
     }
-    // eslint-disable-next-line max-len
-    percentRightToday = Math.floor(((rightSprint + rightAudioCall) * 100) / (wrongSprint + rightSprint + rightAudioCall + wrongAudioCall));
+    percentRightToday = Math.floor(((rightSprint + rightAudioCall) * 100)
+    / (wrongSprint + rightSprint + rightAudioCall + wrongAudioCall));
   }
   root.innerHTML = `
     <div class="statistic-wrapper statistic-wrapper-auth">
@@ -232,8 +234,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                     Количество новых слов за день
                   </div>
                   <div class="count-word-audiocall-count count">
-                    ${await getCountNewWordFromAudioCallToDay(statistic)}
-                  </div>
+                  ${await getCountNewWordFromAudioCallToDay(statistic)}</div>
                 </div>
                 <div class="count-percent-audiocall">
                   <div class="count-percent-audiocall-title">

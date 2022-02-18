@@ -38,7 +38,7 @@ export class ControlWord extends BaseComponent {
 
   allAudio: HTMLAudioElement[] = [];
 
-  statisticUser: any | undefined;
+  statisticUser: Statistic | undefined;
 
   constructor(parentNode: HTMLElement, wordInfo: Word, hard:boolean, learn:boolean) {
     super(parentNode, 'div', 'book-word-item');
@@ -203,11 +203,11 @@ export class ControlWord extends BaseComponent {
   async setInfoWord(wordInfo:Word):Promise<void> {
     const correctAnswerWord = new BaseComponent(this.node, 'div', 'correct-answer', 'Правильных ответов: 0');
     const wrongAnswerWord = new BaseComponent(this.node, 'div', 'wrong-answer', 'Неправильных ответов: 0');
-    if (this.statisticUser.optional.words[wordInfo.id]) {
+    if (this.statisticUser!.optional.words[wordInfo.id]) {
       correctAnswerWord.node.textContent = `Правильных ответов:
-      ${this.statisticUser.optional.words[wordInfo.id].correct}`;
+      ${this.statisticUser!.optional.words[wordInfo.id].correct}`;
       wrongAnswerWord.node.textContent = `Неправильных ответов:
-      ${this.statisticUser.optional.words[wordInfo.id].wrong}`;
+      ${this.statisticUser!.optional.words[wordInfo.id].wrong}`;
     } else {
       correctAnswerWord.node.textContent = 'Правильных ответов: 0';
       wrongAnswerWord.node.textContent = 'Неправильных ответов: 0';

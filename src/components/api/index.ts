@@ -1,5 +1,5 @@
 import {
-  User, Sign, Token, Word, ContentWord,
+  User, Sign, Token, Word, ContentWord, Statistic,
 } from '../types';
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
@@ -125,7 +125,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
       '5testWord': { correct: 0, wrong: 0 },
     },
     daysStatistic: {
-      '1testDay': {
+      '00': {
         countSprint: 0,
         countNewWordFromSprint: 0,
         countRightAnswerSprint: 0,
@@ -326,7 +326,7 @@ export const updateWordUser = async (
 };
 
 // get statistic
-export const getStatisticUser = async (id: string, token: string): Promise<any> => {
+export const getStatisticUser = async (id: string, token: string): Promise<Statistic> => {
   const url = `${BASE_URL}/users/${id}/statistics`;
   try {
     const response = await fetch(url, {
