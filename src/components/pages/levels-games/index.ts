@@ -72,6 +72,7 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
 
       const randomThreePages = Promise.all([
         await currentWords.getGameWords(part, currentWords.getRandomPageNum()),
+        await currentWords.getGameWords(part, currentWords.getRandomPageNum()),
         await currentWords.getGameWords(part, currentWords.getRandomPageNum())]);
       const result: Word[] = (await randomThreePages).flat().sort(() => Math.random() - 0.5);
 

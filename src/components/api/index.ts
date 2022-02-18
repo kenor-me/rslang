@@ -16,7 +16,7 @@ const getNewToken = async (id: string): Promise<void> => {
       'Content-Type': 'application/json',
     },
   }).then((response) => {
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
       const button = document.querySelector('.login ') as HTMLElement;
       button.classList.remove('exit');
       localStorage.clear();
