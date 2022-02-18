@@ -75,8 +75,23 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     wrongAnswerAll: 0,
     seriesSprint: 0,
     seriesAudioCall: 0,
-    words: {},
-    daysStatistic: {},
+    words: {
+     '5testWord': { correct: 0, wrong: 0 },
+    },
+    daysStatistic: {
+       '0': {
+        countSprint:0,
+        countNewWordFromSprint:0,
+        countRightAnswerSprint:0,
+        countWrongAnswerSprint:0,
+        countAudioCall:0,
+        countRightAnswerAudioCall:0,
+        countWrongAnswerAudioCall:0,
+        countNewWordFromAudioCall:0,
+        seriesSprintToday: 0,
+        seriesAudioCallToday: 0
+        },
+    },
   },
 }): Promise<void> => {
   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
