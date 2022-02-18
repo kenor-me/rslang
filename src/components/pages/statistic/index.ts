@@ -14,7 +14,6 @@ export const getPercentCircle = (start: number, end: number): string => `
 </svg>
 `;
 
-
 const getCountGameSprintToDay = async (statistic:Statistic):Promise<number> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
@@ -22,7 +21,6 @@ const getCountGameSprintToDay = async (statistic:Statistic):Promise<number> => {
   }
   return 0;
 };
-
 
 const getCountGameAudioCallToDay = async (statistic:Statistic):Promise<number> => {
   const today = getToday();
@@ -40,7 +38,6 @@ const getCountNewWordFromSprintToDay = async (statistic:Statistic) => {
   return 0;
 };
 
-
 const getCountNewWordFromAudioCallToDay = async (statistic:Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
@@ -48,7 +45,6 @@ const getCountNewWordFromAudioCallToDay = async (statistic:Statistic) => {
   }
   return 0;
 };
-
 
 const getSeriesTodaySprint = async (statistic:Statistic) => {
   const today = getToday();
@@ -65,7 +61,6 @@ const getSeriesTodayAudioCall = async (statistic:Statistic) => {
   }
   return 0;
 };
-
 
 const getDayStatistic = async (statistic:Statistic, percentRight:number): Promise<string> => {
   const today = getToday();
