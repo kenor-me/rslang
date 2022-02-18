@@ -186,7 +186,6 @@ export const renderStatisticPage = async (): Promise<void> => {
   }
   root.innerHTML = `
     <div class="statistic-wrapper statistic-wrapper-auth">
-    <div><canvas id="myChart"></canvas></div>
       <div class="statistic-table">
         <div class="statistic-table__body">
           <div class="statistic-games__wrapper">
@@ -259,6 +258,7 @@ export const renderStatisticPage = async (): Promise<void> => {
           </div>
       </div>
     </div>
+    <div><canvas id="myChart"></canvas></div>
   </div>
   `;
   langStatistic(statistic);
