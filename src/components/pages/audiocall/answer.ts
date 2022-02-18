@@ -12,12 +12,18 @@ export class Answers extends GamesWords {
 
   max: number;
 
+  wrongAnswerSound: string;
+
+  rightAnswerSound: string;
+
   constructor(word: Word) {
     super();
     this.word = word;
     this.amountWrongWords = 4;
     this.min = 0;
     this.max = 19;
+    this.wrongAnswerSound = './wrong.mp3';
+    this.rightAnswerSound = './right.mp3';
   }
 
   getSound(): void {
@@ -67,16 +73,17 @@ export class Answers extends GamesWords {
   }
 
   compareWithRightAnswer(answer: HTMLElement): void {
-    const userSelect = answer.lastElementChild?.textContent;
-    if (userSelect === this.word.wordTranslate) this.showRightAnswer();
-    else {
+    let userSelect = <string | null | undefined>answer.textContent;
+    if (answer.classList.contains('audiocall-answer')) userSelect = answer.lastElementChild?.textContent;
+    if (answer.classList.contains('number-answer')) userSelect = answer.nextElementSibling?.textContent;
+    if (userSelect === this.word.wordTranslate) {
+      this.showRightAnswer();
+      this.turnOnSound(this.rightAnswerSound);
+    } else {
       let elem = answer as HTMLElement;
-      if (elem.classList.contains('name-answer')) {
-        elem = elem.parentNode as HTMLElement;
-        elem.style.backgroundColor = 'tomato';
-        this.showRightAnswer();
-      }
-      if (elem.classList.contains('number-answer')) {
+      this.turnOnSound(this.wrongAnswerSound);
+      if ((elem.classList.contains('name-answer'))
+      || (elem.classList.contains('number-answer'))) {
         elem = elem.parentNode as HTMLElement;
         elem.style.backgroundColor = 'tomato';
         this.showRightAnswer();
@@ -89,5 +96,11 @@ export class Answers extends GamesWords {
         document.querySelector('.audiocall-answers')?.classList.remove('audiocall-disabled');
       }
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  turnOnSound(src: string): void {
+    const audio = new Audio(src);
+    audio.play();
   }
 }
