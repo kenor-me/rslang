@@ -56,13 +56,49 @@ export type WordResult = {
   translate: string,
 };
 
-export type Statistic = {
-  id: string,
+export interface Statistic {
+  id?: string,
   learnedWords: number,
-  optional: { // возможно изменить
+  optional: {
+    countAudioCallAll: number,
+    countSprintAll: number,
+    rightAnswerAll: number,
+    seriesAudioCall: number,
+    seriesSprint: number,
+    wrongAnswerAll: number
+    words: StatisticWord,
+    daysStatistic: StatisticDay,
+  }
+}
+
+type StatisticWord = {
+  '5testWord': { correct: number, wrong: number },
+  [key: string]: { correct: number, wrong: number }
+};
+type StatisticDay = {
+  '00': {
     countSprint: number,
+    countNewWordFromSprint: number,
+    countRightAnswerSprint: number,
+    countWrongAnswerSprint: number,
     countAudioCall: number,
-    words: Record<string, unknown>
+    countRightAnswerAudioCall: number,
+    countWrongAnswerAudioCall: number,
+    countNewWordFromAudioCall: number,
+    seriesSprintToday: number,
+    seriesAudioCallToday: number,
+  },
+  [key: string]: {
+    countAudioCall: number,
+    countNewWordFromAudioCall: number,
+    countNewWordFromSprint: number,
+    countRightAnswerAudioCall: number,
+    countRightAnswerSprint: number,
+    countSprint: number,
+    countWrongAnswerAudioCall: number,
+    countWrongAnswerSprint: number,
+    seriesAudioCallToday: number,
+    seriesSprintToday: number,
   }
 };
 
