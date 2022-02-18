@@ -52,6 +52,7 @@ function showResult() {
   countAnswer = 0;
   RightWrongArrays.audiocallWrong = [];
   RightWrongArrays.audiocallRight = [];
+  RightWrongArrays.seriesRightAnswer = '';
   hasUserAnswer = false;
 }
 
@@ -158,8 +159,10 @@ export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
     document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
     const target = e.target as HTMLElement;
     answers.compareWithRightAnswer(target);
-    const results = new Results(target, answers.word);
-    results.getResult();
+    if (target !== document.querySelector('.audiocall-answers')) {
+      const results = new Results(target, answers.word);
+      results.getResult();
+    }
   });
   return answers;
 };
