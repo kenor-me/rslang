@@ -76,7 +76,7 @@ type StatisticWord = {
   [key: string]: { correct: number, wrong: number }
 };
 type StatisticDay = {
-  '0': {
+  '00': {
     countSprint: number,
     countNewWordFromSprint: number,
     countRightAnswerSprint: number,
