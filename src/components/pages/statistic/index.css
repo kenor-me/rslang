@@ -190,7 +190,6 @@
   .statistic-sprint,
   .statistic-audiocall {
     box-sizing: border-box;
-    margin: 0;
     width: 100%;
   }
 }
