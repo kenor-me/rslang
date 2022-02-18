@@ -154,6 +154,11 @@
   display: flex;
   justify-content: space-between;
 }
+canvas {
+  width: 80% !important;
+  margin: 0 auto !important;
+  margin-top: 30px !important;
+}
 @media (max-width: 1200px) {
   .statistic-all,
   .statistic-sprint,
@@ -192,6 +197,9 @@
     box-sizing: border-box;
     width: 100%;
   }
+  canvas {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 440px) {
@@ -203,9 +211,4 @@
   .count-series-audiocall-title {
     font-size: 12px;
   }
-}
-canvas {
-  width: 80% !important;
-  margin: 0 auto !important;
-  margin-top: 30px !important;
 }
