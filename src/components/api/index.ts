@@ -4,6 +4,32 @@ import {
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
 
+const getNewToken = async (id: string): Promise<void> => {
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  const { refreshToken } = userAuth;
+  const url = `${BASE_URL}/users/${id}/tokens`;
+  await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => {
+    if (response.status === 401) {
+      const button = document.querySelector('.login ') as HTMLElement;
+      button.classList.remove('exit');
+      localStorage.clear();
+      window.location.reload();
+    }
+    return response.json();
+  }).then((result) => {
+    userAuth.token = result.token;
+    userAuth.refreshToken = result.refreshToken;
+    localStorage.setItem('userAuth', JSON.stringify(userAuth));
+  });
+};
+
 export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => {
   const path = `words?group=${part}&page=${pageNumber}`;
   const response = await fetch(`${BASE_URL}/${path}`);
@@ -14,14 +40,34 @@ export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => 
 // all users word
 export const getWordsUser = async (id: string, token: string): Promise<ContentWord[]> => {
   const url = `${BASE_URL}/users/${id}/words`;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // await getNewToken(id);
+    // const newUserAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    // const tokenNew = newUserAuth.token;
+    // console.log('2)', tokenNew);
+    return await response.json();
+  } catch {
+    // !new token
+    await getNewToken(id);
+    const newUserAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = newUserAuth.token;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return await response.json();
+  }
 };
 
 // get word by ID
@@ -94,16 +140,45 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     },
   },
 }): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(statistic),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(statistic),
+    });
+    return await response.json();
+  } catch {
+    // !new token
+    await getNewToken(id);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(statistic),
+    });
+    return response.json();
+  }
+  // {
+  //   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(statistic),
+  //   });
+  //   return response.json();
 };
 
 export const signIn = async (user: Sign, first = false): Promise<void> => {
@@ -144,6 +219,20 @@ export const setWordHard = async (userId: string, token: string, word: Word): Pr
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
+  }).catch(async () => {
+    // !new token
+    await getNewToken(userId);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newWord),
+    });
   });
 };
 
@@ -156,6 +245,19 @@ export const deleteUserWord = async (userId: string, token: string, wordId: stri
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
+  }).catch(async () => {
+    // !new token
+    await getNewToken(userId);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+    });
   });
 };
 
@@ -186,6 +288,20 @@ export const setWordNew = async (userId: string, token: string, wordId: string):
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
+  }).catch(async () => {
+    // !new token
+    await getNewToken(userId);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newWord),
+    });
   });
 };
 
@@ -212,13 +328,29 @@ export const updateWordUser = async (
 // get statistic
 export const getStatisticUser = async (id: string, token: string): Promise<any> => {
   const url = `${BASE_URL}/users/${id}/statistics`;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
-  return response.json();
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    return await response.json();
+  } catch {
+    // !new token
+    await getNewToken(id);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    return await response.json();
+  }
 };

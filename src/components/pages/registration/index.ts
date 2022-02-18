@@ -44,7 +44,7 @@ export const renderRegistrationForm = (): string => `
             type="password"
             name="password"
             id="new_user_password"
-            minlength="6"
+            minlength="8"
             autocomplete="off"
             required
           >
@@ -75,7 +75,7 @@ export const renderSignInForm = (): string => `
           type="password"
           name="password"
           id="user_password"
-          minlength="6"
+          minlength="8"
           autocomplete="off"
           required
         >
