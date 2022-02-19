@@ -126,7 +126,7 @@
   justify-content: center;
 }
 
-.statistic-games__diagram span{
+.statistic-games__diagram span {
   position: absolute;
   top: 35%;
   font-size: 28px;
@@ -154,11 +154,17 @@
   display: flex;
   justify-content: space-between;
 }
+canvas {
+  width: 80% !important;
+  margin: 0 auto !important;
+  margin-top: 30px !important;
+}
 @media (max-width: 1200px) {
   .statistic-all,
   .statistic-sprint,
   .statistic-audiocall {
     width: 90%;
+    margin: 0 auto;
   }
   .statistic-audiocall {
     margin-top: 40px;
@@ -189,8 +195,10 @@
   .statistic-sprint,
   .statistic-audiocall {
     box-sizing: border-box;
-    margin: 0;
     width: 100%;
+  }
+  canvas {
+    width: 100% !important;
   }
 }
 

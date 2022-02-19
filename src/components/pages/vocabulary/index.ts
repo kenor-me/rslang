@@ -137,8 +137,13 @@ class Vocabulary extends BaseComponent {
       cardWord.forEach((card) => card.classList.remove('selection'));
     }
     if (this.settings.part === this.MAX_COUNT_PART) {
-      this.navigation.sprintButton.node.classList.remove('disabled');
-      this.navigation.audioCallButton.node.classList.remove('disabled');
+      if (this.currentPage.length > 0) {
+        this.navigation.sprintButton.node.classList.remove('disabled');
+        this.navigation.audioCallButton.node.classList.remove('disabled');
+      } else {
+        this.navigation.sprintButton.node.classList.add('disabled');
+        this.navigation.audioCallButton.node.classList.add('disabled');
+      }
       cardWord.forEach((card) => card.classList.remove('selection'));
     }
   };
