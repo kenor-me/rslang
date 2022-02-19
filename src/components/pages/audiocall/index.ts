@@ -95,6 +95,8 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
         const results = new Results(document.querySelector('.audiocall-next-button') as HTMLElement, answers.word);
         answers.showRightAnswer();
         results.getResult();
+        const audio = new Audio('./wrong.mp3');
+        audio.play();
       } else if (GAME_WORDS.wordsArr.length - 1 === countAnswer) {
         showResult();
       } else {
@@ -143,6 +145,8 @@ export const renderAudiocallPage = async (words: Word[]): Promise<Answers> => {
       const results = new Results(target, answers.word);
       answers.showRightAnswer();
       results.getResult();
+      const audio = new Audio('./wrong.mp3');
+      audio.play();
     } else if (GAME_WORDS.wordsArr.length - 1 === countAnswer) {
       showResult();
     } else {
