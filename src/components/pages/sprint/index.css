@@ -23,12 +23,25 @@ div.sprint__result-wrapper {
 }
 
 .sprint__inf-block.wrong-border {
-  animation: sprintBorder 0.5s forwards;
+  animation: sprintBorder 3s forwards;
+}
+
+.sprint__inf-block.right-border {
+  animation: sprintRightBorder 3s forwards;
 }
 
 @keyframes sprintBorder {
   0% {
     border-color: tomato;
+  }
+  100% {
+    border-color: #edfef0;
+  }
+}
+
+@keyframes sprintRightBorder {
+  0% {
+    border-color: #90c47a;
   }
   100% {
     border-color: #edfef0;
@@ -221,6 +234,18 @@ div.sprint__result-wrapper {
   width: 36px;
   height: 36px;
   fill: white;
+}
+
+.sprint__answer {
+  display: flex;
+  justify-content: center;
+}
+
+.sprint__answer-svg {
+  width: 48px;
+  height: 48px;
+  fill: transparent;
+  transition: 0.3s;
 }
 
 .sprint__fullscreen-open {
