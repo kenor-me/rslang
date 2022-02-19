@@ -37,6 +37,12 @@ const renderFullscreenClose = (): string => `
   </svg>
 `;
 
+const renderAnswerSVG = (): string => `
+<svg class="sprint__answer-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z">
+</path></svg>
+`;
+
 export const toggleFullScreen = (): void => {
   const fullscreen = document.querySelector('.fullscreen') as HTMLElement;
   const wrapper = document.querySelector('.sprint-wrapper') as HTMLElement
@@ -80,8 +86,12 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameG
     link = '#audiocall-description';
   }
 
-  const persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
-  const persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
+  let persentWrong = Math.floor((wrong.length * 100) / (wrong.length + right.length));
+  let persentRight = Math.floor((right.length * 100) / (wrong.length + right.length));
+  if (wrong.length === 0 && right.length === 0) {
+    persentWrong = 100;
+    persentRight = 0;
+  }
 
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
@@ -102,7 +112,7 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameG
           </ul>
         </div>
         <div class="sprint__result">
-          <p class="sprint__result-title">Изученные слова <span class="result-title-right">${right.length}</span></p>
+          <p class="sprint__result-title">Слова без ошибок <span class="result-title-right">${right.length}</span></p>
           <ui class="sprint__right-words">
             ${right.map((word: WordResult) => renderResultWord(word)).join('')}
           </ui>
@@ -155,12 +165,15 @@ export const renderSprintPage = (): void => {
         </div>
       </div>
       <div class="sprint-text-block">
-        <p class="sprint__title">environment</p>
-        <p class="sprint__subtitle">окружающая обстановка</p>
+        <p class="sprint__title"></p>
+        <p class="sprint__subtitle"></p>
       </div>
       <div class="sprint__btn-block">
       <div class="sprint__btn sprint__left">Неверно</div>
         <div class="sprint__btn sprint__right">Верно</div>
+      </div>
+      <div class="sprint__answer">
+        ${renderAnswerSVG()}
       </div>
     </div>
   </div>
@@ -207,15 +220,22 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   }, 60000);
 
   const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
+  const answerSVG = document.querySelector('.sprint__answer-svg') as HTMLElement;
 
   const addWrongWord = (): void => {
     wrongBorder.classList.add('wrong-border');
+    answerSVG.style.fill = 'tomato';
+    const audio = new Audio('./wrong.mp3');
+    audio.play();
     wrong.push({
       id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
     seriesRightAnswer += ' ';
-    setTimeout(() => wrongBorder.classList.remove('wrong-border'), 1000);
+    setTimeout(() => {
+      wrongBorder.classList.remove('wrong-border');
+      answerSVG.style.fill = 'transparent';
+    }, 400);
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       const nameGame = 'sprint';
@@ -227,11 +247,19 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   };
 
   const addRightWord = (): void => {
+    wrongBorder.classList.add('right-border');
+    answerSVG.style.fill = '#90c47a';
+    const audio = new Audio('./right.mp3');
+    audio.play();
     right.push({
       id: words[i].id, audio: words[i].audio, word: words[i].word, transcription: words[i].transcription, translate: words[i].wordTranslate,
     });
     i++;
     seriesRightAnswer += '1';
+    setTimeout(() => {
+      wrongBorder.classList.remove('right-border');
+      answerSVG.style.fill = 'transparent';
+    }, 400);
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       const nameGame = 'sprint';
