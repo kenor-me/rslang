@@ -53,7 +53,7 @@ function createTeamAboutUs(): string {
             <li>Страница "Описание игр"</li>
             <li>Страница "О команде"</li>
             <li>Разработка игры "Аудиовызов"</li>
-            <li>Разработка "Статистики"</li>
+            <li>Презентация приложения</li>
           </ol>
         </div>
       </div>
@@ -96,7 +96,7 @@ export function renderAdvantagesAboutUs(): string {
             <img class="about-img-advantages" src="./../../../assets/pictures/learn-5.jpg" alt="Picture">
             <h2 class="about-header-advantages">Изучай</h2>
             <p class="about-description-advantages">Открывай для себя новые слова
-            вместе со словарем с более чем 3600 слов!</p>
+            вместе со словарем! Более чем 3600 слов, разбитых на разделы по уровню твоей подготовки.</p>
           </div>
 
           <div class="about-advantages">
@@ -109,8 +109,8 @@ export function renderAdvantagesAboutUs(): string {
           <div class="about-advantages">
             <img class="about-img-advantages" src="./../../../assets/pictures/statistics.jpg" alt="Picture">
             <h2 class="about-header-advantages">Анализируй</h2>
-            <p class="about-description-advantages">Статистика поможет увидеть твой прогресс и совершенствовать свои
-            знания еще эффективнее! </p>
+            <p class="about-description-advantages">Отслеживай свой прогресс в индивидуальной статистике 
+            и совершенствуй свои знания еще эффективнее! </p>
           </div>
         </div>
       </div>
