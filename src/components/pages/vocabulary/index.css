@@ -17,6 +17,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  min-height: calc(100vh - 290px);
 }
 .book-word-image {
   height: 200px;
@@ -266,6 +267,9 @@
   .text-errors {
     height: calc(100vh - 270px);
     width: 60%;
+  }
+  .container__book-page {
+    min-height: calc(100vh - 270px);
   }
   .book-page-nav-logo {
     width: 60px;
