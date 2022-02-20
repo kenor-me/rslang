@@ -52,10 +52,6 @@
   letter-spacing: 1.5px;
   padding: 5px;
 }
-/* .statistic__header-day.active,
-.statistic__header-all.active {
-  border-bottom: 4px solid white;
-} */
 
 .statistic-table__body h3 {
   font-family: "Forum";
@@ -64,9 +60,6 @@
   font-weight: bold;
   color: #ffc86d;
   padding-bottom: 8px;
-}
-
-.statistic-games__wrapper {
 }
 
 .statistic-games__wrapper h3 {

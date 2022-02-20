@@ -80,7 +80,7 @@ const renderResultWord = (word: WordResult): string => `
   </li>
 `;
 
-export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameGame = 'sprint', longestSeries: number): void => {
+export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameGame = 'sprint', longestSeries: number, scoreValue?: number): void => {
   let link = '#sprint-description';
   if (window.location.hash === '#audiocall') {
     link = '#audiocall-description';
@@ -93,6 +93,13 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameG
     persentRight = 0;
   }
 
+  let phrase = 'Круто, отличный результат!';
+  if (persentRight < 40) {
+    phrase = 'Ты можешь лучше! Повтори слова и возвращайся!';
+  } else if (persentRight > 40 && persentRight < 70) {
+    phrase = 'Хороший результат! Но ты можешь лучше!';
+  }
+
   root.innerHTML = `
   <div class="sprint-wrapper sprint__result-wrapper">
     <div class="sprint__inf-block">
@@ -100,7 +107,8 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameG
         <a href="#games" class="sprint__link">${renderCloseSVG()}</a>
       </div>
       <div class="sprint-text-block sprint__result-inf-block">
-        <p class="sprint__title">РЕЗУЛЬТАТ</p>
+        <p class="sprint__phrase">${phrase}</p>
+        <p class="sprint__title">РЕЗУЛЬТАТ: ${scoreValue || ''}</span></p>
         <div class="sprint__result-diagram ">
                   ${getPercentCircle(persentRight, persentWrong)}
                   <span>${persentRight}%</span>
@@ -154,8 +162,21 @@ export const renderSprintPage = (): void => {
         <div class="fullscreen">
           ${renderFullscreenOpen()}
         </div>
+        <p class="sprint__score">0</p>
         <a href="#games">${renderCloseSVG()}</a>
       </div>
+      <div class="sprint__answer-block">
+        <div class="one">
+          ${renderAnswerSVG()}
+        </div>
+        <div class="two">
+          ${renderAnswerSVG()}
+        </div>
+        <div class="three">
+          ${renderAnswerSVG()}
+        </div>
+      </div>
+      <p class="sprint__answer-point">+<span class="sprint__point">10</span> очков за слово</p>
       <div class="sprint__timer">
         <div class="sprint__timer-line"></div>
         <div class="sprint__timer-body">
@@ -164,12 +185,13 @@ export const renderSprintPage = (): void => {
           </div>
         </div>
       </div>
+      
       <div class="sprint-text-block">
         <p class="sprint__title"></p>
         <p class="sprint__subtitle"></p>
       </div>
       <div class="sprint__btn-block">
-      <div class="sprint__btn sprint__left">Неверно</div>
+        <div class="sprint__btn sprint__left">Неверно</div>
         <div class="sprint__btn sprint__right">Верно</div>
       </div>
       <div class="sprint__answer">
@@ -210,19 +232,36 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   const right: WordResult[] = [];
   let seriesRightAnswer = '';
 
+  const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
+  const answerSVG = document.querySelector('.sprint__answer .sprint__answer-svg') as HTMLElement;
+  const point = document.querySelector('.sprint__point') as HTMLElement;
+  const oneSVG = document.querySelector('.one .sprint__answer-svg') as HTMLElement;
+  const twoSVG = document.querySelector('.two .sprint__answer-svg') as HTMLElement;
+  const threeSVG = document.querySelector('.three .sprint__answer-svg') as HTMLElement;
+  const score = document.querySelector('.sprint__score') as HTMLElement;
+  let count = 0;
+  let count2 = 0;
+  let pointValue = 10;
+  let scoreValue = 0;
+
   const resultTimeout = setTimeout(async (): Promise<void> => {
     const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
     /*  saveLongestSeries(longestSeries) */
     const nameGame = 'sprint';
-    renderResultForm(wrong, right, nameGame, longestSeries);
+    renderResultForm(wrong, right, nameGame, longestSeries, scoreValue);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     document.removeEventListener('keydown', kayAnswer);
   }, 60000);
 
-  const wrongBorder = document.querySelector('.sprint__inf-block') as HTMLElement;
-  const answerSVG = document.querySelector('.sprint__answer-svg') as HTMLElement;
-
   const addWrongWord = (): void => {
+    count = 0;
+    count2 = 0;
+    oneSVG.style.fill = 'transparent';
+    twoSVG.style.fill = 'transparent';
+    threeSVG.style.fill = 'transparent';
+    pointValue = 10;
+    point.innerHTML = `${pointValue}`;
+
     wrongBorder.classList.add('wrong-border');
     answerSVG.style.fill = 'tomato';
     const audio = new Audio('./wrong.mp3');
@@ -239,7 +278,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       const nameGame = 'sprint';
-      renderResultForm(wrong, right, nameGame, longestSeries);
+      renderResultForm(wrong, right, nameGame, longestSeries, scoreValue);
       clearTimeout(resultTimeout);
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       document.removeEventListener('keydown', kayAnswer);
@@ -247,6 +286,35 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
   };
 
   const addRightWord = (): void => {
+    count += 1;
+    count2 += 1;
+
+    if (count2 === 4) {
+      count2 = 1;
+    }
+
+    if (count2 === 1) {
+      oneSVG.style.fill = '#90c47a';
+      twoSVG.style.fill = 'transparent';
+      threeSVG.style.fill = 'transparent';
+    } else if (count2 === 2) {
+      twoSVG.style.fill = '#90c47a';
+    } else if (count2 === 3) {
+      threeSVG.style.fill = '#90c47a';
+    }
+
+    if (count === 4) {
+      pointValue = 20;
+    } else if (count === 7) {
+      pointValue = 40;
+    } else if (count === 10) {
+      pointValue = 80;
+    }
+
+    scoreValue += pointValue;
+    point.innerHTML = `${pointValue}`;
+    score.innerHTML = `${scoreValue}`;
+
     wrongBorder.classList.add('right-border');
     answerSVG.style.fill = '#90c47a';
     const audio = new Audio('./right.mp3');
@@ -263,7 +331,7 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
     if (i === words.length) {
       const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
       const nameGame = 'sprint';
-      renderResultForm(wrong, right, nameGame, longestSeries);
+      renderResultForm(wrong, right, nameGame, longestSeries, scoreValue);
       clearTimeout(resultTimeout);
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       document.removeEventListener('keydown', kayAnswer);
