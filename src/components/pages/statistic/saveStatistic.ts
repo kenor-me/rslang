@@ -4,7 +4,7 @@ import {
 } from '../../api';
 import { Statistic, WordResult } from '../../types';
 
-export const getToday = ():string => {
+export const getToday = (): string => {
   const dateTodayObj = new Date();
   const year = dateTodayObj.getFullYear();
   const month = dateTodayObj.getMonth() + 1 < 10 ? `0${dateTodayObj.getMonth() + 1}` : dateTodayObj.getMonth() + 1;
@@ -12,8 +12,8 @@ export const getToday = ():string => {
   return `${day}${month}${year}`;
 };
 
-export const saveCountGameToday = (nameGame:string, statistic: Statistic, countNewWordFromSprint = 0,
-  countNewWordFromAudioCall = 0, right:number, wrong:number, longestSeries:number):Statistic => {
+export const saveCountGameToday = (nameGame: string, statistic: Statistic, countNewWordFromSprint = 0,
+  countNewWordFromAudioCall = 0, right: number, wrong: number, longestSeries: number): Statistic => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     if (nameGame === 'sprint') {
@@ -22,14 +22,14 @@ export const saveCountGameToday = (nameGame:string, statistic: Statistic, countN
       statistic.optional.daysStatistic[today].countWrongAnswerSprint += wrong;
       statistic.optional.daysStatistic[today].countNewWordFromSprint += countNewWordFromSprint;
       statistic.optional.daysStatistic[today].seriesSprintToday = (statistic.optional.daysStatistic[today].seriesSprintToday
-         > longestSeries) ? statistic.optional.daysStatistic[today].seriesSprintToday : longestSeries;
+        > longestSeries) ? statistic.optional.daysStatistic[today].seriesSprintToday : longestSeries;
     } else {
       statistic.optional.daysStatistic[today].countAudioCall++;
       statistic.optional.daysStatistic[today].countRightAnswerAudioCall += right;
       statistic.optional.daysStatistic[today].countWrongAnswerAudioCall += wrong;
       statistic.optional.daysStatistic[today].countNewWordFromAudioCall += countNewWordFromAudioCall;
       statistic.optional.daysStatistic[today].seriesAudioCallToday = (statistic.optional.daysStatistic[today].seriesAudioCallToday
-         > longestSeries)
+        > longestSeries)
         ? statistic.optional.daysStatistic[today].seriesAudioCallToday : longestSeries;
     }
     statistic.optional.countSprintAll++;
@@ -67,13 +67,13 @@ export const saveCountGameToday = (nameGame:string, statistic: Statistic, countN
   return statistic;
 };
 
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame:string, longestSeries:number): Promise<void> => {
+export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame: string, longestSeries: number): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
   if (userAuth) {
     const userWords = await getWordsUser(userAuth.userId, userAuth.token);
-    const statistic = await getStatisticUser(userAuth.userId, userAuth.token);
+    let statistic = await getStatisticUser(userAuth.userId, userAuth.token);
     right.forEach(async (word) => {
       if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
         if (nameGame === 'sprint') {
@@ -109,13 +109,13 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
       }
     });
     if (nameGame === 'sprint') {
-      await saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
+      statistic = saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
         right.length, wrong.length, longestSeries);
       if (statistic.optional.seriesSprint < longestSeries) {
         statistic.optional.seriesSprint = longestSeries;
       }
     } else {
-      await saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
+      statistic = saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
       if (statistic.optional.seriesAudioCall < longestSeries) {
         statistic.optional.seriesAudioCall = longestSeries;
       }
@@ -123,6 +123,6 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
     delete statistic.id;
     setTimeout(async () => {
       await setStatisticUser(userAuth.userId, userAuth.token, statistic);
-    }, 1000);
+    }, 1500);
   }
 };
