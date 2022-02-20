@@ -16,7 +16,8 @@ export class PageSwitcher extends BaseComponent {
     if (pageNumber + 1 === 30) {
       this.nextButton.node.style.visibility = 'hidden';
     } else {
-      this.nextButton.node.style.visibility = 'visible';}
+      this.nextButton.node.style.visibility = 'visible';
+    }
     if (pageNumber + 1 === 1) {
       this.prevButton.node.style.visibility = 'hidden';
     } else {
