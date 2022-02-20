@@ -40,7 +40,7 @@ export class ControlWord extends BaseComponent {
 
   statisticUser: Statistic | undefined;
 
-  constructor(parentNode: HTMLElement, wordInfo: Word, hard:boolean, learn:boolean) {
+  constructor(parentNode: HTMLElement, wordInfo: Word, hard: boolean, learn: boolean) {
     super(parentNode, 'div', 'book-word-item');
     this.imageWord.node.src = `${this.BASE_URL}/${wordInfo.image}`;
     this.imageWord.node.alt = wordInfo.word;
@@ -92,7 +92,7 @@ export class ControlWord extends BaseComponent {
     });
   };
 
-  setButtonUser = async (wordInfo: Word, hard:boolean, learn:boolean): Promise<void> => {
+  setButtonUser = async (wordInfo: Word, hard: boolean, learn: boolean): Promise<void> => {
     this.statisticUser = await this.loadStatistic();
     const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
     const addLearnedWordButton = new BaseComponent(this.node, 'button', 'btn-learn', 'Знаю');
@@ -171,12 +171,12 @@ export class ControlWord extends BaseComponent {
     }
   };
 
-  loadStatistic = async () :Promise<Statistic> => {
+  loadStatistic = async (): Promise<Statistic> => {
     this.statisticUser = await getStatisticUser(this.user!.userId, this.user!.token);
     return this.statisticUser;
   };
 
-  updateStatistic = async (learnedWords:number):Promise<void> => {
+  updateStatistic = async (learnedWords: number): Promise<void> => {
     this.statisticUser!.learnedWords = learnedWords;
     const stats = {
       learnedWords: this.statisticUser!.learnedWords,
@@ -185,7 +185,7 @@ export class ControlWord extends BaseComponent {
     await setStatisticUser(this.user!.userId, this.user!.token, stats);
   };
 
-  updateCountLearnandHardWord = (countHard:number, countLearn:number):void => {
+  updateCountLearnandHardWord = (countHard: number, countLearn: number): void => {
     const sprintBtn = document.querySelector('.book-page-nav-sprint') as HTMLElement;
     const audioCallBtn = document.querySelector('.book-page-nav-audio') as HTMLElement;
     const cardWord = document.querySelectorAll('.book-word-item');
@@ -200,7 +200,7 @@ export class ControlWord extends BaseComponent {
     }
   };
 
-  async setInfoWord(wordInfo:Word):Promise<void> {
+  async setInfoWord(wordInfo: Word): Promise<void> {
     const correctAnswerWord = new BaseComponent(this.node, 'div', 'correct-answer', 'Правильных ответов: 0');
     const wrongAnswerWord = new BaseComponent(this.node, 'div', 'wrong-answer', 'Неправильных ответов: 0');
     if (this.statisticUser!.optional.words[wordInfo.id]) {

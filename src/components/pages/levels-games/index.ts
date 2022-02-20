@@ -1,5 +1,4 @@
 import './index.css';
-// import { getTimer } from '../timer';
 import { getSprintPlay, renderSprintPage } from '../sprint';
 import { Word } from '../../types';
 import { renderAudiocallWrapper, renderAudiocallPage, GAME_WORDS } from '../audiocall';
@@ -76,7 +75,6 @@ export const renderLevelsGamePage = (description: string, hash: string): string 
         await currentWords.getGameWords(part, currentWords.getRandomPageNum())]);
       const result: Word[] = (await randomThreePages).flat().sort(() => Math.random() - 0.5);
 
-      // root.innerHTML = `${getTimer()}`;
       const gameTimeout = setTimeout(() => {
         if (window.location.hash === '#sprint') {
           renderSprintPage();

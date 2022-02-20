@@ -23,7 +23,7 @@ const getNewToken = async (id: string): Promise<void> => {
       window.location.reload();
     }
     return response.json();
-  }).then((result) => {
+  }).then((result): void => {
     userAuth.token = result.token;
     userAuth.refreshToken = result.refreshToken;
     localStorage.setItem('userAuth', JSON.stringify(userAuth));
@@ -199,7 +199,7 @@ export const setWordHard = async (userId: string, token: string, word: Word): Pr
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
@@ -225,7 +225,7 @@ export const deleteUserWord = async (userId: string, token: string, wordId: stri
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
@@ -253,6 +253,20 @@ export const setWordLearned = async (userId: string, token: string, wordId: stri
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
+  }).catch(async (): Promise<void> => {
+    // !new token
+    await getNewToken(userId);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newWord),
+    });
   });
 };
 
@@ -268,7 +282,7 @@ export const setWordNew = async (userId: string, token: string, wordId: string):
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);

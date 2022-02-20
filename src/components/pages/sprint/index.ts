@@ -246,7 +246,6 @@ export const getSprintPlay = async (words: Word[]): Promise<void> => {
 
   const resultTimeout = setTimeout(async (): Promise<void> => {
     const longestSeries = seriesRightAnswer.replace(/\s+/g, ' ').trim().split(' ').sort((a, b): number => b.length - a.length)[0].length;
-    /*  saveLongestSeries(longestSeries) */
     const nameGame = 'sprint';
     renderResultForm(wrong, right, nameGame, longestSeries, scoreValue);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
