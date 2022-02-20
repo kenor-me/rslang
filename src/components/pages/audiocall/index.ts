@@ -92,6 +92,7 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
       if (target.innerHTML === 'Не знаю') {
         hasUserAnswer = true;
         document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
+        document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
         const results = new Results(document.querySelector('.audiocall-next-button') as HTMLElement, answers.word);
         answers.showRightAnswer();
         results.getResult();
@@ -109,9 +110,11 @@ function keyPress(e: KeyboardEvent, answers: Answers) {
     const answerNum = Number((e.code).split('').pop());
     if (answerNum >= 1 && answerNum <= 5) {
       if (hasUserAnswer) {
+        document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
         document.querySelector('.audiocall-answers')?.removeEventListener('keydown', () => keyPress);
       } else {
         const userAnswer = document.getElementById(`answer-${answerNum}`) as HTMLElement;
+        document.querySelector('.audiocall-answers')?.classList.add('audiocall-disabled');
         answers.compareWithRightAnswer(userAnswer);
         const results = new Results(userAnswer, answers.word);
         results.getResult();
