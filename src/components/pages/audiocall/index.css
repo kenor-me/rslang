@@ -74,12 +74,13 @@
 }
 
 .right-answer-picture {
+  box-sizing: border-box;
   display: block;
-  margin: 0 auto;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  border: 1px solid var(--font-color-dark);
+  border: 3px solid var(--font-color-dark);
+  object-fit: cover;
 }
 
 .right-answer-word {
@@ -159,6 +160,7 @@
 
   .audiocall-answers {
     flex-direction: column;
+    width: 60%;
     margin: 0 auto;
   }
 

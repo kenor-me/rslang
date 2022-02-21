@@ -309,7 +309,6 @@ h1 {
 
   .menu-item:hover {
     color: var(--font-color-green);
-    /* background-color: var(--bg-btn-hover); */
   }
 
   #menu-toggle {
@@ -331,7 +330,6 @@ h1 {
     transform: rotate(90deg);
   }
   #menu-toggle:checked ~ .menubox {
-    /* visibility: visible; */
     left: 0;
   }
 

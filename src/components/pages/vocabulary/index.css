@@ -1,5 +1,4 @@
 .book-page {
-  /* position: relative; */
   animation: bookPage 0.7s ease-in;
 }
 
@@ -26,16 +25,18 @@
 }
 .book-word-item {
   width: 400px;
-  height: 650px;
+  height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 10px;
   background-color: var(--bg-dark);
   border: 2px solid var(--bg-dark);
-  color: azure;
+  color: var(--font-color-light);
   margin: 20px;
+  padding: 0 10px 15px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .book-word-item.selection {
   background-color: #2a3950a4;
@@ -48,56 +49,66 @@
 .book-word-item.learn-word {
   outline: 7px solid #62ac43;
   outline-offset: 2px;
-  /* box-shadow: 7px -6px 33px #0b7c01ee; */
 }
 .word-img {
+  display: block;
   width: 380px;
   height: 200px;
+  object-fit: cover;
 }
 .card-content {
   text-align: center;
-  height: 250px;
+  height: 280px;
+  width: 100%;
+}
+.card-content i,
+.card__example-value b {
+  color: tomato;
 }
 .card__word {
   font-size: 30px;
+  margin: 0 15px 14px;
+  border-bottom: 2px solid var(--font-color-green);
 }
 .card__translate {
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 3px;
 }
 .card__btn-audio {
   background-image: url("./../../../assets/vocabulary/audio.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 60px;
-  height: 60px;
+  min-height: 60px;
   margin: 0 auto;
+  cursor: pointer;
 }
 .card__example,
 .card__meaning {
-  font-size: 12px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 .card__example-value,
 .card__meaning-value {
-  font-size: 14px;
+  font-size: 17px;
   margin-bottom: 5px;
 }
 .btn-add,
 .btn-learn {
   display: block;
   width: 170px;
-  height: 44px;
+  min-height: 40px;
   font-size: 1rem;
   font-weight: bold;
   color: var(--bg-dark);
-  background-color: #00e0c7;
-  border: 1.5px solid #ffffff;
+  background-color: var(--font-color-green);
+  border: 1.5px solid var(--bg-light);
   box-shadow: 3px 3px 10px rgb(0 224 199 / 25%);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.6s;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 15px;
   padding-top: 10px;
   display: flex;
   justify-content: center;
@@ -117,7 +128,7 @@
 .card__btn-adddifficult,
 .card__btn-deldifficult {
   width: 220px;
-  background: #00e0c7;
+  background: var(--font-color-green);
   border-radius: 5px;
   color: var(--bg-dark);
   font-size: 20px;
@@ -138,9 +149,12 @@
 }
 
 .card__card__meaning-translate,
-.card__example,
-.card__example-translate {
+.card__example {
   margin-top: 5px;
+}
+.card__meaning-translate,
+.card__example-translate {
+  color: #d4d4cf;
 }
 .navigation {
   background-color: #2a39507a;
@@ -171,7 +185,7 @@
   font-family: Forum;
   width: 160px;
   text-align: center;
-  color: azure;
+  color: var(--font-color-light);
 }
 .select-partition {
   width: 125px;
@@ -199,8 +213,8 @@
 }
 .book-page-nav-sprint.disabled,
 .book-page-nav-audio.disabled {
-  pointer-events: none; /* делаем элемент неактивным для взаимодействия */
-  cursor: default; /*  курсор в виде стрелки */
+  pointer-events: none;
+  cursor: default;
 }
 .book-page-nav-sprint.disabled div,
 .book-page-nav-audio.disabled div {
@@ -230,7 +244,7 @@
   font-size: 20px;
   font-family: Forum;
   top: 73px;
-  color: azure;
+  color: var(--font-color-light);
 }
 .book-page-nav-audio span {
   right: -27px;
@@ -261,6 +275,12 @@
   font-size: 32px;
   justify-content: center;
   text-align: center;
+}
+
+@media screen and (max-width: 940px) {
+  .card-content {
+    height: fit-content;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -332,23 +352,13 @@
   .text-errors {
     height: calc(100vh - 538px);
   }
-  .book-word-item {
-    width: 350px;
-  }
-  .word-img {
-    width: 320px;
-  }
 }
 @media screen and (max-width: 440px) {
   .text-errors {
     height: calc(100vh - 605px);
   }
-  .book-word-item {
-    width: 300px;
-  }
   .word-img {
-    width: 250px;
-    height: 200px;
+    width: 100%;
   }
   .book-word-item {
     width: 300px;

@@ -76,8 +76,9 @@ class Vocabulary extends BaseComponent {
     this.navigation.audioCallButton.node.addEventListener('click', async () => {
       await this.updatePage();
       this.wordsForGame = await this.getWordForGame();
-      if (this.wordsForGame.length > 20) GAME_WORDS.wordsArr = this.wordsForGame.splice(20, 40);
-      else GAME_WORDS.wordsArr = this.wordsForGame;
+      if (this.wordsForGame.length > 20) {
+        GAME_WORDS.wordsArr = this.wordsForGame.slice(this.wordsForGame.length - 20, this.wordsForGame.length);
+      } else GAME_WORDS.wordsArr = this.wordsForGame;
       this.gameTimeout = setTimeout(() => {
         renderAudiocallWrapper();
         renderAudiocallPage(GAME_WORDS.wordsArr);
