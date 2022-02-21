@@ -15,7 +15,7 @@ export const getPercentCircle = (start: number, end: number): string => `
 </svg>
 `;
 
-const getCountGameSprintToDay = async (statistic:Statistic):Promise<number> => {
+const getCountGameSprintToDay = async (statistic: Statistic): Promise<number> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countSprint);
@@ -23,7 +23,7 @@ const getCountGameSprintToDay = async (statistic:Statistic):Promise<number> => {
   return 0;
 };
 
-const getCountGameAudioCallToDay = async (statistic:Statistic):Promise<number> => {
+const getCountGameAudioCallToDay = async (statistic: Statistic): Promise<number> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countAudioCall);
@@ -31,7 +31,7 @@ const getCountGameAudioCallToDay = async (statistic:Statistic):Promise<number> =
   return 0;
 };
 
-const getCountNewWordFromSprintToDay = async (statistic:Statistic) => {
+const getCountNewWordFromSprintToDay = async (statistic: Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countNewWordFromSprint);
@@ -39,7 +39,7 @@ const getCountNewWordFromSprintToDay = async (statistic:Statistic) => {
   return 0;
 };
 
-const getCountNewWordFromAudioCallToDay = async (statistic:Statistic) => {
+const getCountNewWordFromAudioCallToDay = async (statistic: Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].countNewWordFromAudioCall);
@@ -47,7 +47,7 @@ const getCountNewWordFromAudioCallToDay = async (statistic:Statistic) => {
   return 0;
 };
 
-const getSeriesTodaySprint = async (statistic:Statistic) => {
+const getSeriesTodaySprint = async (statistic: Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].seriesSprintToday);
@@ -55,7 +55,7 @@ const getSeriesTodaySprint = async (statistic:Statistic) => {
   return 0;
 };
 
-const getSeriesTodayAudioCall = async (statistic:Statistic) => {
+const getSeriesTodayAudioCall = async (statistic: Statistic) => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     return Number(statistic.optional.daysStatistic[today].seriesAudioCallToday);
@@ -63,7 +63,7 @@ const getSeriesTodayAudioCall = async (statistic:Statistic) => {
   return 0;
 };
 
-const getDayStatistic = async (statistic:Statistic, percentRight:number): Promise<string> => {
+const getDayStatistic = async (statistic: Statistic, percentRight: number): Promise<string> => {
   const today = getToday();
   let longSeriesToday = 0;
   if (statistic.optional.daysStatistic[today]) {
@@ -75,8 +75,9 @@ const getDayStatistic = async (statistic:Statistic, percentRight:number): Promis
     }
   }
   return `
-  <h3 class="statistic__title">Статистика за день</h3>
+  
   <div class="statistic-all">
+    <h4 class="statistic__title">Статистика за день</h4>
     <div class="count-game-all">
       <div class="count-game-title">Количество сыгранных игр за день</div>
       <div class="count-game-all-value count">
@@ -119,8 +120,9 @@ const getAllStatistic = (statistic: Statistic) => {
   }
   const longAll = (statistic.optional.seriesSprint > statistic.optional.seriesAudioCall)
     ? statistic.optional.seriesSprint : statistic.optional.seriesAudioCall;
-  return `<h3 class="statistic__title">Статистика за весь период</h3>
+  return `
   <div class="statistic-all">
+    <h4 class="statistic__title">Статистика за весь период</h4>
     <div class="count-game-all">
       <div class="count-game-title">Количество сыгранных игр</div>
       <div class="count-game-all-value count">
@@ -182,14 +184,14 @@ export const renderStatisticPage = async (): Promise<void> => {
       persentWrongAudioCall = Math.floor((wrongAudioCall * 100) / (wrongAudioCall + rightAudioCall));
     }
     percentRightToday = Math.floor(((rightSprint + rightAudioCall) * 100)
-    / (wrongSprint + rightSprint + rightAudioCall + wrongAudioCall));
+      / (wrongSprint + rightSprint + rightAudioCall + wrongAudioCall));
   }
   root.innerHTML = `
     <div class="statistic-wrapper statistic-wrapper-auth">
       <div class="statistic-table">
         <div class="statistic-table__body">
           <div class="statistic-games__wrapper">
-            <h3>Статистика по играм</h3>
+            <h1>Статистика по играм</h1>
             <div class="statistic-games">
               <div class="statistic-sprint">
                 <h4>Спринт</h4>
@@ -251,7 +253,7 @@ export const renderStatisticPage = async (): Promise<void> => {
                 </div>
               </div>
             </div>
-            <div>
+            <div class="statistic-games">
               ${await getDayStatistic(statistic, percentRightToday)}
               ${getAllStatistic(statistic)}
             </div>

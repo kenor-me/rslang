@@ -47,9 +47,6 @@ const createNewUser = async (e: Event): Promise<void> => {
   };
 
   await addUser(user);
-  // setTimeout((): void => {
-  //   signIn({ email: newEmail.value, password: newPassword.value });
-  // }, 4000);
   if (JSON.parse(localStorage.getItem('userAdd') as string)) {
     await signIn({ email: newEmail.value, password: newPassword.value }, true);
   }

@@ -66,26 +66,17 @@
   text-align: center;
 }
 
-.statistic__title {
-  padding-top: 15px;
-}
-
 .statistic-all,
 .statistic-sprint,
 .statistic-audiocall {
   background-color: white;
   width: 40%;
-  border: 3px dashed #ffc86d;
+  border: 5px dashed #ffc86d;
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
     0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
   padding: 20px;
   font-family: "Forum";
 }
-
-.statistic-all {
-  margin: 0 auto;
-}
-
 .count {
   font-size: 22px;
   font-weight: bold;
@@ -98,19 +89,22 @@
   margin: 5px 0;
   font-family: "Forum";
 }
+
 .statistic-sprint h4,
-.statistic-audiocall h4 {
+.statistic-audiocall h4,
+.statistic-all h4 {
   margin-bottom: 10px;
   font-weight: bold;
   font-size: 32px;
-  font-family: "Forum";
   text-align: center;
   color: var(--font-color-dark);
 }
+
 .statistic-games {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
 .statistic-games__diagram {
@@ -160,7 +154,10 @@ canvas {
     margin: 0 auto;
   }
   .statistic-audiocall {
-    margin-top: 40px;
+    margin-top: 30px;
+  }
+  .statistic-all:first-of-type {
+    margin-bottom: 30px;
   }
   .statistic-games {
     display: block;
@@ -177,12 +174,8 @@ canvas {
   .statistic-table__body h3 {
     font-size: 32px;
   }
-  .statistic-sprint h4,
-  .statistic-audiocall h4 {
-    font-size: 24px;
-  }
   .statistic-table__body {
-    font-size: 14px;
+    font-size: 15px;
   }
   .statistic-all,
   .statistic-sprint,
@@ -198,10 +191,5 @@ canvas {
 @media (max-width: 440px) {
   .statistic-wrapper {
     min-height: calc(100vh - 425px);
-  }
-  .count-series-sprint-title,
-  .count-series-all-title,
-  .count-series-audiocall-title {
-    font-size: 12px;
   }
 }

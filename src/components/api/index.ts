@@ -23,7 +23,7 @@ const getNewToken = async (id: string): Promise<void> => {
       window.location.reload();
     }
     return response.json();
-  }).then((result) => {
+  }).then((result): void => {
     userAuth.token = result.token;
     userAuth.refreshToken = result.refreshToken;
     localStorage.setItem('userAuth', JSON.stringify(userAuth));
@@ -49,10 +49,6 @@ export const getWordsUser = async (id: string, token: string): Promise<ContentWo
       },
     });
 
-    // await getNewToken(id);
-    // const newUserAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    // const tokenNew = newUserAuth.token;
-    // console.log('2)', tokenNew);
     return await response.json();
   } catch {
     // !new token
@@ -104,9 +100,6 @@ export const addUser = async (user: User): Promise<void> => {
       <p class="popup-auth-text">Регистрация прошла успешно</p>
     `;
     localStorage.setItem('userAdd', JSON.stringify(res));
-    // setTimeout((): void => {
-    //   popup.classList.remove('open');
-    // }, 3000);
   }).catch((): void => {
     err.classList.add('visible');
   });
@@ -168,17 +161,6 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     });
     return response.json();
   }
-  // {
-  //   const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(statistic),
-  //   });
-  //   return response.json();
 };
 
 export const signIn = async (user: Sign, first = false): Promise<void> => {
@@ -193,8 +175,6 @@ export const signIn = async (user: Sign, first = false): Promise<void> => {
   });
 
   await response.json().then(async (res: Token): Promise<void> => {
-    // const popup = document.getElementById('popup') as HTMLElement;
-    // popup.classList.remove('open');
     localStorage.setItem('userAuth', JSON.stringify(res));
     if (first) {
       setStatisticUser(res.userId, res.token);
@@ -219,7 +199,7 @@ export const setWordHard = async (userId: string, token: string, word: Word): Pr
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
@@ -245,7 +225,7 @@ export const deleteUserWord = async (userId: string, token: string, wordId: stri
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
@@ -273,6 +253,20 @@ export const setWordLearned = async (userId: string, token: string, wordId: stri
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
+  }).catch(async (): Promise<void> => {
+    // !new token
+    await getNewToken(userId);
+    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuth.token;
+
+    await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${tokenNew}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newWord),
+    });
   });
 };
 
@@ -288,7 +282,7 @@ export const setWordNew = async (userId: string, token: string, wordId: string):
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newWord),
-  }).catch(async () => {
+  }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
     const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);

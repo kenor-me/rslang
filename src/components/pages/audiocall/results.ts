@@ -1,8 +1,5 @@
 import { Word, UserAnswers } from '../../types';
 
-// export const audiocallRight: WordResult[] = [];
-// export const audiocallWrong: WordResult[] = [];
-
 export const RightWrongArrays: UserAnswers = {
   audiocallRight: [],
   audiocallWrong: [],
