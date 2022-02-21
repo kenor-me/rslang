@@ -71,6 +71,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
+  const newWord:string[] = [];
   if (userAuth) {
     const userWords = await getWordsUser(userAuth.userId, userAuth.token);
     let statistic = await getStatisticUser(userAuth.userId, userAuth.token);
@@ -81,7 +82,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         } else {
           counterNewWordAudioCall++;
         }
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
+        newWord.push(word.id);
       }
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].correct++;
@@ -99,7 +100,7 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         if (nameGame === 'sprint') {
           counterNewWordSprint++;
         } else { counterNewWordAudioCall++; }
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
+        newWord.push(word.id);
       }
       if (statistic.optional.words[word.id]) {
         statistic.optional.words[word.id].wrong++;
@@ -120,9 +121,8 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         statistic.optional.seriesAudioCall = longestSeries;
       }
     }
+    await Promise.all(newWord.map((wordId) => setWordNew(userAuth.userId, userAuth.token, wordId)));
     delete statistic.id;
-    setTimeout(async () => {
-      await setStatisticUser(userAuth.userId, userAuth.token, statistic);
-    }, 1500);
+    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
   }
 };
