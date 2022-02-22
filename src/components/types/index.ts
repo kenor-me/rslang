@@ -60,8 +60,7 @@ export interface Statistic {
   id?: string,
   learnedWords: number,
   optional: {
-    countAudioCallAll: number,
-    countSprintAll: number,
+    countGamesAll: number,
     rightAnswerAll: number,
     seriesAudioCall: number,
     seriesSprint: number,

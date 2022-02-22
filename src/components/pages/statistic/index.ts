@@ -126,7 +126,7 @@ const getAllStatistic = (statistic: Statistic) => {
     <div class="count-game-all">
       <div class="count-game-title">Количество сыгранных игр</div>
       <div class="count-game-all-value count">
-      ${statistic.optional.countSprintAll + statistic.optional.countAudioCallAll}
+      ${statistic.optional.countGamesAll}
       </div>
     </div>
     <div class="count-words-learn-all">

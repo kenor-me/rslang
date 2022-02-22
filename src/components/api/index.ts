@@ -111,8 +111,7 @@ export const addUser = async (user: User): Promise<void> => {
 export const setStatisticUser = async (id: string, token: string, statistic = {
   learnedWords: 0,
   optional: {
-    countSprintAll: 0,
-    countAudioCallAll: 0,
+    countGamesAll: 0,
     rightAnswerAll: 0,
     wrongAnswerAll: 0,
     seriesSprint: 0,
@@ -332,29 +331,14 @@ export const getStatisticUser = async (id: string): Promise<Statistic> => {
   const { token } = userAuth;
 
   const url = `${BASE_URL}/users/${id}/statistics`;
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    return await response.json();
-  } catch {
-    // !new token
-    await getNewToken(id);
-    const userAuthNew = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuthNew.token;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${tokenNew}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    return await response.json();
-  }
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.json();
 };

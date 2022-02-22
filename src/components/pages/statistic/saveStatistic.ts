@@ -32,7 +32,7 @@ export const saveCountGameToday = async (nameGame: string, statistic: Statistic,
         > longestSeries)
         ? statistic.optional.daysStatistic[today].seriesAudioCallToday : longestSeries;
     }
-    statistic.optional.countSprintAll++;
+    statistic.optional.countGamesAll++;
   } else if (!statistic.optional.daysStatistic[today] && nameGame === 'sprint') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 1,
@@ -46,7 +46,7 @@ export const saveCountGameToday = async (nameGame: string, statistic: Statistic,
       seriesSprintToday: longestSeries,
       seriesAudioCallToday: 0,
     };
-    statistic.optional.countSprintAll++;
+    statistic.optional.countGamesAll++;
   } else if (!statistic.optional.daysStatistic[today] && nameGame === 'audioCall') {
     statistic.optional.daysStatistic[today] = {
       countSprint: 0,
@@ -60,7 +60,7 @@ export const saveCountGameToday = async (nameGame: string, statistic: Statistic,
       seriesSprintToday: 0,
       seriesAudioCallToday: longestSeries,
     };
-    statistic.optional.countAudioCallAll++;
+    statistic.optional.countGamesAll++;
   }
   statistic.optional.rightAnswerAll += right;
   statistic.optional.wrongAnswerAll += wrong;
@@ -68,31 +68,24 @@ export const saveCountGameToday = async (nameGame: string, statistic: Statistic,
 };
 
 export const saveStatistic = async (right: WordResult[], wrong: WordResult[], nameGame: string, longestSeries: number): Promise<void> => {
-  // console.log(right);
-  // console.log(wrong);
-  // console.log(nameGame);
-  // console.log(longestSeries);
-
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
   // if (userAuth) {
   const userWords = await getWordsUser(userAuth.userId);
-  console.log(userWords);
+  // console.log(userWords);
 
   const statistic = await getStatisticUser(userAuth.userId);
-  console.log(statistic);
+  // console.log(statistic);
 
   right.forEach(async (word) => {
     let incl = false;
     for (let i = 0; i < userWords.length; i++) {
       if (userWords[i].wordId === word.id) {
         incl = true;
-        // console.log(userWords[i]);
         break;
       }
     }
-    // console.log(incl);
 
     if (incl === false) {
       if (nameGame === 'sprint') {
@@ -119,11 +112,9 @@ export const saveStatistic = async (right: WordResult[], wrong: WordResult[], na
     for (let i = 0; i < userWords.length; i++) {
       if (userWords[i].wordId === word.id) {
         incl = true;
-        // console.log(userWords[i]);
         break;
       }
     }
-    // console.log(incl);
 
     if (incl === false) {
       if (nameGame === 'sprint') {
@@ -132,8 +123,6 @@ export const saveStatistic = async (right: WordResult[], wrong: WordResult[], na
       await setWordNew(userAuth.userId, word.id);
     }
     if (statistic.optional.words[word.id]) {
-      // console.log('+++++');
-
       statistic.optional.words[word.id].wrong++;
       statistic.optional.words[word.id].correct = 0;
     } else {
