@@ -189,14 +189,17 @@ export class ControlWord extends BaseComponent {
     const sprintBtn = document.querySelector('.book-page-nav-sprint') as HTMLElement;
     const audioCallBtn = document.querySelector('.book-page-nav-audio') as HTMLElement;
     const cardWord = document.querySelectorAll('.book-word-item');
+    const pageText = document.querySelector('.book-page-number-page') as HTMLElement;
     if (countHard + countLearn >= 20) {
       sprintBtn.classList.add('disabled');
       audioCallBtn.classList.add('disabled');
       cardWord.forEach((card) => card.classList.add('selection'));
+      pageText.classList.add('selection');
     } else {
       sprintBtn.classList.remove('disabled');
       audioCallBtn.classList.remove('disabled');
       cardWord.forEach((card) => card.classList.remove('selection'));
+      pageText.classList.remove('selection');
     }
   };
 

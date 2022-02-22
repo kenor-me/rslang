@@ -131,10 +131,12 @@ class Vocabulary extends BaseComponent {
     if (hardtoPage + learntoPage >= this.currentPage.length) {
       this.navigation.sprintButton.node.classList.add('disabled');
       this.navigation.audioCallButton.node.classList.add('disabled');
+      this.navigation.pageSwitcher.title.node.classList.add('selection');
       cardWord.forEach((card) => card.classList.add('selection'));
     } else {
       this.navigation.sprintButton.node.classList.remove('disabled');
       this.navigation.audioCallButton.node.classList.remove('disabled');
+      this.navigation.pageSwitcher.title.node.classList.remove('selection');
       cardWord.forEach((card) => card.classList.remove('selection'));
     }
     if (this.settings.part === this.MAX_COUNT_PART) {
