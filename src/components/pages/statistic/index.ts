@@ -1,5 +1,5 @@
 import { Statistic } from '../../types/index';
-import { getStatisticUser } from '../../api/index';
+import { getStatisticUser, getWordsUser } from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';
 import { langStatistic } from './schedule';
@@ -75,7 +75,7 @@ const getDayStatistic = async (statistic: Statistic, percentRight: number): Prom
     }
   }
   return `
-  
+
   <div class="statistic-all">
     <h4 class="statistic__title">Статистика за день</h4>
     <div class="count-game-all">

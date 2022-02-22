@@ -1,6 +1,6 @@
 import {
   updateWordUser,
-  getStatisticUser, getWordsUser, setStatisticUser, setWordHard, setWordLearned,
+  getStatisticUser, getWordsUser, setStatisticUser, getWordByIdUserInfo, setWordNew,
 } from '../../api/index';
 import { Statistic, Token, Word } from '../../types/index';
 import BaseComponent from './BaseComponent';
@@ -94,31 +94,45 @@ export class ControlWord extends BaseComponent {
 
   setButtonUser = async (wordInfo: Word, hard: boolean, learn: boolean): Promise<void> => {
     this.statisticUser = await this.loadStatistic();
-    const addWordButton = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
+    const addWordButtontoHard = new BaseComponent(this.node, 'button', 'btn-add', 'Добавить слово');
     const addLearnedWordButton = new BaseComponent(this.node, 'button', 'btn-learn', 'Знаю');
     this.setInfoWord(wordInfo);
-    addWordButton.node.addEventListener('click', async () => {
+    addWordButtontoHard.node.addEventListener('click', async () => {
       const userWords = await getWordsUser(this.user!.userId, this.user!.token);
-      if (!this.node.classList.contains('hard-word')) {
-        if (this.node.classList.contains('learn-word')) {
+      if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
+        const newWord = await getWordByIdUserInfo(this.user!.userId, this.user!.token, wordInfo.id);
+        if (!this.node.classList.contains('hard-word')) {
+          newWord.difficulty = 'hard';
+          addWordButtontoHard.node.textContent = 'Удалить слово';
           this.node.classList.remove('learn-word');
-        } else if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
-          const params = 'hard';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+          addLearnedWordButton.node.textContent = 'Знаю';
+          this.node.classList.add('hard-word');
+          const wordObject = {
+            difficulty: newWord.difficulty,
+            optional: newWord.optional,
+          };
+          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, wordObject);
         } else {
-          await setWordHard(this.user!.userId, this.user!.token, wordInfo);
+          newWord.difficulty = 'new';
+          this.node.classList.remove('hard-word');
+          addWordButtontoHard.node.textContent = 'Добавить слово';
+          const wordObject = {
+            difficulty: 'new',
+            optional: newWord.optional,
+          };
+          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, wordObject);
         }
-        addWordButton.node.textContent = 'Удалить слово';
-        this.node.classList.remove('learn-word');
-        addLearnedWordButton.node.textContent = 'Знаю';
-        this.node.classList.add('hard-word');
-        const params = 'hard';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
       } else {
-        addWordButton.node.textContent = 'Добавить слово';
-        this.node.classList.remove('hard-word');
-        const params = 'new';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+        this.node.classList.add('hard-word');
+        addWordButtontoHard.node.textContent = 'Удалить слово';
+        const newWord = {
+          difficulty: 'new',
+          optional: {
+            correct: 0,
+            wrong: 0,
+          },
+        };
+        await setWordNew(this.user!.userId, this.user!.token, wordInfo.id, newWord);
       }
       const settings = (JSON.parse(localStorage.getItem('settings') as string));
       if (settings && settings.part === 6) {
@@ -129,38 +143,46 @@ export class ControlWord extends BaseComponent {
       this.updateCountLearnandHardWord(hardtoPage, learntoPage);
     });
     if (hard) {
-      addWordButton.node.textContent = 'Удалить слово';
+      addWordButtontoHard.node.textContent = 'Удалить слово';
     }
-
     addLearnedWordButton.node.addEventListener('click', async () => {
       const userWords = await getWordsUser(this.user!.userId, this.user!.token);
-      if (!this.node.classList.contains('learn-word')) {
-        if (this.node.classList.contains('hard-word')) {
-          addWordButton.node.textContent = 'Добавить слово';
+      if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
+        const newWord = await getWordByIdUserInfo(this.user!.userId, this.user!.token, wordInfo.id);
+        if (!this.node.classList.contains('learn-word')) {
           this.node.classList.remove('hard-word');
-          const params = 'new';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
-          const settings = (JSON.parse(localStorage.getItem('settings') as string));
-          if (settings && settings.part === 6) {
-            window.location.reload();
-          }
-        }
-        addLearnedWordButton.node.textContent = 'Не знаю';
-        this.node.classList.add('learn-word');
-        if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
-          const params = 'learned';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+          addWordButtontoHard.node.textContent = 'Добавить слово';
+          this.node.classList.add('learn-word');
+          addLearnedWordButton.node.textContent = 'Не знаю';
+          newWord.difficulty = 'learned';
         } else {
-          await setWordLearned(this.user!.userId, this.user!.token, wordInfo.id);
+          this.node.classList.remove('learn-word');
+          addLearnedWordButton.node.textContent = 'Знаю';
+          newWord.difficulty = 'new';
+        }
+        const wordObject = {
+          difficulty: newWord.difficulty,
+          optional: newWord.optional,
+        };
+        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, wordObject);
+        const settings = (JSON.parse(localStorage.getItem('settings') as string));
+        if (settings && settings.part === 6) {
+          window.location.reload();
         }
       } else {
-        addLearnedWordButton.node.textContent = 'Знаю';
-        this.node.classList.remove('learn-word');
-        const params = 'new';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+        this.node.classList.add('learn-word');
+        addLearnedWordButton.node.textContent = 'Не знаю';
+        const newWord = {
+          difficulty: 'learned',
+          optional: {
+            correct: 0,
+            wrong: 0,
+          },
+        };
+        await setWordNew(this.user!.userId, this.user!.token, wordInfo.id, newWord);
       }
       const allUserWord = await getWordsUser(this.user!.userId, this.user!.token);
-      const learnedWords = allUserWord.filter((item) => item.difficulty === ('learned').toString());
+      const learnedWords = allUserWord.filter((item) => item.difficulty === 'learned');
       this.updateStatistic(learnedWords.length);
       const hardtoPage = document.querySelectorAll('.hard-word').length;
       const learntoPage = document.querySelectorAll('.learn-word').length;
@@ -204,16 +226,17 @@ export class ControlWord extends BaseComponent {
   };
 
   async setInfoWord(wordInfo: Word): Promise<void> {
-    const correctAnswerWord = new BaseComponent(this.node, 'div', 'correct-answer', 'Правильных ответов: 0');
-    const wrongAnswerWord = new BaseComponent(this.node, 'div', 'wrong-answer', 'Неправильных ответов: 0');
-    if (this.statisticUser!.optional.words[wordInfo.id]) {
-      correctAnswerWord.node.textContent = `Правильных ответов:
-      ${this.statisticUser!.optional.words[wordInfo.id].correct}`;
-      wrongAnswerWord.node.textContent = `Неправильных ответов:
-      ${this.statisticUser!.optional.words[wordInfo.id].wrong}`;
-    } else {
-      correctAnswerWord.node.textContent = 'Правильных ответов: 0';
-      wrongAnswerWord.node.textContent = 'Неправильных ответов: 0';
+    const userWords = await getWordsUser(this.user!.userId, this.user!.token);
+    let correctAnswer = 0;
+    let wrongAnswer = 0;
+    if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
+      const wordFromUser = await getWordByIdUserInfo(this.user!.userId, this.user!.token, wordInfo.id);
+      correctAnswer = wordFromUser.optional.correct;
+      wrongAnswer = wordFromUser.optional.wrong;
     }
+    const correctWord = '';
+    const correctAnswerWord = new BaseComponent(this.node,
+      'div', 'correct-answer', `Правильных ответов: ${correctAnswer}`);
+    const wrongAnswerWord = new BaseComponent(this.node, 'div', 'wrong-answer', `Неправильных ответов: ${wrongAnswer}`);
   }
 }
