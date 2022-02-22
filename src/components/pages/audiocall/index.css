@@ -97,6 +97,7 @@
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+  background-color: #dffcf5;
 }
 
 .audiocall-next-button {

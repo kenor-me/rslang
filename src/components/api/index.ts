@@ -143,6 +143,7 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(statistic),
+    // eslint-disable-next-line no-console
   }).catch((err) => console.log(err));
 };
 
