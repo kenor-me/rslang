@@ -135,34 +135,15 @@ export const setStatisticUser = async (id: string, token: string, statistic = {
     },
   },
 }): Promise<void> => {
-  try {
-    const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(statistic),
-    });
-    return await response.json();
-  } catch {
-    // !new token
-    await getNewToken(id);
-    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuth.token;
-
-    const response = await fetch(`${BASE_URL}/users/${id}/statistics`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${tokenNew}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(statistic),
-    });
-    return response.json();
-  }
+  await fetch(`${BASE_URL}/users/${id}/statistics`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(statistic),
+  }).catch((err) => console.log(err));
 };
 
 export const signIn = async (user: Sign, first = false): Promise<void> => {

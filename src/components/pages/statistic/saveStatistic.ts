@@ -142,10 +142,6 @@ export const saveStatistic = async (right: WordResult[], wrong: WordResult[], na
     }
   }
   delete statistic.id;
-  console.log('new statistic', statistic);
 
-  setTimeout(async () => {
-    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
-  }, 1000);
-  // }
+  await setStatisticUser(userAuth.userId, userAuth.token, statistic);
 };

@@ -155,8 +155,6 @@ const root = document.getElementById('root') as HTMLElement;
 const user = JSON.parse(localStorage.getItem('userAuth') as string);
 export const renderStatisticPage = async (): Promise<void> => {
   const statistic = await getStatisticUser(user.userId);
-  console.log('statistic from page', statistic);
-
   /* await setStatisticUser(user.userId, user.token)
   const userWord = await getWordsUser(user.userId, user.token)
   userWord.forEach(async (item)=> {
