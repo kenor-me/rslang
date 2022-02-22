@@ -1,5 +1,5 @@
 import {
-  User, Sign, Token, Word, ContentWord, Statistic,
+  User, Sign, Token, Word, ContentWord, Statistic, WordToUpdate,
 } from '../types';
 
 const BASE_URL = 'https://app-english-learn.herokuapp.com';
@@ -72,7 +72,7 @@ export const getWordById = async (wordId: string): Promise<Word> => {
   return response.json();
 };
 // get word by ID by User
-/* export const getWordByIdUserInfo = async (userId:string, token:string, wordId:string):Promise<ContentWord> => {
+export const getWordByIdUserInfo = async (userId:string, token:string, wordId:string):Promise<ContentWord> => {
   const url = `${BASE_URL}/users/${userId}/words/${wordId}`;
   const response = await fetch(url, {
     method: 'GET',
@@ -82,7 +82,7 @@ export const getWordById = async (wordId: string): Promise<Word> => {
     },
   });
   return response.json();
-}; */
+};
 
 export const addUser = async (user: User): Promise<void> => {
   const err = document.getElementById('registration-error') as HTMLElement;
@@ -186,36 +186,6 @@ export const signIn = async (user: Sign, first = false): Promise<void> => {
   });
 };
 
-// add word to hard
-export const setWordHard = async (userId: string, token: string, word: Word): Promise<void> => {
-  const newWord = {
-    difficulty: 'hard',
-    optional: {},
-  };
-  await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newWord),
-  }).catch(async (): Promise<void> => {
-    // !new token
-    await getNewToken(userId);
-    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuth.token;
-
-    await fetch(`${BASE_URL}/users/${userId}/words/${word.id}`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${tokenNew}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newWord),
-    });
-  });
-};
-
 // update word
 export const deleteUserWord = async (userId: string, token: string, wordId: string): Promise<void> => {
   const url = `${BASE_URL}/users/${userId}/words/${wordId}`;
@@ -241,18 +211,14 @@ export const deleteUserWord = async (userId: string, token: string, wordId: stri
   });
 };
 
-export const setWordLearned = async (userId: string, token: string, wordId: string): Promise<void> => {
-  const newWord = {
-    difficulty: 'learned',
-    optional: {},
-  };
+export const setWordNew = async (userId: string, token: string, wordId:string, wordObject:any): Promise<void> => {
   await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newWord),
+    body: JSON.stringify(wordObject),
   }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
@@ -265,36 +231,7 @@ export const setWordLearned = async (userId: string, token: string, wordId: stri
         Authorization: `Bearer ${tokenNew}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newWord),
-    });
-  });
-};
-
-export const setWordNew = async (userId: string, token: string, wordId: string): Promise<void> => {
-  const newWord = {
-    difficulty: 'new',
-    optional: {},
-  };
-  await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newWord),
-  }).catch(async (): Promise<void> => {
-    // !new token
-    await getNewToken(userId);
-    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuth.token;
-
-    await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${tokenNew}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newWord),
+      body: JSON.stringify(wordObject),
     });
   });
 };
@@ -303,12 +240,8 @@ export const updateWordUser = async (
   userId: string,
   token: string,
   wordId: string,
-  wordParams: string,
+  newWord: WordToUpdate,
 ): Promise<void> => {
-  const newWord = {
-    difficulty: wordParams,
-    optional: {},
-  };
   await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
     method: 'PUT',
     headers: {

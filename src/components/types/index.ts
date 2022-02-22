@@ -35,11 +35,12 @@ export type Token = {
 };
 
 export type ContentWord = {
-  difficulty: 'string',
+  difficulty: string,
   id: string,
   wordId: string,
   optional: {
-    correctAnswer: number
+    correct: number,
+    wrong: number,
   }
 };
 
@@ -110,4 +111,12 @@ export type UserAnswers = {
   audiocallRight: WordResult[];
   audiocallWrong: WordResult[];
   seriesRightAnswer: string;
+};
+
+export type WordToUpdate = {
+  difficulty: string,
+  optional: {
+    correct: number,
+    wrong: number,
+  }
 };
