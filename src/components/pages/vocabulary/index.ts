@@ -102,7 +102,7 @@ class Vocabulary extends BaseComponent {
 
   updatePage = async (): Promise<void> => {
     if (this.user) {
-      this.allUserWords = await getWordsUser(this.user.userId, this.user.token);
+      this.allUserWords = await getWordsUser(this.user.userId);
       this.hardWords = this.allUserWords.filter((hardword) => hardword.difficulty === ('hard').toString());
       this.learnWords = this.allUserWords.filter((hardword) => hardword.difficulty === ('learned').toString());
       if (this.settings.part === this.MAX_COUNT_PART) {

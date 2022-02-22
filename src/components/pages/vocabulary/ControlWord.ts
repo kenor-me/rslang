@@ -98,13 +98,13 @@ export class ControlWord extends BaseComponent {
     const addLearnedWordButton = new BaseComponent(this.node, 'button', 'btn-learn', 'Знаю');
     this.setInfoWord(wordInfo);
     addWordButton.node.addEventListener('click', async () => {
-      const userWords = await getWordsUser(this.user!.userId, this.user!.token);
+      const userWords = await getWordsUser(this.user!.userId);
       if (!this.node.classList.contains('hard-word')) {
         if (this.node.classList.contains('learn-word')) {
           this.node.classList.remove('learn-word');
         } else if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
           const params = 'hard';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+          await updateWordUser(this.user!.userId, wordInfo.id, params);
         } else {
           await setWordHard(this.user!.userId, this.user!.token, wordInfo);
         }
@@ -113,12 +113,12 @@ export class ControlWord extends BaseComponent {
         addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.add('hard-word');
         const params = 'hard';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+        await updateWordUser(this.user!.userId, wordInfo.id, params);
       } else {
         addWordButton.node.textContent = 'Добавить слово';
         this.node.classList.remove('hard-word');
         const params = 'new';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+        await updateWordUser(this.user!.userId, wordInfo.id, params);
       }
       const settings = (JSON.parse(localStorage.getItem('settings') as string));
       if (settings && settings.part === 6) {
@@ -133,13 +133,13 @@ export class ControlWord extends BaseComponent {
     }
 
     addLearnedWordButton.node.addEventListener('click', async () => {
-      const userWords = await getWordsUser(this.user!.userId, this.user!.token);
+      const userWords = await getWordsUser(this.user!.userId);
       if (!this.node.classList.contains('learn-word')) {
         if (this.node.classList.contains('hard-word')) {
           addWordButton.node.textContent = 'Добавить слово';
           this.node.classList.remove('hard-word');
           const params = 'new';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+          await updateWordUser(this.user!.userId, wordInfo.id, params);
           const settings = (JSON.parse(localStorage.getItem('settings') as string));
           if (settings && settings.part === 6) {
             window.location.reload();
@@ -149,7 +149,7 @@ export class ControlWord extends BaseComponent {
         this.node.classList.add('learn-word');
         if (userWords.filter((wordItem) => wordItem.wordId === wordInfo.id).length > 0) {
           const params = 'learned';
-          await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+          await updateWordUser(this.user!.userId, wordInfo.id, params);
         } else {
           await setWordLearned(this.user!.userId, this.user!.token, wordInfo.id);
         }
@@ -157,9 +157,9 @@ export class ControlWord extends BaseComponent {
         addLearnedWordButton.node.textContent = 'Знаю';
         this.node.classList.remove('learn-word');
         const params = 'new';
-        await updateWordUser(this.user!.userId, this.user!.token, wordInfo.id, params);
+        await updateWordUser(this.user!.userId, wordInfo.id, params);
       }
-      const allUserWord = await getWordsUser(this.user!.userId, this.user!.token);
+      const allUserWord = await getWordsUser(this.user!.userId);
       const learnedWords = allUserWord.filter((item) => item.difficulty === ('learned').toString());
       this.updateStatistic(learnedWords.length);
       const hardtoPage = document.querySelectorAll('.hard-word').length;
@@ -172,7 +172,7 @@ export class ControlWord extends BaseComponent {
   };
 
   loadStatistic = async (): Promise<Statistic> => {
-    this.statisticUser = await getStatisticUser(this.user!.userId, this.user!.token);
+    this.statisticUser = await getStatisticUser(this.user!.userId);
     return this.statisticUser;
   };
 

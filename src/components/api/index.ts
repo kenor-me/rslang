@@ -38,7 +38,10 @@ export const getWordPage = async (part = 0, pageNumber = 0): Promise<Word[]> => 
 };
 
 // all users word
-export const getWordsUser = async (id: string, token: string): Promise<ContentWord[]> => {
+export const getWordsUser = async (id: string): Promise<ContentWord[]> => {
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  const { token } = userAuth;
+
   const url = `${BASE_URL}/users/${id}/words`;
   try {
     const response = await fetch(url, {
@@ -270,11 +273,14 @@ export const setWordLearned = async (userId: string, token: string, wordId: stri
   });
 };
 
-export const setWordNew = async (userId: string, token: string, wordId: string): Promise<void> => {
+export const setWordNew = async (userId: string, wordId: string): Promise<void> => {
   const newWord = {
     difficulty: 'new',
     optional: {},
   };
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  const { token } = userAuth;
+
   await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
@@ -285,8 +291,8 @@ export const setWordNew = async (userId: string, token: string, wordId: string):
   }).catch(async (): Promise<void> => {
     // !new token
     await getNewToken(userId);
-    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuth.token;
+    const userAuthNew = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuthNew.token;
 
     await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
       method: 'POST',
@@ -301,7 +307,6 @@ export const setWordNew = async (userId: string, token: string, wordId: string):
 
 export const updateWordUser = async (
   userId: string,
-  token: string,
   wordId: string,
   wordParams: string,
 ): Promise<void> => {
@@ -309,6 +314,8 @@ export const updateWordUser = async (
     difficulty: wordParams,
     optional: {},
   };
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  const { token } = userAuth;
   await fetch(`${BASE_URL}/users/${userId}/words/${wordId}`, {
     method: 'PUT',
     headers: {
@@ -320,7 +327,10 @@ export const updateWordUser = async (
 };
 
 // get statistic
-export const getStatisticUser = async (id: string, token: string): Promise<Statistic> => {
+export const getStatisticUser = async (id: string): Promise<Statistic> => {
+  const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
+  const { token } = userAuth;
+
   const url = `${BASE_URL}/users/${id}/statistics`;
   try {
     const response = await fetch(url, {
@@ -335,8 +345,8 @@ export const getStatisticUser = async (id: string, token: string): Promise<Stati
   } catch {
     // !new token
     await getNewToken(id);
-    const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
-    const tokenNew = userAuth.token;
+    const userAuthNew = JSON.parse(localStorage.getItem('userAuth') as string);
+    const tokenNew = userAuthNew.token;
     const response = await fetch(url, {
       method: 'GET',
       headers: {

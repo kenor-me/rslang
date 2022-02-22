@@ -4,7 +4,7 @@ import {
 } from '../../types';
 import { getPercentCircle } from '../statistic';
 import './index.css';
-import { saveStatictic } from '../statistic/saveStatistic';
+import { saveStatistic } from '../statistic/saveStatistic';
 
 const root = document.getElementById('root') as HTMLElement;
 
@@ -139,7 +139,7 @@ export const renderResultForm = (wrong: WordResult[], right: WordResult[], nameG
       audio.play();
     }
   });
-  saveStatictic(right, wrong, nameGame, longestSeries);
+  saveStatistic(right, wrong, nameGame, longestSeries);
 };
 
 const getSeconds = (): void => {

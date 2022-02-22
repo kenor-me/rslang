@@ -12,8 +12,8 @@ export const getToday = (): string => {
   return `${day}${month}${year}`;
 };
 
-export const saveCountGameToday = (nameGame: string, statistic: Statistic, countNewWordFromSprint = 0,
-  countNewWordFromAudioCall = 0, right: number, wrong: number, longestSeries: number): Statistic => {
+export const saveCountGameToday = async (nameGame: string, statistic: Statistic, countNewWordFromSprint = 0,
+  countNewWordFromAudioCall = 0, right: number, wrong: number, longestSeries: number): Promise<Statistic> => {
   const today = getToday();
   if (statistic.optional.daysStatistic[today]) {
     if (nameGame === 'sprint') {
@@ -67,62 +67,96 @@ export const saveCountGameToday = (nameGame: string, statistic: Statistic, count
   return statistic;
 };
 
-export const saveStatictic = async (right: WordResult[], wrong: WordResult[], nameGame: string, longestSeries: number): Promise<void> => {
+export const saveStatistic = async (right: WordResult[], wrong: WordResult[], nameGame: string, longestSeries: number): Promise<void> => {
+  // console.log(right);
+  // console.log(wrong);
+  // console.log(nameGame);
+  // console.log(longestSeries);
+
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
   let counterNewWordSprint = 0;
   let counterNewWordAudioCall = 0;
-  if (userAuth) {
-    const userWords = await getWordsUser(userAuth.userId, userAuth.token);
-    const statistic = await getStatisticUser(userAuth.userId, userAuth.token);
-    right.forEach(async (word) => {
-      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
-        if (nameGame === 'sprint') {
-          counterNewWordSprint++;
-        } else {
-          counterNewWordAudioCall++;
-        }
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
-      }
-      if (statistic.optional.words[word.id]) {
-        statistic.optional.words[word.id].correct++;
-        if (statistic.optional.words[word.id].correct >= 3) {
-          const params = 'learned';
-          await updateWordUser(userAuth.userId, userAuth.token, word.id, params);
-          statistic.learnedWords++;
-        }
-      } else {
-        statistic.optional.words[word.id] = { correct: 1, wrong: 0 };
-      }
-    });
-    wrong.forEach(async (word) => {
-      if ((userWords.filter((wordItem) => wordItem.wordId === word.id)).length === 0) {
-        if (nameGame === 'sprint') {
-          counterNewWordSprint++;
-        } else { counterNewWordAudioCall++; }
-        await setWordNew(userAuth.userId, userAuth.token, word.id);
-      }
-      if (statistic.optional.words[word.id]) {
-        statistic.optional.words[word.id].wrong++;
-        statistic.optional.words[word.id].correct = 0;
-      } else {
-        statistic.optional.words[word.id] = { correct: 0, wrong: 1 };
-      }
-    });
-    if (nameGame === 'sprint') {
-      await saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
-        right.length, wrong.length, longestSeries);
-      if (statistic.optional.seriesSprint < longestSeries) {
-        statistic.optional.seriesSprint = longestSeries;
-      }
-    } else {
-      await saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
-      if (statistic.optional.seriesAudioCall < longestSeries) {
-        statistic.optional.seriesAudioCall = longestSeries;
+  // if (userAuth) {
+  const userWords = await getWordsUser(userAuth.userId);
+  console.log(userWords);
+
+  const statistic = await getStatisticUser(userAuth.userId);
+  console.log(statistic);
+
+  right.forEach(async (word) => {
+    let incl = false;
+    for (let i = 0; i < userWords.length; i++) {
+      if (userWords[i].wordId === word.id) {
+        incl = true;
+        // console.log(userWords[i]);
+        break;
       }
     }
-    delete statistic.id;
-    setTimeout(async () => {
-      await setStatisticUser(userAuth.userId, userAuth.token, statistic);
-    }, 1000);
+    // console.log(incl);
+
+    if (incl === false) {
+      if (nameGame === 'sprint') {
+        counterNewWordSprint++;
+      } else {
+        counterNewWordAudioCall++;
+      }
+      await setWordNew(userAuth.userId, word.id);
+    }
+    if (statistic.optional.words[word.id]) {
+      statistic.optional.words[word.id].correct++;
+      if (statistic.optional.words[word.id].correct >= 3) {
+        const params = 'learned';
+        await updateWordUser(userAuth.userId, word.id, params);
+        statistic.learnedWords++;
+      }
+    } else {
+      statistic.optional.words[word.id] = { correct: 1, wrong: 0 };
+    }
+  });
+
+  wrong.forEach(async (word) => {
+    let incl = false;
+    for (let i = 0; i < userWords.length; i++) {
+      if (userWords[i].wordId === word.id) {
+        incl = true;
+        // console.log(userWords[i]);
+        break;
+      }
+    }
+    // console.log(incl);
+
+    if (incl === false) {
+      if (nameGame === 'sprint') {
+        counterNewWordSprint++;
+      } else { counterNewWordAudioCall++; }
+      await setWordNew(userAuth.userId, word.id);
+    }
+    if (statistic.optional.words[word.id]) {
+      // console.log('+++++');
+
+      statistic.optional.words[word.id].wrong++;
+      statistic.optional.words[word.id].correct = 0;
+    } else {
+      statistic.optional.words[word.id] = { correct: 0, wrong: 1 };
+    }
+  });
+  if (nameGame === 'sprint') {
+    saveCountGameToday('sprint', statistic, counterNewWordSprint, counterNewWordAudioCall,
+      right.length, wrong.length, longestSeries);
+    if (statistic.optional.seriesSprint < longestSeries) {
+      statistic.optional.seriesSprint = longestSeries;
+    }
+  } else {
+    saveCountGameToday('audioCall', statistic, counterNewWordSprint, counterNewWordAudioCall, right.length, wrong.length, longestSeries);
+    if (statistic.optional.seriesAudioCall < longestSeries) {
+      statistic.optional.seriesAudioCall = longestSeries;
+    }
   }
+  delete statistic.id;
+  console.log('new statistic', statistic);
+
+  setTimeout(async () => {
+    await setStatisticUser(userAuth.userId, userAuth.token, statistic);
+  }, 1000);
+  // }
 };
