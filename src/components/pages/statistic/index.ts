@@ -258,7 +258,7 @@ export const renderStatisticPage = async (): Promise<void> => {
             </div>
             <div class="statistic-games">
               ${await getDayStatistic(statistic, percentRightToday)}
-              ${getAllStatistic(statistic)}
+              ${await getAllStatistic(statistic)}
             </div>
           </div>
       </div>
