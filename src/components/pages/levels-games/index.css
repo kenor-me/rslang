@@ -1,0 +1,124 @@
+.wrapper-levels {
+  min-height: calc(100vh - 130px);
+  padding: 0 20px;
+  background-image: url(./../../../assets/img/bg-games-levels.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.wrapper-levels  h1 {
+  margin: 0;
+  padding: 60px 0 30px 0;
+  color: tomato;
+}
+
+.wrapper-levels-header {
+  padding: 60px 0 30px 0;
+  font-family: Forum;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--font-color-dark);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapper-levels-header {
+  padding-top: 125px;
+}
+
+.wrapper-desc p {
+  padding-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  color: var(--font-color-dark);
+}
+
+.levels {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  gap: 50px;
+  margin: 0 auto;
+  padding: 40px 0;
+  max-width: 50%;
+}
+
+.bg-level {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color:var(--bg-dark);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: 0.4s;
+}
+
+.level:hover .bg-level {
+  background-color: tomato;
+}
+
+.level {
+  position: relative;
+}
+
+.level span {
+  position: absolute;
+  top: 20px;
+  left: 35px;
+  font-size: 3.3rem;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+}
+
+@media (max-width: 960px) {
+  .wrapper-levels-header {
+    font-size: 2rem;
+    padding-top: 25px;
+  }
+
+  .wrapper-desc p {
+    font-size: 1.3rem;
+  }
+
+  .levels {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .levels {
+    width: 300px;
+    flex-wrap: wrap;
+  }
+
+  .level,
+  .bg-level {
+    width:65px;
+    height: 65px;
+  }
+
+  .level span {
+    top: 18px;
+    left: 25px;
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .wrapper-levels {
+    min-height: calc(100vh - 258px);
+  }
+
+  .levels {
+    max-width: 90%;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 440px) {
+  .wrapper-levels {
+    min-height: calc(100vh - 225px);
+  }
+}

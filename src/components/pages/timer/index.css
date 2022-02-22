@@ -1,0 +1,135 @@
+.timer-wrapper {
+  min-height: calc(100vh - 230px);
+  padding: 50px 20px;
+  background-color: #ffc86d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.timer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 3;
+  background-color: white;
+  animation: mask-left 4s steps(1, end) forwards;
+}
+
+.timer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 3;
+  background-color: tomato;
+  animation: mask-right 4s steps(1, end) forwards;
+}
+
+.timer__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  animation: line 4s linear forwards;
+}
+
+.timer__line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: tomato;
+}
+
+.timer__body {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #ffc86d;
+  text-align: center;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.timer__counter {
+  animation: counter 4s steps(3, end) forwards;
+}
+
+.timer__counter span {
+  font-size: 60px;
+  height: 120px;
+  color: var(--font-color-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes counter {
+  0% {
+  }
+  100% {
+    transform: translateY(-360px)
+  }
+}
+
+@keyframes line {
+  0% {
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes mask-left {
+  0% {
+    visibility: visible;
+  }
+  50%,
+  100% {
+    visibility: hidden;
+  }
+}
+
+@keyframes mask-right {
+  0% {
+    visibility: hidden;
+  }
+  50%,
+  100% {
+    visibility: visible;
+  }
+}
+
+@media (max-width: 639px) {
+  .timer-wrapper {
+    min-height: calc(100vh - 358px);
+  }
+}
+
+@media (max-width: 440px) {
+  .timer-wrapper {
+    min-height: calc(100vh - 425px);
+  }
+}
