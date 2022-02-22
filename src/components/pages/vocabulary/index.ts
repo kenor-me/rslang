@@ -194,7 +194,7 @@ class Vocabulary extends BaseComponent {
     if (this.settings.page > 0) {
       const onePart = await getWordPage(this.settings.part, this.settings.page - 1);
       const twoPart = await getWordPage(this.settings.part, this.settings.page);
-      this.wordsForGame = [ ...twoPart, ...onePart];
+      this.wordsForGame = [...twoPart, ...onePart];
     }
     const ind: number[] = [];
     this.wordsForGame?.forEach((item, index) => {

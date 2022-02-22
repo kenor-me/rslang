@@ -93,11 +93,8 @@ export const saveStatictic = async (right: WordResult[], wrong: WordResult[], na
         const wordUser = await getWordByIdUserInfo(userAuth.userId, userAuth.token, word.id);
         wordUser.optional.correct++;
         if (wordUser.optional.correct >= 3) {
-          console.log('слово попадает в изученные')
           wordUser.difficulty = 'learned';
-          console.log(statistic.learnedWords)
           statistic.learnedWords++;
-          console.log(statistic.learnedWords)
         }
         const wordObj = {
           difficulty: wordUser.difficulty,

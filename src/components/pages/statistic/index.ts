@@ -1,8 +1,13 @@
 import { Statistic } from '../../types/index';
-import { deleteUserWord, getStatisticUser, getWordsUser, setStatisticUser } from '../../api/index';
+import {
+  deleteUserWord, getStatisticUser, getWordsUser, setStatisticUser,
+} from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';
 import { langStatistic } from './schedule';
+
+const root = document.getElementById('root') as HTMLElement;
+const user = JSON.parse(localStorage.getItem('userAuth') as string);
 
 export const getPercentCircle = (start: number, end: number): string => `
 <svg class="" width="120px" height="120px" viewBox="0 0 42 42" class="donut">
@@ -65,7 +70,7 @@ const getSeriesTodayAudioCall = async (statistic: Statistic) => {
 
 const getDayStatistic = async (statistic: Statistic, percentRight: number): Promise<string> => {
   const today = getToday();
-  const userWord = await getWordsUser(user.userId, user.token)
+  const userWord = await getWordsUser(user.userId, user.token);
   const learnedWords = userWord.filter((item) => item.difficulty === 'learned');
   let longSeriesToday = 0;
   if (statistic.optional.daysStatistic[today]) {
@@ -114,8 +119,9 @@ const getDayStatistic = async (statistic: Statistic, percentRight: number): Prom
   </div>
   `;
 };
+
 const getAllStatistic = async (statistic: Statistic) => {
-  const userWord = await getWordsUser(user.userId, user.token)
+  const userWord = await getWordsUser(user.userId, user.token);
   const learnedWords = userWord.filter((item) => item.difficulty === 'learned');
   let percentRightAll = 0;
   if (statistic.optional.rightAnswerAll + statistic.optional.wrongAnswerAll !== 0) {
@@ -155,8 +161,6 @@ const getAllStatistic = async (statistic: Statistic) => {
   `;
 };
 
-const root = document.getElementById('root') as HTMLElement;
-const user = JSON.parse(localStorage.getItem('userAuth') as string);
 export const renderStatisticPage = async (): Promise<void> => {
   const statistic = await getStatisticUser(user.userId, user.token);
   const today = getToday();
