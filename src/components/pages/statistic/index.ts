@@ -1,5 +1,5 @@
 import { Statistic } from '../../types/index';
-import { getStatisticUser, getWordsUser } from '../../api/index';
+import { deleteUserWord, getStatisticUser, getWordsUser, setStatisticUser } from '../../api/index';
 import './index.css';
 import { getToday } from './saveStatistic';
 import { langStatistic } from './schedule';
@@ -65,6 +65,8 @@ const getSeriesTodayAudioCall = async (statistic: Statistic) => {
 
 const getDayStatistic = async (statistic: Statistic, percentRight: number): Promise<string> => {
   const today = getToday();
+  const userWord = await getWordsUser(user.userId, user.token)
+  const learnedWords = userWord.filter((item) => item.difficulty === 'learned');
   let longSeriesToday = 0;
   if (statistic.optional.daysStatistic[today]) {
     if (statistic.optional.daysStatistic[today].seriesSprintToday
@@ -95,7 +97,7 @@ const getDayStatistic = async (statistic: Statistic, percentRight: number): Prom
       <div class="count-word-learn-all-title">
         Количество изученных слов
       </div>
-      <div class="count-word-all-count count">${statistic.learnedWords}</div>
+      <div class="count-word-all-count count">${learnedWords.length}</div>
     </div>
     <div class="count-percent-all">
       <div class="count-percent-all-title">
@@ -112,7 +114,9 @@ const getDayStatistic = async (statistic: Statistic, percentRight: number): Prom
   </div>
   `;
 };
-const getAllStatistic = (statistic: Statistic) => {
+const getAllStatistic = async (statistic: Statistic) => {
+  const userWord = await getWordsUser(user.userId, user.token)
+  const learnedWords = userWord.filter((item) => item.difficulty === 'learned');
   let percentRightAll = 0;
   if (statistic.optional.rightAnswerAll + statistic.optional.wrongAnswerAll !== 0) {
     percentRightAll = Math.floor((statistic.optional.rightAnswerAll * 100)
@@ -133,7 +137,7 @@ const getAllStatistic = (statistic: Statistic) => {
       <div class="count-word-learn-all-title">
         Количество изученных слов
       </div>
-      <div class="count-word-all-count count">${statistic.learnedWords}</div>
+      <div class="count-word-all-count count">${learnedWords.length}</div>
     </div>
     <div class="count-percent-all">
       <div class="count-percent-all-title">
@@ -155,11 +159,6 @@ const root = document.getElementById('root') as HTMLElement;
 const user = JSON.parse(localStorage.getItem('userAuth') as string);
 export const renderStatisticPage = async (): Promise<void> => {
   const statistic = await getStatisticUser(user.userId, user.token);
-  /* await setStatisticUser(user.userId, user.token)
-  const userWord = await getWordsUser(user.userId, user.token)
-  userWord.forEach(async (item)=> {
-    await deleteUserWord(user.userId, user.token, item.wordId)
-  }); */
   const today = getToday();
   let rightSprint = 0;
   let wrongSprint = 0;
