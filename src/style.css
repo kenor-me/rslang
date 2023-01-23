@@ -1,0 +1,31 @@
+@import url(./assets/normalize.css);
+@font-face {
+  font-family: Forum;
+  src: url("assets/fonts/Forum/Forum-Regular.ttf");
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --bg-dark: #2A3950;
+  --bg-light: #edfef0;
+  --bg-dark-green: #006270;
+  --radius: 4px;
+  --font-color-light: #edfef0;
+  --font-color-dark: #2A3950;
+  --font-color-green: #00E0C7;
+  --font-color-disabled: #006270;
+  --font-color-error: #e90e24;
+  --bg-btn:#00E0C7;
+  --bg-btn-hover: #b1f7ee;
+}
+
+#root {
+  min-height: calc(100vh - 130px);
+}

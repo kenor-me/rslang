@@ -1,0 +1,195 @@
+.statistic-wrapper {
+  padding: 50px 20px;
+  min-height: calc(100vh - 230px);
+  background-color: var(--bg-dark);
+  background-image: url("./../../../assets/bg.png");
+  background-size: cover;
+}
+
+.statistic-wrapper-auth {
+  background-color: #3b4d68;
+}
+
+.statistic-wrapper h1 {
+  color: #ffc86d;
+}
+
+.statistic-text {
+  font-size: 1.3rem;
+  font-weight: 400;
+  max-width: 600px;
+  padding-top: 20px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--bg-light);
+}
+
+.statistic-table {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
+.statistic-table__header {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  margin: 0 20px;
+}
+.statistic__header-day,
+.statistic__header-all {
+  height: 60px;
+  width: 50%;
+  text-transform: uppercase;
+  font-size: 30px;
+  flex-grow: 1;
+  align-items: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  border-bottom: 4px solid #2a39507a;
+  cursor: pointer;
+  font-family: "Forum";
+  letter-spacing: 1.5px;
+  padding: 5px;
+}
+
+.statistic-table__body h3 {
+  font-family: "Forum";
+  letter-spacing: 1.5px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffc86d;
+  padding-bottom: 8px;
+}
+
+.statistic-games__wrapper h3 {
+  text-align: center;
+}
+
+.statistic-all,
+.statistic-sprint,
+.statistic-audiocall {
+  background-color: white;
+  width: 40%;
+  border: 5px dashed #ffc86d;
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+    0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+  padding: 20px;
+  font-family: "Forum";
+}
+.count {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--font-color-dark);
+}
+
+.statistic-all div,
+.statistic-sprint div,
+.statistic-audiocall div {
+  margin: 5px 0;
+  font-family: "Forum";
+}
+
+.statistic-sprint h4,
+.statistic-audiocall h4,
+.statistic-all h4 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+  color: var(--font-color-dark);
+}
+
+.statistic-games {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.statistic-games__diagram {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.statistic-games__diagram span {
+  position: absolute;
+  top: 35%;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--font-color-dark);
+}
+
+.count-game-all,
+.count-words-learn-all,
+.count-words-learn-sprint,
+.count-words-learn-audiocall,
+.count-percent-all,
+.count-series-all {
+  display: flex;
+  justify-content: space-between;
+}
+.count-game-sprint,
+.count-words-learn-sprint,
+.count-words-learn-sprint,
+.count-series-sprint,
+.count-game-audiocall,
+.count-words-learn-audiocall,
+.count-percent-audiocall,
+.count-series-audiocall {
+  display: flex;
+  justify-content: space-between;
+}
+canvas {
+  width: 80% !important;
+  margin: 0 auto !important;
+  margin-top: 30px !important;
+}
+@media (max-width: 1200px) {
+  .statistic-all,
+  .statistic-sprint,
+  .statistic-audiocall {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .statistic-audiocall {
+    margin-top: 30px;
+  }
+  .statistic-all:first-of-type {
+    margin-bottom: 30px;
+  }
+  .statistic-games {
+    display: block;
+  }
+}
+
+@media (max-width: 639px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 358px);
+  }
+  .statistic-table {
+    width: 100%;
+  }
+  .statistic-table__body h3 {
+    font-size: 32px;
+  }
+  .statistic-table__body {
+    font-size: 15px;
+  }
+  .statistic-all,
+  .statistic-sprint,
+  .statistic-audiocall {
+    box-sizing: border-box;
+    width: 100%;
+  }
+  canvas {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .statistic-wrapper {
+    min-height: calc(100vh - 425px);
+  }
+}
