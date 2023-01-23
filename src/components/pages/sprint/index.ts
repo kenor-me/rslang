@@ -65,7 +65,7 @@ export const toggleFullScreen = (): void => {
   });
 };
 
-const BASE_URL = 'https://app-english-learn.herokuapp.com';
+const BASE_URL = 'https://rs-lang-d921.onrender.com';
 
 const renderResultWord = (word: WordResult): string => `
   <li>
@@ -185,7 +185,7 @@ export const renderSprintPage = (): void => {
           </div>
         </div>
       </div>
-      
+
       <div class="sprint-text-block">
         <p class="sprint__title"></p>
         <p class="sprint__subtitle"></p>

@@ -2,7 +2,7 @@ import { Word } from '../../types/index';
 import { GamesWords } from './getWords';
 
 export class Answers extends GamesWords {
-  BASE_URL = 'https://app-english-learn.herokuapp.com';
+  BASE_URL = 'https://rs-lang-d921.onrender.com';
 
   word: Word;
 

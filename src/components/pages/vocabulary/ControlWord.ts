@@ -6,7 +6,7 @@ import { Statistic, Token, Word } from '../../types/index';
 import BaseComponent from './BaseComponent';
 
 export class ControlWord extends BaseComponent {
-  BASE_URL = 'https://app-english-learn.herokuapp.com';
+  BASE_URL = 'https://rs-lang-d921.onrender.com';
 
   user: Token | null;
 

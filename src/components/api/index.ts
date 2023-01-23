@@ -2,7 +2,7 @@ import {
   User, Sign, Token, Word, ContentWord, Statistic, WordToUpdate,
 } from '../types';
 
-const BASE_URL = 'https://app-english-learn.herokuapp.com';
+const BASE_URL = 'https://rs-lang-d921.onrender.com';
 
 const getNewToken = async (id: string): Promise<void> => {
   const userAuth = JSON.parse(localStorage.getItem('userAuth') as string);
